@@ -1,35 +1,26 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { Menu, X } from "lucide-react"
 
 const NAV_LINKS = [
-  { label: "Nosotros", href: "#nosotros" },
-  { label: "Objetivos", href: "#objetivos" },
-  { label: "Comit\u00E9s", href: "#comites" },
-  { label: "Conferencia", href: "#conferencia" },
-  { label: "Boletines", href: "#boletines" },
+  { label: "Inicio", href: "/" },
+  { label: "Nosotros", href: "/nosotros" },
+  { label: "Membresía", href: "/membresia" },
+  { label: "Comunicaciones", href: "/comunicaciones" },
 ] as const
 
 export default function Header() {
+  const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-
-  const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 10)
-  }, [])
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [handleScroll])
 
   useEffect(() => {
     if (!mobileMenuOpen) return
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMobileMenuOpen(false)
-      }
+      if (e.key === "Escape") setMobileMenuOpen(false)
     }
 
     document.body.style.overflow = "hidden"
@@ -41,123 +32,96 @@ export default function Header() {
     }
   }, [mobileMenuOpen])
 
-  const closeMobileMenu = useCallback(() => {
-    setMobileMenuOpen(false)
-  }, [])
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), [])
+  const toggleMobileMenu = useCallback(() => setMobileMenuOpen((p) => !p), [])
 
-  const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen((prev) => !prev)
-  }, [])
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href)
 
   return (
-    <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-bg/95 shadow-lg shadow-primary/5 backdrop-blur-md"
-          : "bg-primary-dark"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <a
+    <header className="sticky top-0 z-50 h-[72px] border-b border-border bg-surface">
+      <div className="mx-auto flex h-full max-w-[1200px] items-center gap-8 px-6">
+        <Link
           href="/"
-          className={`text-2xl font-extrabold tracking-tight transition-colors ${
-            scrolled ? "text-primary" : "text-white"
-          }`}
-          style={{ fontFamily: "var(--font-be-vietnam-pro), sans-serif" }}
+          className="flex shrink-0 items-center gap-2.5"
           aria-label="ADPUPR - Inicio"
         >
-          <span className={scrolled ? "text-primary-light" : "text-white/70"}>
-            ADPU
-          </span>
-          <span className={scrolled ? "text-primary" : "text-accent"}>PR</span>
-        </a>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-color.png" alt="ADPUPR" className="h-10 w-auto" />
+        </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Principal">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={`relative px-3 py-2 text-sm font-medium transition-colors after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:origin-left after:scale-x-0 after:bg-accent after:transition-transform hover:after:scale-x-100 ${
-                scrolled
-                  ? "text-text hover:text-primary"
-                  : "text-white/75 hover:text-white"
-              }`}
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav
+          className="hidden flex-1 items-center gap-1 md:flex"
+          aria-label="Principal"
+        >
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className="relative rounded-sm px-3.5 py-2.5 font-heading text-sm font-semibold text-text transition-colors hover:bg-sky-50"
+              >
+                {link.label}
+                <span
+                  className={`absolute inset-x-3.5 bottom-1 block h-[2px] rounded-sm bg-mustard transition-opacity ${
+                    active ? "opacity-100" : "opacity-0"
+                  }`}
+                  aria-hidden="true"
+                />
+              </Link>
+            )
+          })}
         </nav>
 
-        <div className="hidden md:block">
-          <a
-            href="mailto:info@adpupr.com"
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
-              scrolled
-                ? "bg-primary text-white hover:bg-primary-light"
-                : "bg-accent text-primary-dark hover:bg-accent-light"
-            }`}
+        <div className="hidden items-center gap-2 md:flex">
+          <Link
+            href="/membresia"
+            className="inline-flex items-center rounded-sm bg-primary px-4 py-2 font-heading text-[13px] font-semibold text-white transition-colors hover:bg-primary-700"
           >
-            Membres&iacute;a
-          </a>
+            Hacerme miembro
+          </Link>
         </div>
 
         <button
           type="button"
-          className={`inline-flex items-center justify-center rounded-md p-2 md:hidden ${
-            scrolled ? "text-primary" : "text-white"
-          }`}
+          className="ml-auto inline-flex items-center justify-center rounded-sm p-2 text-primary md:hidden"
           onClick={toggleMobileMenu}
           aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? "Cerrar men\u00FA" : "Abrir men\u00FA"}
+          aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            {mobileMenuOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6" strokeWidth={1.75} />
+          ) : (
+            <Menu className="h-6 w-6" strokeWidth={1.75} />
+          )}
         </button>
       </div>
 
       {mobileMenuOpen && (
         <nav
-          className="border-t border-white/10 bg-primary-dark md:hidden"
-          aria-label="Men\u00FA m\u00F3vil"
+          className="border-t border-border bg-surface md:hidden"
+          aria-label="Menú móvil"
         >
-          <div className="space-y-1 px-4 pb-4 pt-2">
+          <div className="flex flex-col gap-1 px-6 py-4">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 onClick={closeMobileMenu}
-                className="block rounded-md px-3 py-2.5 text-base font-medium text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                className="rounded-sm px-3 py-2.5 font-heading text-sm font-semibold text-text transition-colors hover:bg-sky-50"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
-            <a
-              href="mailto:info@adpupr.com"
+            <Link
+              href="/membresia"
               onClick={closeMobileMenu}
-              className="mt-3 block rounded-full bg-accent px-5 py-2.5 text-center text-base font-semibold text-primary-dark transition-colors hover:bg-accent-light"
+              className="mt-2 inline-flex items-center justify-center rounded-sm bg-primary px-3 py-2.5 font-heading text-sm font-semibold text-white transition-colors hover:bg-primary-700"
             >
-              Membres&iacute;a
-            </a>
+              Hacerme miembro
+            </Link>
           </div>
         </nav>
       )}

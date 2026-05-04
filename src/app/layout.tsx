@@ -1,28 +1,22 @@
 import type { Metadata } from "next"
-import { Be_Vietnam_Pro, DM_Serif_Display, Source_Sans_3 } from "next/font/google"
+import { Be_Vietnam_Pro, Open_Sans } from "next/font/google"
 import "./globals.css"
 
 const beVietnamPro = Be_Vietnam_Pro({
-  weight: ["700", "800"],
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-be-vietnam-pro",
 })
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
+const openSans = Open_Sans({
   subsets: ["latin"],
-  variable: "--font-dm-serif-display",
-})
-
-const sourceSans = Source_Sans_3({
-  subsets: ["latin"],
-  variable: "--font-source-sans-3",
+  variable: "--font-open-sans",
 })
 
 export const metadata: Metadata = {
-  title: "ADPUPR - Asociaci\u00F3n de Administraci\u00F3n P\u00FAblica de Puerto Rico",
+  title: "ADPUPR - Asociación de Administración Pública de Puerto Rico",
   description:
-    "Promoviendo y fortaleciendo la sana administraci\u00F3n p\u00FAblica en Puerto Rico",
+    "Promoviendo y fortaleciendo la sana administración pública en Puerto Rico",
 }
 
 export default function RootLayout({
@@ -32,9 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        className={`${beVietnamPro.variable} ${dmSerif.variable} ${sourceSans.variable} antialiased`}
-      >
+      <body className={`${beVietnamPro.variable} ${openSans.variable} antialiased`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-white"
