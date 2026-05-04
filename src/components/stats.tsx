@@ -13,7 +13,7 @@ const STATS: readonly Stat[] = [
 export default function Stats() {
   return (
     <section className="border-y border-border bg-sky-50 px-6 py-16">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-8 md:grid-cols-4 md:gap-6">
+      <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-8 md:grid-cols-3 md:gap-6">
         {STATS.map((stat) => (
           <div key={stat.label}>
             <div
