@@ -47,7 +47,7 @@ export default function Header() {
           aria-label="ADPUPR - Inicio"
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-color.png" alt="ADPUPR" className="h-10 w-auto" />
+          <img src="/logo-color.png" alt="ADPUPR" width={142} height={40} className="h-10 w-auto" />
         </Link>
 
         <nav

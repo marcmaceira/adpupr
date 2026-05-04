@@ -5,9 +5,15 @@ import Subhead from "@/components/subhead"
 import Membresia from "@/components/membresia"
 
 export const metadata: Metadata = {
-  title: "Membresía | ADPUPR",
+  title: "Membresía",
   description:
-    "Únete a la ADPUPR. Beneficios, tarifas y métodos de pago para integrantes regulares y estudiantes.",
+    "Únete a la ADPUPR. Accede a beneficios exclusivos, eventos, formación y una red de profesionales comprometidos con el servicio público en Puerto Rico.",
+  openGraph: {
+    title: "Membresía | ADPUPR",
+    description:
+      "Únete a la ADPUPR. Beneficios, tarifas y métodos de pago para integrantes regulares y estudiantes.",
+    url: "/membresia",
+  },
 }
 
 export default function MembresiaPage() {

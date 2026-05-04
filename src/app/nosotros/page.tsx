@@ -9,9 +9,15 @@ import Directors from "@/components/directors"
 import CtaBand from "@/components/cta-band"
 
 export const metadata: Metadata = {
-  title: "Nosotros | ADPUPR",
+  title: "Nosotros",
   description:
     "Misión, visión, objetivos, comités de trabajo y junta de directores de la Asociación de Administración Pública de Puerto Rico.",
+  openGraph: {
+    title: "Nosotros | ADPUPR",
+    description:
+      "Misión, visión, objetivos, comités de trabajo y junta de directores de la Asociación de Administración Pública de Puerto Rico.",
+    url: "/nosotros",
+  },
 }
 
 export default function NosotrosPage() {

@@ -5,9 +5,15 @@ import Subhead from "@/components/subhead"
 import BoletinesList from "@/components/boletines-list"
 
 export const metadata: Metadata = {
-  title: "Comunicaciones | ADPUPR",
+  title: "Comunicaciones",
   description:
-    "Boletines temáticos, comunicados institucionales y posicionamientos sobre administración pública en Puerto Rico.",
+    "Boletines temáticos, comunicados institucionales y posicionamientos sobre administración pública en Puerto Rico. Accede a publicaciones de la ADPUPR.",
+  openGraph: {
+    title: "Comunicaciones | ADPUPR",
+    description:
+      "Boletines temáticos, comunicados institucionales y posicionamientos sobre administración pública en Puerto Rico.",
+    url: "/comunicaciones",
+  },
 }
 
 export default function ComunicacionesPage() {

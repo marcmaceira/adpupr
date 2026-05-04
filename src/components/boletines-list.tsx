@@ -160,12 +160,12 @@ export default function BoletinesList() {
                   >
                     {b.kind} &middot; {b.cat}
                   </div>
-                  <h4
+                  <h2
                     className="font-heading text-[16px] font-bold text-primary"
                     style={{ letterSpacing: "-0.005em", margin: 0 }}
                   >
                     {b.title}
-                  </h4>
+                  </h2>
                 </div>
                 <div className="font-heading text-[13px] font-semibold text-text-faint">
                   {b.date}

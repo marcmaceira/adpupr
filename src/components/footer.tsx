@@ -83,9 +83,21 @@ const LinkedInIcon = (
 )
 
 const SOCIAL: readonly SocialLink[] = [
-  { label: "Facebook", href: "#", icon: FacebookIcon },
-  { label: "Instagram", href: "#", icon: InstagramIcon },
-  { label: "LinkedIn", href: "#", icon: LinkedInIcon },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/profile.php?id=61563728602523",
+    icon: FacebookIcon,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/adpupr/",
+    icon: InstagramIcon,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/asociaci%C3%B3n-de-administraci%C3%B3n-p%C3%BAblica-de-puerto-rico-adpupr-7b7290316/",
+    icon: LinkedInIcon,
+  },
 ] as const
 
 export default function Footer() {
@@ -104,6 +116,8 @@ export default function Footer() {
             <img
               src="/logo-white-tagline.png"
               alt="ADPUPR — Asociación de Administración Pública de Puerto Rico"
+              width={120}
+              height={120}
               className="mb-3 -ml-2 block h-[120px] w-auto"
             />
             <p
@@ -121,6 +135,8 @@ export default function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex h-9 w-9 items-center justify-center rounded text-white transition-colors hover:bg-mustard hover:text-primary"
                   style={{ background: "rgba(255,255,255,0.06)" }}
                 >
