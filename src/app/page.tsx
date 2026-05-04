@@ -1,10 +1,11 @@
 import Header from "@/components/header"
 import Hero from "@/components/hero"
+import Stats from "@/components/stats"
 import About from "@/components/about"
-import Objectives from "@/components/objectives"
 import Committees from "@/components/committees"
-import ConferenceCta from "@/components/conference-cta"
+import Directors from "@/components/directors"
 import Newsletters from "@/components/newsletters"
+import CtaBand from "@/components/cta-band"
 import Footer from "@/components/footer"
 
 export default function Home() {
@@ -13,11 +14,12 @@ export default function Home() {
       <Header />
       <main id="main-content">
         <Hero />
+        <Stats />
         <About />
-        <Objectives />
         <Committees />
-        <ConferenceCta />
+        <Directors />
         <Newsletters />
+        <CtaBand />
       </main>
       <Footer />
     </>

@@ -1,54 +1,60 @@
-const OBJECTIVES = [
-  "Agrupar a las personas interesadas en promover la sana administraci\u00F3n p\u00FAblica",
-  "Promover la educaci\u00F3n a trav\u00E9s de cursos, foros, conferencias y seminarios",
-  "Establecer redes de comunicaci\u00F3n entre los miembros",
-  "Mantener participaci\u00F3n colectiva activa en los asuntos p\u00FAblicos de Puerto Rico",
-  "Los dem\u00E1s objetivos que fije la Asamblea de Miembros",
+const OBJETIVOS = [
+  "Agrupar a personas interesadas en promover los valores de una sana Administración Pública en Puerto Rico.",
+  "Promover la educación, la difusión del conocimiento y el estudio de la disciplina mediante cursos, foros, conferencias y conversatorios.",
+  "Establecer redes y conexiones de comunicación entre integrantes de la Asociación.",
+  "Tener una participación colectiva activa en los asuntos públicos y en la gobernanza de Puerto Rico.",
+  "Cualquier otro objetivo establecido por la Asamblea de Integrantes.",
 ] as const
-
-interface ObjectiveItemProps {
-  readonly index: number
-  readonly text: string
-}
-
-function ObjectiveItem({ index, text }: ObjectiveItemProps) {
-  return (
-    <li className="group relative flex items-start gap-6">
-      <span
-        className="absolute -left-2 -top-6 select-none font-heading text-7xl font-bold text-primary/[0.04]"
-        aria-hidden="true"
-      >
-        {index}
-      </span>
-      <span
-        className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-sm font-bold text-white shadow-md shadow-primary/20"
-        aria-hidden="true"
-      >
-        {index}
-      </span>
-      <p className="relative pt-2 leading-relaxed text-text-muted transition-colors group-hover:text-text">
-        {text}
-      </p>
-    </li>
-  )
-}
 
 export default function Objectives() {
   return (
-    <section id="objetivos" className="section-padding bg-surface">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
-          <h2 className="font-heading text-3xl text-primary sm:text-4xl">
-            Objetivos
+    <section
+      id="objetivos"
+      className="px-6 py-28 md:py-[112px]"
+      style={{ background: "var(--color-surface-2)" }}
+    >
+      <div className="mx-auto max-w-[1200px]">
+        <div className="mb-14 max-w-[760px]">
+          <p className="eyebrow mb-3.5">Objetivos</p>
+          <h2 className="h-section text-text">
+            Cinco compromisos institucionales.
           </h2>
-          <div className="gold-rule mx-auto mt-4" />
         </div>
 
-        <ul className="mx-auto grid max-w-3xl gap-10 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
-          {OBJECTIVES.map((text, i) => (
-            <ObjectiveItem key={text} index={i + 1} text={text} />
-          ))}
-        </ul>
+        <div
+          className="grid grid-cols-1 overflow-hidden rounded-lg border border-border md:grid-cols-2"
+          style={{
+            background: "var(--color-border)",
+            gap: "1px",
+          }}
+        >
+          {OBJETIVOS.map((text, i) => {
+            const isLast = i === OBJETIVOS.length - 1
+            return (
+              <div
+                key={text}
+                className={`grid items-start gap-6 bg-white p-9 transition-colors hover:bg-sky-50 ${
+                  isLast ? "md:col-span-2" : ""
+                }`}
+                style={{ gridTemplateColumns: "64px 1fr" }}
+              >
+                <div
+                  className="font-heading font-black text-mustard"
+                  style={{
+                    fontSize: 40,
+                    lineHeight: 1,
+                    letterSpacing: "-0.03em",
+                  }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <p className="font-body text-[15.5px] leading-[1.6] text-text">
+                  {text}
+                </p>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

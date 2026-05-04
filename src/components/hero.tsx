@@ -1,108 +1,67 @@
-function HeroDotPattern() {
-  return (
-    <div className="absolute inset-0 overflow-hidden opacity-[0.07]" aria-hidden="true">
-      <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <pattern
-            id="hero-dots"
-            x="0"
-            y="0"
-            width="28"
-            height="28"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="14" cy="14" r="1" fill="white" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#hero-dots)" />
-      </svg>
-    </div>
-  )
-}
+import Link from "next/link"
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[80vh] items-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
-      <HeroDotPattern />
-
-      {/* Decorative gold accent line */}
+    <section
+      id="inicio"
+      className="relative overflow-hidden bg-primary px-6 pb-32 pt-24 text-white sm:pb-36 lg:pt-32"
+    >
+      {/* Concentric ring ornaments — top right */}
       <div
-        className="absolute left-0 top-1/3 h-px w-full bg-gradient-to-r from-transparent via-accent/25 to-transparent"
         aria-hidden="true"
+        className="pointer-events-none absolute -right-[200px] -top-[180px] h-[560px] w-[560px] rounded-full border-2"
+        style={{ borderColor: "rgba(117, 189, 240, 0.35)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-[100px] -top-[80px] h-[360px] w-[360px] rounded-full border-2"
+        style={{ borderColor: "rgba(255, 210, 88, 0.55)" }}
       />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 py-20 sm:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* Text content */}
-          <div className="max-w-xl">
-            <div
-              className="gold-rule animate-expand-width mb-8"
-              style={{ opacity: 0 }}
-            />
+      <div className="relative mx-auto max-w-[1200px]">
+        <p className="eyebrow eyebrow-on-dark">
+          Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica de Puerto Rico
+        </p>
 
-            <h1
-              className="animate-fade-in-up font-heading text-4xl leading-tight text-white sm:text-5xl lg:text-[3.5rem]"
-              style={{ animationDelay: "0.15s", opacity: 0 }}
-            >
-              Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica de
-              Puerto Rico
-            </h1>
+        <h1
+          className="mt-4 max-w-[14ch] text-white"
+          style={{
+            fontFamily:
+              "var(--font-be-vietnam-pro), 'Helvetica Neue', Helvetica, Arial, sans-serif",
+            fontWeight: 900,
+            fontSize: "clamp(48px, 6.5vw, 84px)",
+            lineHeight: 0.98,
+            letterSpacing: "-0.025em",
+          }}
+        >
+          De la opini&oacute;n
+          <br />a la <em className="not-italic text-mustard">acci&oacute;n</em>.
+        </h1>
 
-            <p
-              className="animate-fade-in-up mt-6 text-lg leading-relaxed text-white/70 sm:text-xl"
-              style={{ animationDelay: "0.35s", opacity: 0 }}
-            >
-              Promoviendo y fortaleciendo la sana administraci&oacute;n
-              p&uacute;blica en Puerto Rico
-            </p>
+        <p
+          className="mt-6 max-w-[56ch] font-body text-[19px] leading-[1.55]"
+          style={{ color: "var(--color-text-on-dark-muted)" }}
+        >
+          ADPUPR convoca a profesionales, acad&eacute;micos y estudiantes en
+          torno al estudio, la pr&aacute;ctica y la mejora continua de la
+          administraci&oacute;n p&uacute;blica en Puerto Rico.
+        </p>
 
-            <div
-              className="animate-fade-in-up mt-10 flex flex-col gap-4 sm:flex-row"
-              style={{ animationDelay: "0.55s", opacity: 0 }}
-            >
-              <a
-                href="mailto:info@adpupr.com?subject=Membres%C3%ADa"
-                className="inline-flex items-center justify-center rounded-md bg-accent px-8 py-3.5 text-base font-semibold text-primary-dark transition-all hover:bg-accent-light hover:shadow-lg hover:shadow-accent/20"
-              >
-                &Uacute;nete
-              </a>
-
-              <a
-                href="#nosotros"
-                className="inline-flex items-center justify-center rounded-md border-2 border-white/25 px-8 py-3.5 text-base font-semibold text-white transition-all hover:border-white/50 hover:bg-white/10"
-              >
-                Conoce m&aacute;s
-              </a>
-            </div>
-          </div>
-
-          {/* Logo with decorative rings */}
-          <div
-            className="animate-fade-in relative hidden justify-center lg:flex"
-            style={{ animationDelay: "0.4s", opacity: 0 }}
-            aria-hidden="true"
+        <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <Link
+            href="/membresia"
+            className="inline-flex items-center justify-center gap-2 rounded-sm bg-mustard px-6 py-3.5 font-heading text-[15px] font-semibold text-primary transition-colors hover:bg-mustard-600"
           >
-            <div className="relative">
-              <div className="absolute -inset-10 rounded-full border border-white/[0.08]" />
-              <div className="absolute -inset-20 rounded-full border border-white/[0.04]" />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo-clear.png"
-                alt="ADPUPR Logo"
-                width={340}
-                height={340}
-                className="drop-shadow-2xl"
-              />
-            </div>
-          </div>
+            Hacerme miembro <span aria-hidden="true">&rarr;</span>
+          </Link>
+          <Link
+            href="/nosotros"
+            className="inline-flex items-center justify-center rounded-sm border border-white/70 px-6 py-3.5 font-heading text-[15px] font-semibold text-white transition-colors hover:bg-white hover:text-primary"
+          >
+            Conocer la Asociaci&oacute;n
+          </Link>
         </div>
       </div>
-
-      {/* Bottom fade to white */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-bg to-transparent"
-        aria-hidden="true"
-      />
     </section>
   )
 }

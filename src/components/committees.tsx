@@ -1,102 +1,87 @@
+import Link from "next/link"
+import GeoPlaceholder from "./geo-placeholder"
+
 interface Committee {
-  readonly icon: React.ReactNode
-  readonly title: string
-  readonly description: string
+  readonly name: string
+  readonly desc: string
+  readonly seed: number
+  readonly variant: "circles" | "stripes" | "grid"
 }
 
-function MonitorIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25A2.25 2.25 0 0 1 5.25 3h13.5A2.25 2.25 0 0 1 21 5.25Z" />
-    </svg>
-  )
-}
-
-function DocumentTextIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-    </svg>
-  )
-}
-
-function CurrencyIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-    </svg>
-  )
-}
-
-function ScaleIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="h-6 w-6">
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z" />
-    </svg>
-  )
-}
-
-const COMMITTEES: readonly Committee[] = [
+const COMITES: readonly Committee[] = [
   {
-    icon: <MonitorIcon />,
-    title: "Educaci\u00F3n y Tecnolog\u00EDa",
-    description:
-      "Fomenta una cultura de aprendizaje continuo integrando la educaci\u00F3n con la tecnolog\u00EDa",
+    name: "Educación y Tecnología",
+    desc: "Fomenta una cultura de aprendizaje continuo en la asociación y aporta al desarrollo de una ciudadanía informada. Integra la educación en administración pública con el uso de tecnologías.",
+    seed: 0,
+    variant: "circles",
   },
   {
-    icon: <DocumentTextIcon />,
-    title: "Publicaciones Institucionales",
-    description:
-      "Coordina las comunicaciones formales reflejando la misi\u00F3n y visi\u00F3n de la organizaci\u00F3n",
+    name: "Publicaciones Institucionales",
+    desc: "Coordina, supervisa y fortalece los productos comunicativos formales de la Asociación, asegurando que reflejen su misión, visión y valores.",
+    seed: 1,
+    variant: "stripes",
   },
   {
-    icon: <CurrencyIcon />,
-    title: "Recaudaci\u00F3n de Fondos",
-    description:
-      "Apoya la generaci\u00F3n estrat\u00E9gica de ingresos bajo el liderazgo del tesorero",
-  },
-  {
-    icon: <ScaleIcon />,
-    title: "Asuntos Legislativos",
-    description:
-      "Analiza los desarrollos legislativos que impactan la administraci\u00F3n p\u00FAblica",
+    name: "Asuntos Legislativos",
+    desc: "Analiza, da seguimiento y comunica los desarrollos legislativos y regulatorios que impactan la administración pública en Puerto Rico, desde una óptica rigurosa y no partidista.",
+    seed: 2,
+    variant: "grid",
   },
 ] as const
 
-interface CommitteeCardProps {
-  readonly committee: Committee
-}
-
-function CommitteeCard({ committee }: CommitteeCardProps) {
-  return (
-    <article className="card-accent-top group rounded-lg bg-bg p-8 shadow-sm transition-all hover:shadow-lg hover:-translate-y-1">
-      <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/[0.07] text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-        {committee.icon}
-      </span>
-      <h3 className="mb-2 text-lg font-bold text-primary">
-        {committee.title}
-      </h3>
-      <p className="leading-relaxed text-text-muted">
-        {committee.description}
-      </p>
-    </article>
-  )
-}
-
 export default function Committees() {
   return (
-    <section id="comites" className="section-padding bg-bg">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
-          <h2 className="font-heading text-3xl text-primary sm:text-4xl">
-            Comit&eacute;s de Trabajo
-          </h2>
-          <div className="gold-rule mx-auto mt-4" />
+    <section id="comites" className="bg-bg px-6 py-28 md:py-[112px]">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="mb-14 max-w-[760px]">
+          <p className="eyebrow mb-3.5">Comit&eacute;s de Trabajo</p>
+          <h2 className="h-section text-text">Donde se hace el trabajo.</h2>
+          <p className="lede mt-5">
+            Tres comit&eacute;s estructuran la actividad sustantiva de la
+            Asociaci&oacute;n, cada uno con responsabilidades definidas y
+            abierto a la participaci&oacute;n de la membres&iacute;a.
+          </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2">
-          {COMMITTEES.map((committee) => (
-            <CommitteeCard key={committee.title} committee={committee} />
+        <div className="grid gap-6 md:grid-cols-3">
+          {COMITES.map((c) => (
+            <article
+              key={c.name}
+              className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-surface p-8 transition-all duration-200 hover:-translate-y-0.5"
+              style={{
+                transitionTimingFunction: "var(--ease-standard)",
+                boxShadow: "var(--shadow-card)",
+              }}
+            >
+              <div
+                className="relative -mx-8 -mt-8 mb-6 h-[140px] overflow-hidden"
+                aria-hidden="true"
+              >
+                <GeoPlaceholder seed={c.seed} variant={c.variant} />
+              </div>
+              <h3
+                className="font-heading text-[22px] font-extrabold text-primary"
+                style={{ letterSpacing: "-0.01em", lineHeight: 1.2 }}
+              >
+                {c.name}
+              </h3>
+              <p className="mt-4 font-body text-[14.5px] leading-[1.6] text-text-muted">
+                {c.desc}
+              </p>
+              <Link
+                href="/nosotros#comites"
+                className="mt-6 inline-flex items-center gap-1.5 font-heading text-[13px] font-semibold text-primary"
+                style={{ letterSpacing: "0.02em" }}
+              >
+                Conocer el comit&eacute;
+                <span
+                  className="transition-transform duration-150 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  &rarr;
+                </span>
+              </Link>
+            </article>
           ))}
         </div>
       </div>

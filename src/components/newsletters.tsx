@@ -1,73 +1,102 @@
-interface Edition {
-  readonly month: string
-  readonly year: number
+import Link from "next/link"
+import GeoPlaceholder from "./geo-placeholder"
+
+interface Boletin {
+  readonly kind: "Boletín" | "Comunicado"
+  readonly title: string
+  readonly date: string
+  readonly cat: string
+  readonly seed: number
 }
 
-const EDITIONS: readonly Edition[] = [
-  { month: "Junio", year: 2025 },
-  { month: "Septiembre", year: 2025 },
-  { month: "Diciembre", year: 2025 },
+const BOLETINES: readonly Boletin[] = [
+  {
+    kind: "Boletín",
+    title: "Reforma del servicio civil: implicaciones para los municipios",
+    date: "Mar 2026",
+    cat: "Política",
+    seed: 3,
+  },
+  {
+    kind: "Comunicado",
+    title: "Posicionamiento sobre la modernización de OGP",
+    date: "Feb 2026",
+    cat: "Posicionamiento",
+    seed: 4,
+  },
+  {
+    kind: "Boletín",
+    title: "Educación cívica en la era digital",
+    date: "Ene 2026",
+    cat: "Educación",
+    seed: 5,
+  },
 ] as const
-
-function DocumentIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.5}
-      className="mx-auto mb-5 h-10 w-10 text-primary/40"
-      aria-hidden="true"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
-      />
-    </svg>
-  )
-}
-
-interface NewsletterCardProps {
-  readonly edition: Edition
-}
-
-function NewsletterCard({ edition }: NewsletterCardProps) {
-  return (
-    <article className="group rounded-lg border border-primary/[0.08] bg-bg p-8 text-center shadow-sm transition-all hover:shadow-md hover:border-accent/30">
-      <DocumentIcon />
-      <h3 className="text-lg font-bold text-primary">
-        {edition.month} {edition.year}
-      </h3>
-      <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-surface px-3 py-1 text-xs font-medium text-text-muted">
-        <span
-          className="h-1.5 w-1.5 rounded-full bg-accent/60"
-          aria-hidden="true"
-        />
-        Pr&oacute;ximamente
-      </span>
-    </article>
-  )
-}
 
 export default function Newsletters() {
   return (
-    <section id="boletines" className="section-padding bg-surface">
-      <div className="mx-auto max-w-5xl">
-        <div className="mb-14 text-center">
-          <h2 className="font-heading text-3xl text-primary sm:text-4xl">
-            Boletines Informativos
-          </h2>
-          <div className="gold-rule mx-auto mt-4" />
+    <section id="boletines" className="bg-bg px-6 py-28 md:py-[112px]">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="mb-12 flex flex-wrap items-end justify-between gap-8">
+          <div>
+            <p className="eyebrow mb-3.5">Boletines y Publicaciones</p>
+            <h2 className="h-section text-text">Lo m&aacute;s reciente.</h2>
+          </div>
+          <Link
+            href="/comunicaciones"
+            className="inline-flex items-center gap-2 rounded-sm border border-primary px-5 py-3 font-heading text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+          >
+            Ver todos <span aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-3">
-          {EDITIONS.map((edition) => (
-            <NewsletterCard
-              key={`${edition.month}-${edition.year}`}
-              edition={edition}
-            />
+        <div className="grid gap-6 md:grid-cols-3">
+          {BOLETINES.map((b, i) => (
+            <a
+              key={b.title}
+              href="#"
+              className={`flex flex-col overflow-hidden rounded-lg border border-border bg-surface no-underline transition-shadow ${
+                i === 0 ? "border-t-[4px] border-t-mustard" : ""
+              }`}
+              style={{
+                boxShadow: "var(--shadow-card)",
+              }}
+            >
+              <div
+                className="relative overflow-hidden"
+                style={{ aspectRatio: "4 / 3", background: "var(--color-sky-50)" }}
+                aria-hidden="true"
+              >
+                <GeoPlaceholder seed={b.seed} />
+              </div>
+              <div className="flex flex-1 flex-col gap-2.5 px-6 pb-6 pt-5">
+                <p className="eyebrow" style={{ margin: 0 }}>
+                  {b.kind}
+                </p>
+                <h3
+                  className="font-heading text-[18px] font-extrabold text-primary"
+                  style={{ letterSpacing: "-0.005em", lineHeight: 1.25 }}
+                >
+                  {b.title}
+                </h3>
+                <div
+                  className="mt-auto flex gap-3.5 pt-3.5 font-heading text-[12px] font-semibold"
+                  style={{
+                    color: "var(--color-text-faint)",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  <span>{b.date}</span>
+                  <span>&middot; {b.cat}</span>
+                  <span
+                    className="ml-auto text-primary"
+                    aria-hidden="true"
+                  >
+                    Leer &rarr;
+                  </span>
+                </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
