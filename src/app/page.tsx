@@ -5,6 +5,7 @@ import About from "@/components/about"
 import Committees from "@/components/committees"
 import Directors from "@/components/directors"
 import Newsletters from "@/components/newsletters"
+import ConferenceCta from "@/components/conference-cta"
 import CtaBand from "@/components/cta-band"
 import Footer from "@/components/footer"
 
@@ -16,6 +17,7 @@ export default function Home() {
         <Hero />
         <Stats />
         <About />
+        <ConferenceCta />
         <Committees />
         <Directors />
         <Newsletters />
