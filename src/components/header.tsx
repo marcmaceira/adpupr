@@ -12,7 +12,7 @@ const NAV_LINKS = [
 ] as const
 
 const NOSOTROS_LINKS = [
-  { label: "Qui\u00E9nes somos", href: "/nosotros#mision" },
+  { label: "Qui\u00E9nes somos", href: "/nosotros/quienes-somos" },
   { label: "Estructura organizacional", href: "/nosotros#directores" },
   { label: "Comit\u00E9s", href: "/nosotros#comites" },
   { label: "Colaboradores", href: "/nosotros#colaboradores" },
