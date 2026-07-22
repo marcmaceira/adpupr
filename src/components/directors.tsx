@@ -172,7 +172,7 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
             <h2 className="h-section text-white">Liderazgo y legado.</h2>
           </div>
           <Link
-            href="/nosotros#directores"
+            href="/nosotros/estructura-organizacional"
             className="inline-flex items-center gap-2 rounded-sm border border-white/70 px-5 py-3 font-heading text-sm font-semibold text-white transition-colors hover:bg-white hover:text-primary"
           >
             Ver junta completa <span aria-hidden="true">&rarr;</span>

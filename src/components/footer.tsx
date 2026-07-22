@@ -11,7 +11,10 @@ const COLUMNS: readonly FooterColumn[] = [
     links: [
       { label: "Nosotros", href: "/nosotros" },
       { label: "Misión y Visión", href: "/nosotros/quienes-somos" },
-      { label: "Junta de Directores", href: "/nosotros#directores" },
+      {
+        label: "Junta de Directores",
+        href: "/nosotros/estructura-organizacional",
+      },
       { label: "Comités de Trabajo", href: "/nosotros#comites" },
     ],
   },

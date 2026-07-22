@@ -46,7 +46,7 @@ Single-page site composed of section components rendered in order:
 Header → Hero → About → Objectives → Committees → ConferenceCta → Newsletters → Footer
 ```
 
-All components are **server components** except `header.tsx` (client — uses state for mobile menu and scroll detection).
+All components are **server components** except `header.tsx` (mobile navigation state) and `board-members.tsx` (interactive biography overlays).
 
 ### Components (`src/components/`)
 
