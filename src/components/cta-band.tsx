@@ -1,11 +1,24 @@
 import Link from "next/link"
 
-export default function CtaBand() {
+interface CtaBandProps {
+  readonly id?: string
+  readonly eyebrow?: string
+}
+
+export default function CtaBand({ id, eyebrow }: CtaBandProps) {
   return (
-    <section className="relative overflow-hidden bg-mustard">
+    <section id={id} className="relative overflow-hidden bg-mustard">
       <div className="container relative mx-auto max-w-[1200px] px-6">
         <div className="grid items-center gap-12 py-20 md:grid-cols-[1.5fr_auto] md:gap-12 md:py-[72px]">
           <div>
+            {eyebrow ? (
+              <p
+                className="eyebrow mb-3"
+                style={{ color: "var(--color-primary-700)" }}
+              >
+                {eyebrow}
+              </p>
+            ) : null}
             <h2
               className="font-heading font-black text-primary"
               style={{

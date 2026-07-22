@@ -125,6 +125,7 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
         </section>
 
         <section
+          id="historia-fundacion"
           className="px-6 py-20 md:py-24"
           style={{ background: "var(--color-surface-2)" }}
         >

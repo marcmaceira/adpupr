@@ -34,7 +34,7 @@ export default function NosotrosPage() {
         <Objectives />
         <Committees />
         <Directors variant="full" />
-        <CtaBand />
+        <CtaBand id="colaboradores" eyebrow="Colaboradores" />
       </main>
       <Footer />
     </>
