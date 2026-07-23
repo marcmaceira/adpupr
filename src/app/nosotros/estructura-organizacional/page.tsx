@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import BoardMembers from "@/components/board-members"
+import CommitteeDetails from "@/components/committee-details"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
 
@@ -47,12 +48,6 @@ const BOARD_MEMBERS: readonly BoardMember[] = [
   },
 ] as const
 
-const COMMITTEES = [
-  "Educaci\u00F3n y Tecnolog\u00EDa",
-  "Publicaciones Institucionales",
-  "Asuntos Legislativos",
-] as const
-
 export const metadata: Metadata = {
   title: "Estructura organizacional",
   description:
@@ -63,19 +58,6 @@ export const metadata: Metadata = {
       "Conoce la Junta Directiva y la estructura de comit\u00E9s de la Asociaci\u00F3n de Administraci\u00F3n P\u00FAblica de Puerto Rico.",
     url: "/nosotros/estructura-organizacional",
   },
-}
-
-function OrganizationNode({ member }: { readonly member: BoardMember }) {
-  return (
-    <li className="rounded-md border border-sky/25 bg-primary-700 p-5">
-      <p className="font-heading text-[10px] font-bold uppercase tracking-[0.12em] text-sky">
-        {member.role}
-      </p>
-      <p className="mt-2 font-heading text-sm font-bold leading-snug text-white">
-        {member.name}
-      </p>
-    </li>
-  )
 }
 
 export default function EstructuraOrganizacionalPage() {
@@ -112,10 +94,10 @@ export default function EstructuraOrganizacionalPage() {
                 Ver Junta Directiva
               </a>
               <a
-                href="#organigrama"
+                href="#comites"
                 className="rounded-sm border border-white/60 px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-white hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Ver organigrama
+                Ver comit&eacute;s
               </a>
             </nav>
           </div>
@@ -138,68 +120,7 @@ export default function EstructuraOrganizacionalPage() {
           </div>
         </section>
 
-        <section id="organigrama" className="bg-primary px-6 py-20 text-white md:py-28">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-14 max-w-[760px]">
-              <p className="eyebrow eyebrow-on-dark mb-3.5">Organigrama</p>
-              <h2 className="h-section text-white">
-                Junta de Directores y comit&eacute;s
-              </h2>
-              <p className="mt-5 font-body text-lg leading-[1.7] text-text-on-dark-muted">
-                La Junta Directiva articula la gesti&oacute;n institucional y los
-                comit&eacute;s concentran el trabajo sustantivo de la Asociaci&oacute;n.
-              </p>
-            </div>
-
-            <div className="mx-auto max-w-[1060px]">
-              <div className="mx-auto max-w-sm rounded-md border-2 border-mustard bg-primary-900 px-6 py-5 text-center shadow-[var(--shadow-modal)]">
-                <p className="font-heading text-xs font-bold uppercase tracking-[0.14em] text-mustard">
-                  Estructura central
-                </p>
-                <h3 className="mt-2 font-heading text-2xl font-black text-white">
-                  Junta Directiva
-                </h3>
-              </div>
-
-              <div className="mx-auto hidden h-10 w-px bg-sky/50 md:block" aria-hidden="true" />
-              <ul className="mt-6 grid gap-3 md:mt-0 md:grid-cols-4" aria-label="Integrantes de la Junta Directiva">
-                {BOARD_MEMBERS.slice(0, 4).map((member) => (
-                  <OrganizationNode key={member.name} member={member} />
-                ))}
-              </ul>
-              <ul
-                className="mt-3 grid gap-3 md:grid-cols-3"
-                aria-label={"Direcci\u00F3n y vocales de la Junta Directiva"}
-              >
-                {BOARD_MEMBERS.slice(4).map((member) => (
-                  <OrganizationNode key={member.name} member={member} />
-                ))}
-              </ul>
-
-              <div className="mx-auto h-10 w-px bg-sky/50" aria-hidden="true" />
-              <div className="rounded-lg border border-sky/25 bg-primary-900/50 p-5 md:p-8">
-                <div className="mb-6 text-center">
-                  <p className="font-heading text-xs font-bold uppercase tracking-[0.14em] text-sky">
-                    Trabajo sustantivo
-                  </p>
-                  <h3 className="mt-2 font-heading text-2xl font-black text-white">
-                    Comit&eacute;s de trabajo
-                  </h3>
-                </div>
-                <ul className="grid gap-3 md:grid-cols-3">
-                  {COMMITTEES.map((committee) => (
-                    <li
-                      key={committee}
-                      className="flex min-h-24 items-center justify-center rounded-md border border-white/15 bg-primary-700 px-5 py-6 text-center font-heading text-sm font-bold leading-snug text-white"
-                    >
-                      {committee}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CommitteeDetails />
       </main>
       <Footer />
     </>

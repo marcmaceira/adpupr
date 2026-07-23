@@ -17,7 +17,10 @@ const NOSOTROS_LINKS = [
     label: "Estructura organizacional",
     href: "/nosotros/estructura-organizacional",
   },
-  { label: "Comit\u00E9s", href: "/nosotros#comites" },
+  {
+    label: "Comit\u00E9s",
+    href: "/nosotros/estructura-organizacional#comites",
+  },
   { label: "Colaboradores", href: "/nosotros#colaboradores" },
   { label: "Historia de Fundaci\u00F3n", href: "/nosotros#historia-fundacion" },
 ] as const
