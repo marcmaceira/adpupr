@@ -3,6 +3,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import Subhead from "@/components/subhead"
 import Membresia from "@/components/membresia"
+import MembershipPlan from "@/components/membership-plan"
 
 export const metadata: Metadata = {
   title: "Membresía",
@@ -27,6 +28,7 @@ export default function MembresiaPage() {
           description="Ser miembro de ADPUPR te conecta con personas comprometidas con una administración pública ética, moderna y basada en datos."
         />
         <Membresia />
+        <MembershipPlan />
       </main>
       <Footer />
     </>

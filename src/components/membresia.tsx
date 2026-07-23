@@ -127,96 +127,20 @@ export default function Membresia() {
               className="mt-2.5 font-heading text-[24px] font-extrabold text-primary"
               style={{ letterSpacing: "-0.01em" }}
             >
-              Dos categor&iacute;as.
+              Opciones para cada etapa.
             </h3>
-            <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {/* Featured tier */}
-              <div
-                className="rounded-lg border p-7 text-white"
-                style={{
-                  background: "var(--color-primary)",
-                  borderColor: "var(--color-primary)",
-                }}
-              >
-                <div
-                  className="font-heading text-[12px] font-bold uppercase"
-                  style={{
-                    color: "var(--color-sky)",
-                    letterSpacing: "0.14em",
-                    marginBottom: 8,
-                  }}
-                >
-                  Integrante regular
-                </div>
-                <div
-                  className="font-heading font-black text-white"
-                  style={{
-                    fontSize: 56,
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1,
-                  }}
-                >
-                  $50
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "var(--color-text-on-dark-muted)",
-                      letterSpacing: 0,
-                      marginLeft: 4,
-                    }}
-                  >
-                    /a&ntilde;o
-                  </span>
-                </div>
-                <div
-                  className="mt-2 font-body text-sm"
-                  style={{ color: "var(--color-text-on-dark-muted)" }}
-                >
-                  Profesionales, acad&eacute;micos y servidores
-                  p&uacute;blicos.
-                </div>
-              </div>
-              {/* Estudiante tier */}
-              <div className="rounded-lg border border-border bg-white p-7">
-                <div
-                  className="font-heading text-[12px] font-bold uppercase"
-                  style={{
-                    color: "var(--color-primary-300)",
-                    letterSpacing: "0.14em",
-                    marginBottom: 8,
-                  }}
-                >
-                  Estudiante
-                </div>
-                <div
-                  className="font-heading font-black text-primary"
-                  style={{
-                    fontSize: 56,
-                    letterSpacing: "-0.03em",
-                    lineHeight: 1,
-                  }}
-                >
-                  $25
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      color: "var(--color-text-faint)",
-                      letterSpacing: 0,
-                      marginLeft: 4,
-                    }}
-                  >
-                    /a&ntilde;o
-                  </span>
-                </div>
-                <div className="mt-2 font-body text-sm text-text-muted">
-                  Estudiantes universitarios activos.
-                </div>
-              </div>
-            </div>
+            <p className="mt-4 max-w-[46ch] font-body text-[15px] leading-[1.65] text-text-muted">
+              Conoce las tarifas y los beneficios de cada tipo de
+              membres&iacute;a disponible para 2026.
+            </p>
+            <a
+              href="#opciones-membresia"
+              className="mt-6 inline-flex items-center gap-2 font-heading text-sm font-bold text-primary underline decoration-sky decoration-2 underline-offset-4 transition-colors hover:text-primary-700"
+            >
+              Ver opciones de membres&iacute;a <span aria-hidden="true">&darr;</span>
+            </a>
 
-            <div className="mt-10">
+            <div className="mt-12">
               <p className="eyebrow mb-3.5">M&eacute;todos de pago</p>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 {PAYMENTS.map((p) => (
