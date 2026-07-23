@@ -6,13 +6,13 @@ import Membresia from "@/components/membresia"
 import MembershipPlan from "@/components/membership-plan"
 
 export const metadata: Metadata = {
-  title: "Membresía",
+  title: "Membres\u00EDa",
   description:
-    "Únete a la ADPUPR. Accede a beneficios exclusivos, eventos, formación y una red de profesionales comprometidos con el servicio público en Puerto Rico.",
+    "Conoce las tarifas, completa el formulario y selecciona tu m\u00E9todo de pago para solicitar membres\u00EDa en la ADPUPR.",
   openGraph: {
-    title: "Membresía | ADPUPR",
+    title: "Membres\u00EDa | ADPUPR",
     description:
-      "Únete a la ADPUPR. Beneficios, tarifas y métodos de pago para integrantes regulares y estudiantes.",
+      "Tarifas, formulario y m\u00E9todos de pago para integrantes regulares y estudiantes de la ADPUPR.",
     url: "/membresia",
   },
 }

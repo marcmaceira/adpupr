@@ -1,65 +1,8 @@
-import { Check } from "lucide-react"
-
-interface MembershipOption {
-  readonly name: string
-  readonly price: string
-  readonly description: string
-  readonly benefits: readonly string[]
-}
-
 interface SponsorshipLevel {
   readonly name: string
   readonly price: string
   readonly benefits: readonly string[]
 }
-
-const MEMBERSHIP_OPTIONS: readonly MembershipOption[] = [
-  {
-    name: "Estudiante activo",
-    price: "$25",
-    description: "Para estudiantes que desean comenzar a vincularse con el servicio p\u00FAblico.",
-    benefits: [
-      "Acceso a contenido educativo parcial, como el bolet\u00EDn informativo y webinars",
-      "20% de descuento en el registro al congreso",
-      "Voz y voto en asambleas",
-      "Certificado de membres\u00EDa",
-    ],
-  },
-  {
-    name: "Socio regular",
-    price: "$50",
-    description: "La membres\u00EDa base para profesionales, acad\u00E9micos y servidores p\u00FAblicos.",
-    benefits: [
-      "Voz y voto en asambleas",
-      "Nominar y ser nominado a la Junta Directiva",
-      "15% de descuento en el registro al congreso",
-      "Acceso completo a contenido educativo",
-      "Certificado de membres\u00EDa",
-    ],
-  },
-  {
-    name: "Senior",
-    price: "$75",
-    description: "Para quienes buscan una participaci\u00F3n ampliada en las actividades de la Asociaci\u00F3n.",
-    benefits: [
-      "Todos los beneficios de la membres\u00EDa regular",
-      "Acceso anticipado a talleres exclusivos",
-      "Menci\u00F3n en materiales del congreso",
-      "Dos boletos con descuento para invitar colegas",
-    ],
-  },
-  {
-    name: "Institucional",
-    price: "$350",
-    description: "Para entidades p\u00FAblicas, organizaciones sin fines de lucro y empresas privadas.",
-    benefits: [
-      "Hasta tres integrantes de la instituci\u00F3n con beneficios de socio regular",
-      "Logo en la p\u00E1gina web y los materiales del congreso",
-      "Espacio para distribuir material informativo",
-      "Voz, pero no voto",
-    ],
-  },
-] as const
 
 const SPONSORSHIP_LEVELS: readonly SponsorshipLevel[] = [
   {
@@ -105,50 +48,6 @@ const SPONSORSHIP_LEVELS: readonly SponsorshipLevel[] = [
     ],
   },
 ] as const
-
-function BenefitList({ benefits }: { readonly benefits: readonly string[] }) {
-  return (
-    <ul className="mt-6 space-y-3">
-      {benefits.map((benefit) => (
-        <li
-          key={benefit}
-          className="grid grid-cols-[20px_1fr] gap-2.5 font-body text-sm leading-[1.55] text-text-muted"
-        >
-          <span
-            className="mt-0.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-sky-50 text-primary"
-            aria-hidden="true"
-          >
-            <Check size={12} strokeWidth={3} />
-          </span>
-          <span>{benefit}</span>
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function MembershipCard({ option }: { readonly option: MembershipOption }) {
-  return (
-    <article
-      className="relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-surface p-7 text-text sm:p-8"
-      style={{ boxShadow: "var(--shadow-card)" }}
-    >
-      <p className="font-heading text-xs font-bold uppercase tracking-[0.12em] text-primary-300">
-        {option.name}
-      </p>
-      <p className="mt-3 font-heading text-[44px] font-black leading-none tracking-[-0.035em] text-primary">
-        {option.price}
-        <span className="ml-1.5 text-sm font-semibold tracking-normal text-text-faint">
-          /a&ntilde;o
-        </span>
-      </p>
-      <p className="mt-4 min-h-[3.25rem] font-body text-sm leading-[1.55] text-text-muted">
-        {option.description}
-      </p>
-      <BenefitList benefits={option.benefits} />
-    </article>
-  )
-}
 
 export default function MembershipPlan() {
   return (
@@ -198,25 +97,7 @@ export default function MembershipPlan() {
           </div>
         </div>
 
-        <div id="opciones-membresia" className="scroll-mt-24 pt-16 lg:pt-20">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-5">
-            <div>
-              <p className="eyebrow mb-3.5">Plan de membres&iacute;as y patrocinios</p>
-              <h2 className="h-section text-text">Opciones de membres&iacute;a.</h2>
-            </div>
-            <p className="font-heading text-sm font-bold uppercase tracking-[0.12em] text-primary-300">
-              Tarifas 2026
-            </p>
-          </div>
-
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {MEMBERSHIP_OPTIONS.map((option) => (
-              <MembershipCard key={option.name} option={option} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-20 overflow-hidden rounded-lg bg-primary px-6 py-10 sm:px-10 lg:px-12 lg:py-12">
+        <div className="mt-16 overflow-hidden rounded-lg bg-primary px-6 py-10 sm:px-10 lg:mt-20 lg:px-12 lg:py-12">
           <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:gap-14">
             <div>
               <p className="eyebrow eyebrow-on-dark mb-3.5">Apoya nuestra misi&oacute;n</p>
