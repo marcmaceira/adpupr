@@ -280,7 +280,7 @@ export default function Footer() {
 
         <div
           className="mt-8 flex flex-col items-start justify-between gap-2 font-body text-[12.5px] sm:flex-row sm:items-center"
-          style={{ color: "#6b7592" }}
+          style={{ color: "var(--color-text-on-dark-muted)" }}
         >
           <span>
             &copy; {new Date().getFullYear()} ADPUPR &middot; Todos los derechos
