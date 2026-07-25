@@ -33,6 +33,7 @@ const COLUMNS: readonly FooterColumn[] = [
     heading: "Comunidad",
     links: [
       { label: "Hacerme miembro", href: "/membresia" },
+      { label: "Cont\u00E1ctanos", href: "/contactanos" },
       { label: "info@adpupr.com", href: "mailto:info@adpupr.com" },
       {
         label: "asociacion.adpupr@gmail.com",

@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { label: "Membres\u00EDa", href: "/membresia" },
   { label: "Comunicaciones", href: "/comunicaciones" },
   { label: "Conferencia 2026", href: "/conferencia" },
+  { label: "Cont\u00E1ctanos", href: "/contactanos" },
 ] as const
 
 const NOSOTROS_LINKS = [
