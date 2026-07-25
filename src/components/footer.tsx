@@ -9,7 +9,7 @@ const COLUMNS: readonly FooterColumn[] = [
   {
     heading: "Asociación",
     links: [
-      { label: "Nosotros", href: "/nosotros" },
+      { label: "Nosotros", href: "/nosotros/quienes-somos" },
       { label: "Misión y Visión", href: "/nosotros/quienes-somos" },
       {
         label: "Junta de Directores",

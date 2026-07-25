@@ -5,15 +5,14 @@ interface Stat {
 }
 
 const STATS: readonly Stat[] = [
-  { num: "3", suffix: "años", label: "Trayectoria institucional" },
-  { num: "100", suffix: "+", label: "Miembros activos" },
-  { num: "4", label: "Comités de trabajo" },
+  { num: "50", suffix: "+", label: "Miembros activos" },
+  { num: "3", label: "Comités de trabajo" },
 ] as const
 
 export default function Stats() {
   return (
     <section className="border-y border-border bg-sky-50 px-6 py-16">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-8 md:grid-cols-3 md:gap-6">
+      <div className="mx-auto grid max-w-[760px] grid-cols-2 gap-8 md:gap-16">
         {STATS.map((stat) => (
           <div key={stat.label}>
             <div

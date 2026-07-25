@@ -55,7 +55,7 @@ export default function Hero() {
             Hacerme miembro <span aria-hidden="true">&rarr;</span>
           </Link>
           <Link
-            href="/nosotros"
+            href="/nosotros/quienes-somos"
             className="inline-flex items-center justify-center rounded-sm border border-white/70 px-6 py-3.5 font-heading text-[15px] font-semibold text-white transition-colors hover:bg-white hover:text-primary"
           >
             Conocer la Asociaci&oacute;n

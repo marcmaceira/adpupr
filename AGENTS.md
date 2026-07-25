@@ -43,14 +43,14 @@ Always use theme tokens (`bg-bg`, `border-primary/10`) instead of hardcoded valu
 Single-page site composed of section components rendered in order:
 
 ```
-Header → Hero → About → Objectives → Committees → ConferenceCta → Newsletters → Footer
+Header → Hero → Stats → About → ConferenceCta → LatestVideo → EngagementCtas → CtaBand → Footer
 ```
 
 All components are **server components** except `header.tsx` (mobile navigation state) and `board-members.tsx` (interactive biography overlays).
 
 ### Components (`src/components/`)
 
-Each section is a self-contained file with its own data constants, sub-components, and TypeScript interfaces. Section IDs for anchor navigation: `#nosotros`, `#objetivos`, `#comites`, `#conferencia`, `#boletines`.
+Each section is a self-contained file with its own data constants, sub-components, and TypeScript interfaces. Homepage section IDs for anchor navigation: `#inicio`, `#nosotros`, `#conferencia`.
 
 ### Key Patterns
 
