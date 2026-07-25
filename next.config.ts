@@ -1,11 +1,12 @@
 import type { NextConfig } from "next";
+import { BLOB_STORAGE_URL } from "./src/lib/constants";
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "2yohsk2xwqevfocw.public.blob.vercel-storage.com",
+        hostname: new URL(BLOB_STORAGE_URL).hostname,
         port: "",
         pathname: "/*.png",
         search: "",

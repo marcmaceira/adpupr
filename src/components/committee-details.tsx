@@ -1,8 +1,10 @@
-import { UserRound } from "lucide-react"
+import Image from "next/image"
+import { BLOB_STORAGE_URL } from "@/lib/constants"
 
 interface Coordinator {
   readonly name?: string
   readonly bio: string
+  readonly image: string
 }
 
 interface AdministrationMember {
@@ -66,6 +68,7 @@ const COMMITTEES: readonly Committee[] = [
     },
     coordinator: {
       name: "Deliz Rodríguez-Carrasquillo, Ph.D. ",
+      image: `${BLOB_STORAGE_URL}/deliz-9c750515-e457-4653-bfbe-fc8fbc112d2c.png`,
       bio: "Catedr\u00E1tica Auxiliar en la Escuela Graduada de Administraci\u00F3n P\u00FAblica de la Universidad de Puerto Rico, Recinto de R\u00EDo Piedras. Posee un doctorado en Psicolog\u00EDa Industrial Organizacional de la UPR-RP, con formaci\u00F3n en el an\u00E1lisis de factores psicosociales que influyen en la experiencia laboral y en el dise\u00F1o de entornos de trabajo m\u00E1s justos. Su trayectoria integra la docencia, la investigaci\u00F3n y la consultor\u00EDa, con proyectos de clasificaci\u00F3n, retribuci\u00F3n y recursos humanos en el sector p\u00FAblico. Ha publicado art\u00EDculos en revistas arbitradas sobre equidad de g\u00E9nero, reclutamiento y selecci\u00F3n de personas empleadas, y se desempe\u00F1a como editora de la Revista de Administraci\u00F3n P\u00FAblica. Su agenda acad\u00E9mica se centra en la intersecci\u00F3n entre pol\u00EDticas p\u00FAblicas y gesti\u00F3n del talento humano, con \u00E9nfasis en equidad, diversidad, empleo y estrategias de reclutamiento y selecci\u00F3n. Adem\u00E1s, brinda consultor\u00EDa al sector p\u00FAblico en temas vinculados a los recursos humanos.",
     },
   },
@@ -82,6 +85,7 @@ const COMMITTEES: readonly Committee[] = [
     ],
     coordinator: {
       name: "Javier Cuevas Landr\u00F3n",
+      image: `${BLOB_STORAGE_URL}/javier-c4fcd99b-48d2-4471-9d88-d97bd93a59c7.png`,
       bio: "Servidor p\u00FAblico con varios a\u00F1os de experiencia en las ramas legislativa y ejecutiva del Gobierno de Puerto Rico. Con preparaci\u00F3n en ciencias pol\u00EDticas y administraci\u00F3n p\u00FAblica, ha integrado m\u00FAltiples organizaciones p\u00FAblicas y pol\u00EDticas a nivel estatal y federal. Comenz\u00F3 su carrera en el Senado de Puerto Rico, donde trabaj\u00F3 en la Oficina del Portavoz de la Mayor\u00EDa, el Comit\u00E9 de Reglas y Calendarios y una de las Portavoc\u00EDas Alternas de la Minor\u00EDa. Posee experiencia detallada en el proceso legislativo, los procedimientos parlamentarios y las relaciones intergubernamentales. Actualmente es ayudante especial del Secretario de Salud de Puerto Rico y coordinador del Comit\u00E9 de Asuntos Legislativos de ADPUPR.",
     },
   },
@@ -98,6 +102,7 @@ const COMMITTEES: readonly Committee[] = [
     ],
     coordinator: {
       name: "Dr. Urayo\u00E1n Jord\u00E1n Salivia",
+      image: `${BLOB_STORAGE_URL}/urayoan-305ea19e-e0e2-4e31-a8dc-6567867b49cd.png`,
       bio: "Profesor de la Escuela Graduada de Administraci\u00F3n P\u00FAblica (EGAP) de la Universidad de Puerto Rico, Recinto de R\u00EDo Piedras. Posee un Doctorado en Administraci\u00F3n P\u00FAblica de la Universidad de Baltimore y una Maestr\u00EDa en Administraci\u00F3n P\u00FAblica de la UPR R\u00EDo Piedras. Fue el Presidente fundador de ADPUPR. Cuenta con una amplia trayectoria como acad\u00E9mico, administrador p\u00FAblico y asesor parlamentario profesional. Su experiencia integra la docencia, el procedimiento parlamentario, la gobernanza organizacional y el fortalecimiento de entidades p\u00FAblicas, profesionales y comunitarias. Como coordinador del Comit\u00E9 de Educación y Tecnología de ADPUPR, impulsa iniciativas formativas orientadas al desarrollo de competencias pr\u00E1cticas para la gesti\u00F3n p\u00FAblica, la deliberaci\u00F3n democr\u00E1tica y la toma de decisiones institucionales. Su aportaci\u00F3n fortalece la misi\u00F3n educativa de ADPUPR y su compromiso con una administraci\u00F3n p\u00FAblica \u00E9tica, efectiva e innovadora.",
     },
   },
@@ -107,11 +112,14 @@ function CoordinatorProfile({ coordinator }: { readonly coordinator: Coordinator
   return (
     <aside className="rounded-lg bg-primary p-6 text-white md:p-8">
       <div className="flex items-center gap-5 border-b border-sky/25 pb-6">
-        <div
-          className="flex h-24 w-20 shrink-0 items-center justify-center rounded-md border border-sky/35 bg-primary-700 text-sky"
-          aria-label="Espacio reservado para la foto de la persona coordinadora"
-        >
-          <UserRound className="h-9 w-9" strokeWidth={1.4} aria-hidden="true" />
+        <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-md border border-sky/35 bg-primary-700">
+          <Image
+            src={coordinator.image}
+            alt={`Retrato de ${coordinator.name ?? "la persona coordinadora"}`}
+            fill
+            sizes="80px"
+            className="object-cover object-top"
+          />
         </div>
         <div>
           <p className="font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-sky">
@@ -120,9 +128,6 @@ function CoordinatorProfile({ coordinator }: { readonly coordinator: Coordinator
           <h4 className="mt-2 font-heading text-xl font-extrabold leading-tight text-white">
             {coordinator.name ?? "Coordinadora del Comit\u00E9"}
           </h4>
-          <p className="mt-2 font-body text-xs text-text-on-dark-muted">
-            Foto pr&oacute;ximamente
-          </p>
         </div>
       </div>
       <p className="mt-6 font-body text-sm leading-[1.75] text-text-on-dark-muted">

@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { DirectorCard, type Director } from "@/components/directors"
 import Footer from "@/components/footer"
 import Header from "@/components/header"
+import { BLOB_STORAGE_URL } from "@/lib/constants"
 
 const ACHIEVEMENTS = [
   "Constituy\u00F3 y organiz\u00F3 la ADPUPR, estableciendo su estructura de gobernanza, reglamentaci\u00F3n y procesos institucionales.",
@@ -15,44 +16,37 @@ const FOUNDING_BOARD: readonly Director[] = [
   {
     name: "Urayo\u00E1n Jord\u00E1n Salivia",
     role: "Presidente",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/urayoan-305ea19e-e0e2-4e31-a8dc-6567867b49cd.png",
+    image: `${BLOB_STORAGE_URL}/urayoan-305ea19e-e0e2-4e31-a8dc-6567867b49cd.png`,
   },
   {
     name: "Liz. J. Ortiz Laureano",
     role: "Vicepresidenta",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/liz-68f1ad00-d563-4d6a-b9f6-58e974a11a24.png",
+    image: `${BLOB_STORAGE_URL}/liz-68f1ad00-d563-4d6a-b9f6-58e974a11a24.png`,
   },
   {
     name: "D\u00E9borah R. Rom\u00E1n Cort\u00E9s",
     role: "Secretaria",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/debora-60cc4ded-688e-466f-8d5c-2e78b022aa38.png",
+    image: `${BLOB_STORAGE_URL}/debora-60cc4ded-688e-466f-8d5c-2e78b022aa38.png`,
   },
   {
     name: "Jonnathan Garc\u00EDa Rosado",
     role: "Director de Tesorer\u00EDa",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/jonnathan-6aca08c9-7520-41d2-800c-fa3e435093c0.png",
+    image: `${BLOB_STORAGE_URL}/jonnathan-6aca08c9-7520-41d2-800c-fa3e435093c0.png`,
   },
   {
     name: "Rosalie Ayala Col\u00F3n",
     role: "Directora de Relaciones P\u00FAblicas",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/rosalie-6bc1df39-30e0-4c76-bd31-ab4570bad221.png",
+    image: `${BLOB_STORAGE_URL}/rosalie-6bc1df39-30e0-4c76-bd31-ab4570bad221.png`,
   },
   {
     name: "Alexis G\u00F3mez Rivera",
     role: "Vocal",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/alexis-f9f50ad9-3b17-4fe9-b85c-4cb1cd7111ab.png",
+    image: `${BLOB_STORAGE_URL}/alexis-f9f50ad9-3b17-4fe9-b85c-4cb1cd7111ab.png`,
   },
   {
     name: "Jonuel Negr\u00F3n",
     role: "Vocal",
-    image:
-      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/jonuel-negron-12649ace-f27c-4fab-af6a-a5cc253c78fd.png",
+    image: `${BLOB_STORAGE_URL}/jonuel-negron-12649ace-f27c-4fab-af6a-a5cc253c78fd.png`,
   },
 ] as const
 
