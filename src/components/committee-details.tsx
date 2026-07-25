@@ -5,6 +5,17 @@ interface Coordinator {
   readonly bio: string
 }
 
+interface AdministrationMember {
+  readonly name: string
+  readonly role: string
+}
+
+interface Administration {
+  readonly summary: string
+  readonly members: readonly AdministrationMember[]
+  readonly responsibilities: readonly string[]
+}
+
 interface Committee {
   readonly id: string
   readonly name: string
@@ -12,7 +23,7 @@ interface Committee {
   readonly focus?: string
   readonly functionsLabel: string
   readonly functions: readonly string[]
-  readonly administration?: readonly string[]
+  readonly administration?: Administration
   readonly coordinator: Coordinator
 }
 
@@ -30,11 +41,29 @@ const COMMITTEES: readonly Committee[] = [
       "Dise\u00F1ar y coordinar c\u00E1psulas educativas para su difusi\u00F3n en redes sociales, en coordinaci\u00F3n con la Junta ADPU-PR y otros comit\u00E9s.",
       "Proponer lineamientos editoriales y de estilo para las publicaciones institucionales, como el bolet\u00EDn, las c\u00E1psulas y los comunicados.",
     ],
-    administration: [
-      "El Comit\u00E9 estar\u00E1 compuesto por un m\u00EDnimo de tres y un m\u00E1ximo de siete miembros. Contar\u00E1 con un subcomit\u00E9 operativo, el Consejo Administrativo, integrado por un editor o editora y dos miembros adicionales del Comit\u00E9.",
-      "El Consejo Administrativo planificar\u00E1 cada n\u00FAmero del bolet\u00EDn dentro de los temas y lineamientos aprobados. Esto incluye seleccionar el tema, las noticias recientes, la entrevista y los art\u00EDculos de opini\u00F3n. Tambi\u00E9n ser\u00E1 responsable del montaje y la edici\u00F3n del bolet\u00EDn informativo.",
-      "Se considerar\u00E1n las recomendaciones, ideas y estrategias de los miembros del Comit\u00E9. El Consejo Administrativo tomar\u00E1 las decisiones de acuerdo con la misi\u00F3n y los valores de ADPU-PR.",
-    ],
+    administration: {
+      summary:
+        "La Junta Editora lidera la planificaci\u00F3n, coordinaci\u00F3n y producci\u00F3n del Bolet\u00EDn Informativo de la ADPUPR, velando por la calidad editorial, la pertinencia de los contenidos y la difusi\u00F3n de informaci\u00F3n de inter\u00E9s para la comunidad profesional de la administraci\u00F3n p\u00FAblica.",
+      members: [
+        {
+          name: "Dra. Deliz Rodr\u00EDguez Carrasquillo",
+          role: "Coordinadora del Comit\u00E9",
+        },
+        {
+          name: "Jonnathan Garc\u00EDa Rosado",
+          role: "Presidente de la ADPUPR y Miembro del Comit\u00E9",
+        },
+        {
+          name: "Victoria Ram\u00EDrez",
+          role: "Directora de Relaciones P\u00FAblicas de la ADPUPR y Miembro del Comit\u00E9",
+        },
+      ],
+      responsibilities: [
+        "Planificar cada n\u00FAmero del bolet\u00EDn, en el marco de los temas y lineamientos aprobados por el Comit\u00E9 de Publicaciones Institucionales. Esto incluye la selecci\u00F3n del tema, cantidad de noticias recientes, entrevista y los art\u00EDculos de opini\u00F3n.",
+        "Adem\u00E1s, la Junta Editora ser\u00E1 responsable del montaje y edici\u00F3n del bolet\u00EDn informativo.",
+        "Se considerar\u00E1n todas las recomendaciones, ideas y estrategias de los miembros del Comit\u00E9 y la Junta Editora tomar\u00E1 la decisi\u00F3n de acuerdo con la misi\u00F3n y valores de ADPUPR.",
+      ],
+    },
     coordinator: {
       name: "Deliz Rodríguez-Carrasquillo, Ph.D. ",
       bio: "Catedr\u00E1tica Auxiliar en la Escuela Graduada de Administraci\u00F3n P\u00FAblica de la Universidad de Puerto Rico, Recinto de R\u00EDo Piedras. Posee un doctorado en Psicolog\u00EDa Industrial Organizacional de la UPR-RP, con formaci\u00F3n en el an\u00E1lisis de factores psicosociales que influyen en la experiencia laboral y en el dise\u00F1o de entornos de trabajo m\u00E1s justos. Su trayectoria integra la docencia, la investigaci\u00F3n y la consultor\u00EDa, con proyectos de clasificaci\u00F3n, retribuci\u00F3n y recursos humanos en el sector p\u00FAblico. Ha publicado art\u00EDculos en revistas arbitradas sobre equidad de g\u00E9nero, reclutamiento y selecci\u00F3n de personas empleadas, y se desempe\u00F1a como editora de la Revista de Administraci\u00F3n P\u00FAblica. Su agenda acad\u00E9mica se centra en la intersecci\u00F3n entre pol\u00EDticas p\u00FAblicas y gesti\u00F3n del talento humano, con \u00E9nfasis en equidad, diversidad, empleo y estrategias de reclutamiento y selecci\u00F3n. Adem\u00E1s, brinda consultor\u00EDa al sector p\u00FAblico en temas vinculados a los recursos humanos.",
@@ -142,14 +171,42 @@ function CommitteeArticle({ committee, index }: { readonly committee: Committee;
           {committee.administration ? (
             <div className="mt-10 rounded-lg border border-border bg-surface-2 p-6 md:p-8">
               <h4 className="font-heading text-xl font-extrabold text-text">
-                Consejo Administrativo
+                Junta Editora
               </h4>
-              <div className="mt-4 space-y-4">
-                {committee.administration.map((paragraph) => (
-                  <p key={paragraph} className="font-body text-[15px] leading-[1.75] text-text-muted">
-                    {paragraph}
-                  </p>
-                ))}
+              <p className="mt-4 font-body text-base leading-[1.75] text-text-muted">
+                {committee.administration.summary}
+              </p>
+
+              <div className="mt-8">
+                <h5 className="eyebrow">Integrantes</h5>
+                <ul className="mt-4 divide-y divide-border border-t border-border">
+                  {committee.administration.members.map((member) => (
+                    <li key={member.name} className="py-4">
+                      <p className="font-heading text-base font-extrabold leading-snug text-primary">
+                        {member.name}
+                      </p>
+                      <p className="mt-1 font-body text-sm leading-relaxed text-text-muted">
+                        {member.role}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-9 border-t border-border-strong pt-8">
+                <h5 className="eyebrow">Responsabilidades</h5>
+                <ol className="mt-5 space-y-5">
+                  {committee.administration.responsibilities.map((responsibility, index) => (
+                    <li key={responsibility} className="grid grid-cols-[32px_1fr] gap-4">
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-heading text-[11px] font-black text-white">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <p className="font-body text-[15px] leading-[1.75] text-text-muted">
+                        {responsibility}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
               </div>
             </div>
           ) : null}
