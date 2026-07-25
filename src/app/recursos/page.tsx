@@ -29,14 +29,6 @@ export default function RecursosPage() {
       <Header />
       <main id="main-content">
         <section className="relative overflow-hidden bg-primary px-6 py-20 text-white md:py-28">
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[38%] border-l border-white/10 lg:block" aria-hidden="true">
-            <div className="absolute inset-0 grid grid-cols-3">
-              <span className="border-r border-white/10" />
-              <span className="border-r border-white/10" />
-              <span />
-            </div>
-            <span className="absolute bottom-12 right-12 font-heading text-[180px] font-black leading-none text-white/[0.035]">R</span>
-          </div>
 
           <div className="relative mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
             <div>
