@@ -34,11 +34,6 @@ const COLUMNS: readonly FooterColumn[] = [
     links: [
       { label: "Hacerme miembro", href: "/membresia" },
       { label: "Cont\u00E1ctanos", href: "/contactanos" },
-      { label: "info@adpupr.com", href: "mailto:info@adpupr.com" },
-      {
-        label: "asociacion.adpupr@gmail.com",
-        href: "mailto:asociacion.adpupr@gmail.com",
-      },
     ],
   },
 ] as const
@@ -231,7 +226,7 @@ export default function Footer() {
               </a>
             </div>
           </div>
-          <div>
+          {/* <div>
             <div
               className="mb-2.5 font-heading text-[11px] font-bold uppercase"
               style={{
@@ -276,7 +271,7 @@ export default function Footer() {
                 Unirme
               </button>
             </form>
-          </div>
+          </div> */}
         </div>
 
         <div
