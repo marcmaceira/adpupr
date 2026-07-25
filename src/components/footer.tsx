@@ -24,8 +24,8 @@ const COLUMNS: readonly FooterColumn[] = [
   {
     heading: "Recursos",
     links: [
-      { label: "Boletines", href: "/comunicaciones" },
-      { label: "Comunicaciones", href: "/comunicaciones" },
+      { label: "Publicaciones", href: "/recursos#publicaciones" },
+      { label: "Biblioteca", href: "/recursos#biblioteca" },
       { label: "Membresía", href: "/membresia" },
     ],
   },

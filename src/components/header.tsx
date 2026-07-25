@@ -8,7 +8,7 @@ import { ChevronDown, Menu, X } from "lucide-react"
 const NAV_LINKS = [
   { label: "Inicio", href: "/" },
   { label: "Membres\u00EDa", href: "/membresia" },
-  { label: "Comunicaciones", href: "/comunicaciones" },
+  { label: "Recursos", href: "/recursos" },
   { label: "Conferencia 2026", href: "/conferencia" },
   { label: "Cont\u00E1ctanos", href: "/contactanos" },
 ] as const

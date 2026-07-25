@@ -43,7 +43,7 @@ export default function Newsletters() {
             <h2 className="h-section text-text">Lo m&aacute;s reciente.</h2>
           </div>
           <Link
-            href="/comunicaciones"
+            href="/recursos#publicaciones"
             className="inline-flex items-center gap-2 rounded-sm border border-primary px-5 py-3 font-heading text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
           >
             Ver todos <span aria-hidden="true">&rarr;</span>

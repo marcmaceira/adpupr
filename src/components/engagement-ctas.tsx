@@ -8,7 +8,7 @@ const ACTIONS = [
     description:
       "Somete tu art\u00EDculo de opini\u00F3n y aporta nuevas perspectivas a la conversaci\u00F3n sobre administraci\u00F3n p\u00FAblica.",
     label: "Someter un art\u00EDculo",
-    href: "/comunicaciones",
+    href: "/recursos#convocatoria-boletin",
     icon: FilePenLine,
   },
   {
