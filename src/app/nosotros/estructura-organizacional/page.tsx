@@ -8,6 +8,7 @@ interface BoardMember {
   readonly name: string
   readonly role: string
   readonly bio: string
+  readonly image: string
 }
 
 const BOARD_MEMBERS: readonly BoardMember[] = [
@@ -15,36 +16,50 @@ const BOARD_MEMBERS: readonly BoardMember[] = [
     role: "Presidente",
     name: "Jonnathan Garc\u00EDa Rosado, MPA",
     bio: "Servidor p\u00FAblico en el Departamento de Educaci\u00F3n. Egresado de la Escuela Graduada de Administraci\u00F3n P\u00FAblica \"Roberto S\u00E1nchez Vilella\" (UPR). Cursa estudios doctorales con investigaci\u00F3n sobre pobreza energ\u00E9tica e inversi\u00F3n extranjera.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/jonnathan-garcia-c62e3a40-d4b6-47cd-982c-abc816eb1059.png",
   },
   {
     role: "Vicepresidente",
     name: "Luis A. Matos Gonz\u00E1lez, Ph.D.",
     bio: "Catedr\u00E1tico Auxiliar en Ciencias Sociales (UPR Cayey). Doctorado en Gobierno y Pol\u00EDticas P\u00FAblicas (Universidad de Costa Rica). Especializaci\u00F3n en pol\u00EDticas p\u00FAblicas, gobernanza, innovaci\u00F3n y transparencia gubernamental.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/luis-matos-2b67915d-b6cc-4b95-ad2e-b5c465a42ea9.png",
   },
   {
     role: "Secretaria Ejecutiva",
     name: "Mariluz Serrano-Ortiz, Ed.D.",
     bio: "Educadora, investigadora y conferenciante internacional. Catedr\u00E1tica Auxiliar en la Facultad de Administraci\u00F3n de Empresas de la UPR. Creadora del modelo TIHA (Tecnolog\u00EDas para la Inspiraci\u00F3n y la Humanizaci\u00F3n del Aprendizaje).",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/mariluz-serrano-82cca165-f382-4b59-9021-6722ec453d73.png",
   },
   {
     role: "Director de Tesorer\u00EDa",
     name: "Juan David Alicea Otero",
     bio: "Bachillerato en Ciencias Sociales con concentraci\u00F3n en Relaciones Laborales y Ciencia Pol\u00EDtica. Cursa Maestr\u00EDa en Administraci\u00F3n P\u00FAblica (UPR R\u00EDo Piedras) con especialidad en Gobierno y Pol\u00EDtica P\u00FAblica.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/juan-david-d39b7bbc-dda3-4527-8f5d-d6400cd0e663.png",
   },
   {
     role: "Directora de Relaciones P\u00FAblicas",
     name: "Victoria Ram\u00EDrez Lamprea, MPA",
-    bio: "Estudiante de Juris Doctor en la Escuela de Derecho (UPR) y Presidenta de la Clase 2029. Egresada de la Escuela Graduada de Administraci\u00F3n P\u00FAblica \"Roberto S\u00E1nchez Vilella\" (UPR). Formaci\u00F3n en Administraci\u00F3n P\u00FAblica y Estudios Internacionales con visi\u00F3n innovadora y global.",
+    bio: "Estudiante de Juris Doctor en la Escuela de Derecho (UPR) y Presidenta de la Clase 2029. Egresada de la Escuela Graduada de Administraci\u00F3n P\u00FAblica \"Roberto S\u00E1nchez Vilella\" (UPR). Formaci\u00F3n y experiencia en Administraci\u00F3n P\u00FAblica y Estudios Internacionales con visi\u00F3n innovadora y global.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/victoria-ramirez-cee9d93e-160d-46ad-b8e0-baf225f2b9e8.png",
   },
   {
     role: "Vocal de la Junta de Directores",
     name: "Janiel de Jes\u00FAs Santiago",
     bio: "Cursa estudios en la Escuela Graduada de Administraci\u00F3n P\u00FAblica (UPR). Bachillerato en Ciencias Pol\u00EDticas con concentraci\u00F3n menor en Derechos Humanos. Enfoque en temas de gobernanza.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/janiel-de-jesus-7e19a5ae-dd35-43fa-b117-21e6e25e3662.png",
   },
   {
     role: "Vocal de la Junta de Directores",
     name: "Ana Teresa Rodr\u00EDguez Lebr\u00F3n, PhD",
     bio: "Especialista en educaci\u00F3n superior, gobernanza y \u00E9tica de las tecnolog\u00EDas emergentes, con formaci\u00F3n doctoral en literatura, Juris Doctor y Maestr\u00EDa en Administraci\u00F3n P\u00FAblica. Se desempe\u00F1a como investigadora y conferencista en inteligencia artificial, gobernanza de internet y \u00E9tica aplicada.",
+    image:
+      "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/ana-rodriguez-edd82bd9-04dc-4206-9af9-04d2a53708d3.png",
   },
 ] as const
 

@@ -287,6 +287,10 @@
   background: var(--color-primary);
   aspect-ratio: 3 / 4;
   isolation: isolate;
+  cursor: default;
+}
+
+.dir-card-has-bio {
   cursor: pointer;
 }
 

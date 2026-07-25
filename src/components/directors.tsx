@@ -1,10 +1,12 @@
 import Link from "next/link"
+import Image from "next/image"
 import { DirectorAvatar } from "./geo-placeholder"
 
-interface Director {
+export interface Director {
   readonly name: string
   readonly role: string
   readonly bio?: string
+  readonly image?: string
 }
 
 const CURRENT_BOARD: readonly Director[] = [
@@ -57,11 +59,24 @@ interface DirectorCardProps {
   readonly seed: number
 }
 
-function DirectorCard({ director, seed }: DirectorCardProps) {
+export function DirectorCard({ director, seed }: DirectorCardProps) {
   return (
-    <div className="dir-card" tabIndex={0}>
+    <div
+      className={`dir-card ${director.bio ? "dir-card-has-bio" : ""}`}
+      tabIndex={director.bio ? 0 : undefined}
+    >
       <div className="dir-photo">
-        <DirectorAvatar seed={seed} />
+        {director.image ? (
+          <Image
+            src={director.image}
+            alt={`Retrato de ${director.name}`}
+            fill
+            sizes="(min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw"
+            className="object-cover object-top"
+          />
+        ) : (
+          <DirectorAvatar seed={seed} />
+        )}
       </div>
       <div className="dir-overlay">
         <p

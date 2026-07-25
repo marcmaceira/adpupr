@@ -1,12 +1,14 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Image from "next/image"
 import { DirectorAvatar } from "./geo-placeholder"
 
 interface BoardMember {
   readonly name: string
   readonly role: string
   readonly bio: string
+  readonly image: string
 }
 
 interface BoardMembersProps {
@@ -91,13 +93,17 @@ export default function BoardMembers({ members }: BoardMembersProps) {
                 role="img"
               >
                 <DirectorAvatar seed={index} />
-                <span className="absolute bottom-3 left-3 rounded-sm bg-primary-900/85 px-2.5 py-1 font-heading text-[9px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-sm">
-                  Fotograf&iacute;a
-                </span>
+                <Image
+                  src={member.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 112px"
+                  className="z-[1] object-cover object-top"
+                />
               </div>
             </div>
 
-            <div className="relative z-[1] flex flex-col p-5 sm:absolute sm:inset-x-0 sm:bottom-0 sm:bg-gradient-to-t sm:from-primary-900 sm:via-primary-900/90 sm:to-transparent sm:px-6 sm:pb-6 sm:pt-20">
+            <div className="relative z-[2] flex flex-col p-5 sm:absolute sm:inset-x-0 sm:bottom-0 sm:bg-gradient-to-t sm:from-primary-900 sm:via-primary-900/90 sm:to-transparent sm:px-6 sm:pb-6 sm:pt-20">
               <p className="line-clamp-2 font-heading text-[10px] font-bold uppercase tracking-[0.12em] text-primary-300 sm:text-sky">
                 {member.role}
               </p>
