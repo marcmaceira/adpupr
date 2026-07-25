@@ -5,6 +5,7 @@ import {
   Check,
   Clock3,
   MapPin,
+  Smartphone,
   Users,
 } from "lucide-react"
 import Header from "@/components/header"
@@ -12,6 +13,9 @@ import Footer from "@/components/footer"
 
 const REGISTRATION_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSd3Nc0d9srM9AgoSQal0RWS__ARj53TacAYnNQ24VxXYYAbHA/viewform"
+
+const ATH_MOVIL_URL =
+  "https://pagos.athmovilapp.com/qrCodePayment.html?133d0fe53fe0aee5f76f045eeebc2197e51d7aec08444832522d3dda729305c0"
 
 const THEMES = [
   {
@@ -60,7 +64,7 @@ const PRICES = [
     price: "$75",
     note: "Para miembros estudiantes activos de ADPUPR.",
     href: "https://www.paypal.com/ncp/payment/FAW7NTNWFWQXL",
-    featured: false,
+    featured: true,
   },
 ] as const
 
@@ -283,6 +287,41 @@ export default function ConferenciaPage() {
                   </a>
                 </article>
               ))}
+            </div>
+
+            <div className="mt-8 overflow-hidden rounded-lg bg-primary text-white shadow-[var(--shadow-card)]">
+              <div className="grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+                <div className="flex gap-5 p-7 sm:p-8">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-50 text-primary">
+                    <Smartphone
+                      className="h-6 w-6"
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                    />
+                  </span>
+                  <div>
+                    <h3 className="mb-2 font-heading text-xl font-bold text-white">
+                      Pago con ATH M&oacute;vil
+                    </h3>
+                    <p className="max-w-[65ch] text-sm leading-relaxed text-text-on-dark-muted sm:text-base">
+                      Al continuar, ser&aacute;s redirigido a ATH M&oacute;vil. Escribe
+                      manualmente el monto correspondiente a tu tarifa para
+                      finalizar la transacci&oacute;n.
+                    </p>
+                  </div>
+                </div>
+                <div className="border-t border-white/15 p-7 md:border-l md:border-t-0 md:p-8">
+                  <a
+                    href={ATH_MOVIL_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-sm bg-mustard px-6 py-3 font-heading text-sm font-bold text-primary transition-colors hover:bg-mustard-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mustard md:w-auto"
+                  >
+                    Pagar con ATH M&oacute;vil
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
             </div>
 
             <p className="mt-7 text-sm text-text-faint">
