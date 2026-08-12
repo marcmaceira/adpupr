@@ -4,6 +4,7 @@ import { ArrowDown, ArrowRight, BookOpen, FileChartColumn, Library, Send } from 
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import ResourceLibrary from "@/components/resource-library"
+import { getResources } from "@/lib/resources"
 
 export const metadata: Metadata = {
   title: "Recursos",
@@ -23,7 +24,9 @@ const RESOURCE_SECTIONS = [
   { label: "Biblioteca", href: "#biblioteca" },
 ] as const
 
-export default function RecursosPage() {
+export default async function RecursosPage() {
+  const resources = await getResources()
+
   return (
     <>
       <Header />
@@ -78,7 +81,7 @@ export default function RecursosPage() {
               </p>
             </div>
           </div>
-          <ResourceLibrary />
+          <ResourceLibrary resources={resources} />
         </section>
 
         <section id="convocatoria-boletin" className="scroll-mt-[72px] bg-mustard px-6 py-16 md:py-20">
