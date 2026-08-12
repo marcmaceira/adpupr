@@ -1,35 +1,31 @@
 "use client"
 
 import { useDeferredValue, useState } from "react"
-import { FileText, Search } from "lucide-react"
+import { Download, FileText, Search } from "lucide-react"
+import {
+  RESOURCE_CATEGORIES,
+  type Resource,
+  type ResourceCategory,
+} from "@/lib/resource-categories"
 
-const CATEGORIES = [
-  "Todos",
-  "Boletines",
-  "Art\u00EDculos de opini\u00F3n especial",
-  "Comunicados",
-  "Convocatorias",
-] as const
+const ALL_CATEGORIES = "Todos" as const
+type CategoryFilter = ResourceCategory | typeof ALL_CATEGORIES
+const CATEGORY_FILTERS: readonly CategoryFilter[] = [
+  ALL_CATEGORIES,
+  ...RESOURCE_CATEGORIES.map(({ label }) => label),
+]
 
-type Category = (typeof CATEGORIES)[number]
-
-interface Resource {
-  readonly title: string
-  readonly category: Exclude<Category, "Todos">
-  readonly date: string
-  readonly href: string
+interface ResourceLibraryProps {
+  readonly resources: readonly Resource[]
 }
 
-// Add publications here when the source documents are placed in public/recursos.
-const RESOURCES: readonly Resource[] = []
-
-export default function ResourceLibrary() {
-  const [category, setCategory] = useState<Category>("Todos")
+export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
+  const [category, setCategory] = useState<CategoryFilter>(ALL_CATEGORIES)
   const [query, setQuery] = useState("")
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase("es"))
-  const filteredResources = RESOURCES.filter(
+  const filteredResources = resources.filter(
     (resource) =>
-      (category === "Todos" || resource.category === category) &&
+      (category === ALL_CATEGORIES || resource.category === category) &&
       (deferredQuery === "" ||
         resource.title.toLocaleLowerCase("es").includes(deferredQuery)),
   )
@@ -43,7 +39,7 @@ export default function ResourceLibrary() {
             role="group"
             aria-label="Filtrar recursos por categor\u00EDa"
           >
-            {CATEGORIES.map((item) => {
+            {CATEGORY_FILTERS.map((item) => {
               const active = category === item
 
               return (
@@ -72,6 +68,7 @@ export default function ResourceLibrary() {
           <span className="sr-only">Buscar en los recursos</span>
           <input
             type="search"
+            aria-label="Buscar en los recursos"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder={"Buscar por t\u00EDtulo"}
@@ -82,18 +79,21 @@ export default function ResourceLibrary() {
         {filteredResources.length > 0 ? (
           <ul className="mt-8 divide-y divide-border border-y border-border">
             {filteredResources.map((resource) => (
-              <li key={resource.href}>
+              <li
+                key={resource.href}
+                className="grid gap-5 bg-surface px-5 py-6 sm:grid-cols-[1fr_auto] sm:items-center"
+              >
+                <div>
+                  <p className="eyebrow mb-2">{resource.category}</p>
+                  <h3 className="text-lg text-primary">{resource.title}</h3>
+                </div>
                 <a
                   href={resource.href}
-                  className="grid gap-4 bg-surface px-5 py-6 transition-colors hover:bg-sky-50 sm:grid-cols-[1fr_auto] sm:items-center"
+                  aria-label={`Descargar ${resource.title}`}
+                  className="inline-flex min-h-11 items-center justify-center gap-2 self-start rounded-sm bg-primary px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:self-auto"
                 >
-                  <div>
-                    <p className="eyebrow mb-2">{resource.category}</p>
-                    <h3 className="text-lg text-primary">{resource.title}</h3>
-                  </div>
-                  <p className="font-heading text-sm font-semibold text-text-faint">
-                    {resource.date} <span aria-hidden="true">&darr;</span>
-                  </p>
+                  <Download className="h-4 w-4" aria-hidden="true" />
+                  Descargar
                 </a>
               </li>
             ))}
@@ -103,11 +103,22 @@ export default function ResourceLibrary() {
             <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-sky-50 text-primary">
               <FileText className="h-6 w-6" strokeWidth={1.6} aria-hidden="true" />
             </span>
-            <h3 className="text-xl text-primary">El archivo est&aacute; en preparaci&oacute;n.</h3>
-            <p className="mt-2 max-w-[52ch] font-body text-[15px] text-text-muted">
-              Los documentos de esta categor&iacute;a se publicar&aacute;n aqu&iacute; tan pronto
-              formen parte del archivo digital de la ADPUPR.
-            </p>
+            {resources.length === 0 ? (
+              <>
+                <h3 className="text-xl text-primary">El archivo est&aacute; en preparaci&oacute;n.</h3>
+                <p className="mt-2 max-w-[52ch] font-body text-[15px] text-text-muted">
+                  Los documentos se publicar&aacute;n aqu&iacute; tan pronto formen parte del
+                  archivo digital de la ADPUPR.
+                </p>
+              </>
+            ) : (
+              <>
+                <h3 className="text-xl text-primary">No encontramos recursos.</h3>
+                <p className="mt-2 max-w-[52ch] font-body text-[15px] text-text-muted">
+                  Intenta otra categor&iacute;a o un t&eacute;rmino de b&uacute;squeda diferente.
+                </p>
+              </>
+            )}
           </div>
         )}
       </div>
