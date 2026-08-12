@@ -12,11 +12,10 @@ const CATEGORY_BY_SLUG = new Map<string, ResourceCategory>(
   RESOURCE_CATEGORIES.map(({ slug, label }) => [slug, label]),
 )
 
-function hasBlobCredentials() {
-  return Boolean(
-    process.env.BLOB_READ_WRITE_TOKEN ||
-      (process.env.BLOB_STORE_ID && process.env.VERCEL_OIDC_TOKEN),
-  )
+function hasBlobConfiguration() {
+  // At runtime, Vercel supplies OIDC through request context rather than process.env.
+  // The Blob SDK resolves that token; the store ID is enough to select OIDC auth.
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
 }
 
 function getFileTitle(pathname: string) {
@@ -98,21 +97,26 @@ async function listResources(storeId: string): Promise<readonly Resource[]> {
 
     return resources
   } catch (error) {
-    console.error("Unable to list documents from Vercel Blob.", error)
-    return []
+    throw new Error("Unable to list documents from Vercel Blob.", {
+      cause: error,
+    })
   }
 }
 
-const getCachedResources = unstable_cache(listResources, ["resources-v4"], {
+const getCachedResources = unstable_cache(listResources, ["resources-v5"], {
   revalidate: 3600,
   tags: ["resources"],
 })
 
 export async function getResources(): Promise<readonly Resource[]> {
-  if (!hasBlobCredentials()) {
-    console.warn(
-      "Vercel Blob credentials are unavailable; rendering the resource library without documents.",
-    )
+  if (!hasBlobConfiguration()) {
+    const message = "Vercel Blob is not configured for the resource library."
+
+    if (process.env.VERCEL === "1") {
+      throw new Error(message)
+    }
+
+    console.warn(`${message} Rendering without documents outside Vercel.`)
     return []
   }
 
