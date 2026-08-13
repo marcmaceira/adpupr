@@ -176,11 +176,11 @@ export default function ConferenciaPage() {
         <section className="bg-surface px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 max-w-2xl">
-              <p className="eyebrow mb-3">Inscripci&oacute;n</p>
-              <h2 className="h-section mb-4 text-primary">Selecciona tu tarifa.</h2>
+              <p className="eyebrow mb-3">Inscripci&oacute;n &middot; Paso 1</p>
+              <h2 className="h-section mb-4 text-primary">Realiza tu pago.</h2>
               <p className="text-text-muted">
-                Completa primero el formulario de inscripci&oacute;n y luego
-                realiza el pago correspondiente a tu categor&iacute;a.
+                Selecciona tu tarifa y realiza el pago con PayPal o ATH
+                M&oacute;vil.
               </p>
             </div>
 
@@ -267,7 +267,8 @@ export default function ConferenciaPage() {
 
             <p className="mt-7 text-sm text-text-faint">
               Las tarifas preferenciales aplican exclusivamente a miembros
-              activos de ADPUPR.
+              activos de ADPUPR. Conserva tu evidencia de pago, ya que
+              deber&aacute;s incluirla en el formulario de inscripci&oacute;n.
             </p>
           </div>
         </section>
@@ -275,11 +276,16 @@ export default function ConferenciaPage() {
         <section className="bg-primary-900 px-6 py-16 text-white sm:py-20">
           <div className="mx-auto flex max-w-[1200px] flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="eyebrow eyebrow-on-dark mb-3">Reserva tu espacio</p>
+              <p className="eyebrow eyebrow-on-dark mb-3">
+                Inscripci&oacute;n &middot; Paso 2
+              </p>
               <h2 className="max-w-[18ch] font-heading text-3xl font-black leading-tight text-white sm:text-4xl">
-                S&eacute; parte de la conversaci&oacute;n sobre el futuro de la
-                gobernanza.
+                Completa tu registro.
               </h2>
+              <p className="mt-4 max-w-[58ch] text-text-on-dark-muted">
+                Una vez realizado el pago, completa el Formulario de
+                Inscripci&oacute;n e incluye tu evidencia de pago.
+              </p>
             </div>
             <a
               href={REGISTRATION_URL}
@@ -287,7 +293,7 @@ export default function ConferenciaPage() {
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center justify-center gap-2 rounded-sm bg-mustard px-6 py-4 font-heading text-sm font-bold text-primary transition-colors hover:bg-mustard-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mustard"
             >
-              Completar inscripci&oacute;n
+              Completar formulario de inscripci&oacute;n
               <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
