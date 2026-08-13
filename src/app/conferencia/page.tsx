@@ -173,65 +173,6 @@ export default function ConferenciaPage() {
           </div>
         </section>
 
-        <section className="bg-bg px-6 py-16 sm:py-24">
-          <div className="mx-auto max-w-[1200px]">
-            <div className="mb-12 grid gap-5 md:grid-cols-2 md:items-end">
-              <div>
-                <p className="eyebrow mb-3">Programa de contenido</p>
-                <h2 className="h-section text-primary">Ejes tem&aacute;ticos</h2>
-              </div>
-              <p className="max-w-[52ch] text-text-muted md:justify-self-end">
-                Funcionar&aacute;n como hilos conductores en las actividades
-                preconferencia.
-              </p>
-            </div>
-
-            <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-2">
-              {THEMES.map((theme) => (
-                <article
-                  key={theme.number}
-                  className="group bg-surface p-7 transition-colors hover:bg-sky-50 sm:p-9"
-                >
-                  <div className="mb-8 flex items-center gap-4">
-                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-primary-300">
-                      EJE {theme.number}
-                    </span>
-                    <span className="h-px flex-1 bg-border" aria-hidden="true" />
-                  </div>
-                  <h3 className="mb-4 max-w-[25ch] font-heading text-2xl font-bold leading-tight text-primary">
-                    {theme.title}
-                  </h3>
-                  <p className="text-[15px] leading-[1.75] text-text-muted">
-                    <strong className="font-semibold text-primary">Enfoque: </strong>
-                    {theme.description}
-                  </p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-primary-900 px-6 py-16 text-white sm:py-20">
-          <div className="mx-auto flex max-w-[1200px] flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="eyebrow eyebrow-on-dark mb-3">Reserva tu espacio</p>
-              <h2 className="max-w-[18ch] font-heading text-3xl font-black leading-tight text-white sm:text-4xl">
-                S&eacute; parte de la conversaci&oacute;n sobre el futuro de la
-                gobernanza.
-              </h2>
-            </div>
-            <a
-              href={REGISTRATION_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-sm bg-mustard px-6 py-4 font-heading text-sm font-bold text-primary transition-colors hover:bg-mustard-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mustard"
-            >
-              Completar inscripci&oacute;n
-              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-          </div>
-        </section>
-
         <section className="bg-surface px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 max-w-2xl">
@@ -328,6 +269,65 @@ export default function ConferenciaPage() {
               Las tarifas preferenciales aplican exclusivamente a miembros
               activos de ADPUPR.
             </p>
+          </div>
+        </section>
+
+        <section className="bg-primary-900 px-6 py-16 text-white sm:py-20">
+          <div className="mx-auto flex max-w-[1200px] flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="eyebrow eyebrow-on-dark mb-3">Reserva tu espacio</p>
+              <h2 className="max-w-[18ch] font-heading text-3xl font-black leading-tight text-white sm:text-4xl">
+                S&eacute; parte de la conversaci&oacute;n sobre el futuro de la
+                gobernanza.
+              </h2>
+            </div>
+            <a
+              href={REGISTRATION_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-sm bg-mustard px-6 py-4 font-heading text-sm font-bold text-primary transition-colors hover:bg-mustard-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-mustard"
+            >
+              Completar inscripci&oacute;n
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </a>
+          </div>
+        </section>
+
+        <section className="bg-bg px-6 py-16 sm:py-24">
+          <div className="mx-auto max-w-[1200px]">
+            <div className="mb-12 grid gap-5 md:grid-cols-2 md:items-end">
+              <div>
+                <p className="eyebrow mb-3">Programa de contenido</p>
+                <h2 className="h-section text-primary">Ejes tem&aacute;ticos</h2>
+              </div>
+              <p className="max-w-[52ch] text-text-muted md:justify-self-end">
+                Funcionar&aacute;n como hilos conductores en las actividades
+                preconferencia.
+              </p>
+            </div>
+
+            <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-2">
+              {THEMES.map((theme) => (
+                <article
+                  key={theme.number}
+                  className="group bg-surface p-7 transition-colors hover:bg-sky-50 sm:p-9"
+                >
+                  <div className="mb-8 flex items-center gap-4">
+                    <span className="font-heading text-sm font-bold tracking-[0.12em] text-primary-300">
+                      EJE {theme.number}
+                    </span>
+                    <span className="h-px flex-1 bg-border" aria-hidden="true" />
+                  </div>
+                  <h3 className="mb-4 max-w-[25ch] font-heading text-2xl font-bold leading-tight text-primary">
+                    {theme.title}
+                  </h3>
+                  <p className="text-[15px] leading-[1.75] text-text-muted">
+                    <strong className="font-semibold text-primary">Enfoque: </strong>
+                    {theme.description}
+                  </p>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>
