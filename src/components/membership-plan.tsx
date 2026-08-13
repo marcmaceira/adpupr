@@ -1,3 +1,4 @@
+/* Temporarily disabled at ADPUPR's request. Restore with the JSX block below.
 interface SponsorshipLevel {
   readonly name: string
   readonly price: string
@@ -48,6 +49,7 @@ const SPONSORSHIP_LEVELS: readonly SponsorshipLevel[] = [
     ],
   },
 ] as const
+*/
 
 export default function MembershipPlan() {
   return (
@@ -97,6 +99,7 @@ export default function MembershipPlan() {
           </div>
         </div>
 
+        {/* Temporarily disabled at ADPUPR's request.
         <div className="mt-16 overflow-hidden rounded-lg bg-primary px-6 py-10 sm:px-10 lg:mt-20 lg:px-12 lg:py-12">
           <div className="grid gap-10 lg:grid-cols-[0.62fr_1.38fr] lg:gap-14">
             <div>
@@ -141,6 +144,7 @@ export default function MembershipPlan() {
             </div>
           </div>
         </div>
+        */}
       </div>
     </section>
   )
