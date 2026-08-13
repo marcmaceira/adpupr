@@ -130,7 +130,7 @@ export default function ConferenciaPage() {
           </div>
         </section>
 
-        <section className="bg-surface px-6 py-16 sm:py-20">
+        <section className="bg-bg px-6 py-16 sm:py-20">
           <div className="mx-auto max-w-[1200px]">
             <div className="grid overflow-hidden rounded-lg border border-border bg-bg shadow-[var(--shadow-card)] md:grid-cols-3">
               <EventDetail icon={<CalendarDays />} label="Fecha">
@@ -293,7 +293,7 @@ export default function ConferenciaPage() {
           </div>
         </section>
 
-        <section className="bg-bg px-6 py-16 sm:py-24">
+        <section className="bg-surface px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 grid gap-5 md:grid-cols-2 md:items-end">
               <div>
