@@ -180,7 +180,8 @@ export default function ConferenciaPage() {
               <h2 className="h-section mb-4 text-primary">Realiza tu pago.</h2>
               <p className="text-text-muted">
                 Selecciona tu tarifa y realiza el pago con PayPal o ATH
-                M&oacute;vil.
+                M&oacute;vil. Conserva tu evidencia de pago, ya que
+                deber&aacute;s incluirla en el formulario de inscripci&oacute;n.
               </p>
             </div>
 
@@ -267,8 +268,7 @@ export default function ConferenciaPage() {
 
             <p className="mt-7 text-sm text-text-faint">
               Las tarifas preferenciales aplican exclusivamente a miembros
-              activos de ADPUPR. Conserva tu evidencia de pago, ya que
-              deber&aacute;s incluirla en el formulario de inscripci&oacute;n.
+              activos de ADPUPR.
             </p>
           </div>
         </section>
