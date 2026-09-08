@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import {
   ArrowUpRight,
+  BadgeCheck,
   CalendarDays,
   Check,
   Clock3,
@@ -152,20 +153,34 @@ export default function ConferenciaPage() {
                   Ideas para un mejor servicio p&uacute;blico.
                 </h2>
               </div>
-              <div className="flex gap-5 border-t border-border pt-7 lg:mt-1">
-                <Users
-                  className="mt-1 h-7 w-7 shrink-0 text-sky-600"
-                  strokeWidth={1.75}
-                  aria-hidden="true"
-                />
-                <div>
-                  <h3 className="mb-3 font-heading text-lg font-bold text-primary">
-                    Asiste para participar en:
-                  </h3>
-                  <p className="text-lg leading-relaxed text-text-muted">
-                    Una conferencia magistral, paneles acad&eacute;micos,
-                    discusiones multisectoriales, networking y experiencias de
-                    profesionales de la pr&aacute;ctica.
+              <div className="space-y-7 lg:mt-1">
+                <div className="flex gap-5 border-t border-border pt-7">
+                  <Users
+                    className="mt-1 h-7 w-7 shrink-0 text-sky-600"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <h3 className="mb-3 font-heading text-lg font-bold text-primary">
+                      Asiste para participar en:
+                    </h3>
+                    <p className="text-lg leading-relaxed text-text-muted">
+                      Una conferencia magistral, paneles acad&eacute;micos,
+                      discusiones multisectoriales, networking y experiencias de
+                      profesionales de la pr&aacute;ctica.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex gap-5 border-t border-border pt-7">
+                  <BadgeCheck
+                    className="mt-1 h-7 w-7 shrink-0 text-sky-600"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <p className="text-lg font-semibold leading-relaxed text-primary">
+                    Certificaci&oacute;n de Convalidaci&oacute;n de hasta un
+                    m&aacute;ximo de 8.5 horas en educaci&oacute;n continua de la
+                    Oficina de &Eacute;tica Gubernamental (OEG)
                   </p>
                 </div>
               </div>
