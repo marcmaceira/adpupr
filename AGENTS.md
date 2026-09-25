@@ -1,8 +1,10 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# Next.js: ALWAYS read docs before coding
+# This is NOT the Next.js you know
 
-Before any Next.js work, find and read the relevant doc in `node_modules/next/dist/docs/`. Your training data is outdated — the docs are the source of truth.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 
@@ -11,10 +13,20 @@ Before any Next.js work, find and read the relevant doc in `node_modules/next/di
 ```bash
 pnpm dev          # Start dev server (http://localhost:3000)
 pnpm build        # Production build (Next.js 16 + Turbopack)
-pnpm lint         # ESLint (next/core-web-vitals + typescript)
+pnpm lint         # Oxlint, type-aware + type-check (.oxlintrc.json); warnings fail
+pnpm lint:fix     # Oxlint with auto-fixes
+pnpm format       # Oxfmt (.oxfmtrc.json)
+pnpm format:check # Oxfmt check only
 ```
 
 No test framework is configured yet.
+
+## Linting and formatting
+
+- After making code changes, run `npx oxlint --fix`, then run `npx oxfmt`.
+- Before finishing, run `npx oxlint --deny-warnings --format=agent`.
+
+`.oxlintrc.json` enables the `correctness`, `suspicious`, and `perf` categories plus every rule from `eslint-config-next`. Fix violations instead of disabling rules. The only config-level exception is `react/react-in-jsx-scope`, which is obsolete with the automatic JSX runtime. If an inline `oxlint-disable-next-line` is unavoidable, add a comment explaining why. Unused directives are errors.
 
 ## Git
 
@@ -46,7 +58,7 @@ Single-page site composed of section components rendered in order:
 Header → Hero → Stats → About → ConferenceCta → LatestVideo → EngagementCtas → CtaBand → Footer
 ```
 
-All components are **server components** except `header.tsx` (mobile navigation state) and `board-members.tsx` (interactive biography overlays).
+All components are **server components** except `header.tsx` (mobile navigation state), `board-members.tsx` (interactive biography overlays), `director-card.tsx` (biography toggle), `contact-form.tsx`, `resource-library.tsx`, and `conference-agenda.tsx`.
 
 ### Components (`src/components/`)
 
@@ -63,4 +75,4 @@ Each section is a self-contained file with its own data constants, sub-component
 ### Gotchas
 
 - **`@theme inline` must use direct hex values**, never `var()` references — creates circular CSS custom property definitions that resolve to empty strings
-- **`next/image` may fail to load local PNGs** — if `naturalWidth` is 0, use `<img>` with `eslint-disable-next-line @next/next/no-img-element`
+- **Local images**: use `next/image` with a static import (`import logo from "../../public/logo.png"`), not a string path or `<img>`
