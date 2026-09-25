@@ -11,6 +11,7 @@ import {
 } from "lucide-react"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
+import ConferenceAgenda from "@/components/conference-agenda"
 
 const REGISTRATION_URL =
   "https://docs.google.com/forms/d/e/1FAIpQLSd3Nc0d9srM9AgoSQal0RWS__ARj53TacAYnNQ24VxXYYAbHA/viewform"
@@ -185,10 +186,11 @@ export default function ConferenciaPage() {
                 </div>
               </div>
             </div>
+            <ConferenceAgenda />
           </div>
         </section>
 
-        <section className="bg-surface px-6 py-16 sm:py-24">
+        <section id="inscripcion" tabIndex={-1} className="bg-surface px-6 py-16 sm:py-24">
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 max-w-2xl">
               <p className="eyebrow mb-3">Inscripci&oacute;n &middot; Paso 1</p>
@@ -318,7 +320,7 @@ export default function ConferenciaPage() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 grid gap-5 md:grid-cols-2 md:items-end">
               <div>
-                <p className="eyebrow mb-3">Programa de contenido</p>
+                <p className="eyebrow mb-3">Preconferencia</p>
                 <h2 className="h-section text-primary">Ejes tem&aacute;ticos</h2>
               </div>
               <p className="max-w-[52ch] text-text-muted md:justify-self-end">
