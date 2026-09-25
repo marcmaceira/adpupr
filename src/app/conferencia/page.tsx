@@ -320,7 +320,7 @@ export default function ConferenciaPage() {
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 grid gap-5 md:grid-cols-2 md:items-end">
               <div>
-                <p className="eyebrow mb-3">Preconferencia</p>
+                <p className="eyebrow mb-3">Programa de contenido</p>
                 <h2 className="h-section text-primary">Ejes tem&aacute;ticos</h2>
               </div>
               <p className="max-w-[52ch] text-text-muted md:justify-self-end">
