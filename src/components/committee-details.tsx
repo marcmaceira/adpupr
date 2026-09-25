@@ -1,32 +1,32 @@
-import Image from "next/image"
-import { BLOB_STORAGE_URL } from "@/lib/constants"
+import Image from "next/image";
+import { BLOB_STORAGE_URL } from "@/lib/constants";
 
 interface Coordinator {
-  readonly name?: string
-  readonly bio: string
-  readonly image: string
+  readonly name?: string;
+  readonly bio: string;
+  readonly image: string;
 }
 
 interface AdministrationMember {
-  readonly name: string
-  readonly role: string
+  readonly name: string;
+  readonly role: string;
 }
 
 interface Administration {
-  readonly summary: string
-  readonly members: readonly AdministrationMember[]
-  readonly responsibilities: readonly string[]
+  readonly summary: string;
+  readonly members: readonly AdministrationMember[];
+  readonly responsibilities: readonly string[];
 }
 
 interface Committee {
-  readonly id: string
-  readonly name: string
-  readonly description: string
-  readonly focus?: string
-  readonly functionsLabel: string
-  readonly functions: readonly string[]
-  readonly administration?: Administration
-  readonly coordinator: Coordinator
+  readonly id: string;
+  readonly name: string;
+  readonly description: string;
+  readonly focus?: string;
+  readonly functionsLabel: string;
+  readonly functions: readonly string[];
+  readonly administration?: Administration;
+  readonly coordinator: Coordinator;
 }
 
 const COMMITTEES: readonly Committee[] = [
@@ -106,7 +106,7 @@ const COMMITTEES: readonly Committee[] = [
       bio: "Profesor de la Escuela Graduada de Administraci\u00F3n P\u00FAblica (EGAP) de la Universidad de Puerto Rico, Recinto de R\u00EDo Piedras. Posee un Doctorado en Administraci\u00F3n P\u00FAblica de la Universidad de Baltimore y una Maestr\u00EDa en Administraci\u00F3n P\u00FAblica de la UPR R\u00EDo Piedras. Fue el Presidente fundador de ADPUPR. Cuenta con una amplia trayectoria como acad\u00E9mico, administrador p\u00FAblico y asesor parlamentario profesional. Su experiencia integra la docencia, el procedimiento parlamentario, la gobernanza organizacional y el fortalecimiento de entidades p\u00FAblicas, profesionales y comunitarias. Como coordinador del Comit\u00E9 de Educación y Tecnología de ADPUPR, impulsa iniciativas formativas orientadas al desarrollo de competencias pr\u00E1cticas para la gesti\u00F3n p\u00FAblica, la deliberaci\u00F3n democr\u00E1tica y la toma de decisiones institucionales. Su aportaci\u00F3n fortalece la misi\u00F3n educativa de ADPUPR y su compromiso con una administraci\u00F3n p\u00FAblica \u00E9tica, efectiva e innovadora.",
     },
   },
-] as const
+] as const;
 
 function CoordinatorProfile({ coordinator }: { readonly coordinator: Coordinator }) {
   return (
@@ -134,12 +134,21 @@ function CoordinatorProfile({ coordinator }: { readonly coordinator: Coordinator
         {coordinator.bio}
       </p>
     </aside>
-  )
+  );
 }
 
-function CommitteeArticle({ committee, index }: { readonly committee: Committee; readonly index: number }) {
+function CommitteeArticle({
+  committee,
+  index,
+}: {
+  readonly committee: Committee;
+  readonly index: number;
+}) {
   return (
-    <article id={committee.id} className="scroll-mt-24 border-t border-border-strong py-16 first:border-t-0 first:pt-0 md:py-24">
+    <article
+      id={committee.id}
+      className="scroll-mt-24 border-t border-border-strong py-16 first:border-t-0 first:pt-0 md:py-24"
+    >
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.75fr)] lg:gap-16">
         <div>
           <div className="flex items-center gap-4">
@@ -166,7 +175,10 @@ function CommitteeArticle({ committee, index }: { readonly committee: Committee;
           </h4>
           <ul className="mt-5 space-y-4">
             {committee.functions.map((item) => (
-              <li key={item} className="grid grid-cols-[10px_1fr] gap-4 font-body text-[15px] leading-[1.75] text-text-muted">
+              <li
+                key={item}
+                className="grid grid-cols-[10px_1fr] gap-4 font-body text-[15px] leading-[1.75] text-text-muted"
+              >
                 <span className="mt-[0.65em] h-2.5 w-2.5 rounded-full bg-sky" aria-hidden="true" />
                 <span>{item}</span>
               </li>
@@ -175,9 +187,7 @@ function CommitteeArticle({ committee, index }: { readonly committee: Committee;
 
           {committee.administration ? (
             <div className="mt-10 rounded-lg border border-border bg-surface-2 p-6 md:p-8">
-              <h4 className="font-heading text-xl font-extrabold text-text">
-                Junta Editora
-              </h4>
+              <h4 className="font-heading text-xl font-extrabold text-text">Junta Editora</h4>
               <p className="mt-4 font-body text-base leading-[1.75] text-text-muted">
                 {committee.administration.summary}
               </p>
@@ -222,7 +232,7 @@ function CommitteeArticle({ committee, index }: { readonly committee: Committee;
         </div>
       </div>
     </article>
-  )
+  );
 }
 
 export default function CommitteeDetails() {
@@ -235,9 +245,9 @@ export default function CommitteeDetails() {
             <h2 className="h-section text-text">Donde se hace el trabajo.</h2>
           </div>
           <p className="lede md:justify-self-end">
-            Tres comit&eacute;s estructuran la actividad sustantiva de la
-            Asociaci&oacute;n, cada uno con responsabilidades definidas y abierto a
-            la participaci&oacute;n de la membres&iacute;a.
+            Tres comit&eacute;s estructuran la actividad sustantiva de la Asociaci&oacute;n, cada
+            uno con responsabilidades definidas y abierto a la participaci&oacute;n de la
+            membres&iacute;a.
           </p>
         </div>
 
@@ -261,5 +271,5 @@ export default function CommitteeDetails() {
         </div>
       </div>
     </section>
-  )
+  );
 }

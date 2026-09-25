@@ -1,8 +1,8 @@
-import Link from "next/link"
+import Link from "next/link";
 
 interface CtaBandProps {
-  readonly id?: string
-  readonly eyebrow?: string
+  readonly id?: string;
+  readonly eyebrow?: string;
 }
 
 export default function CtaBand({ id, eyebrow }: CtaBandProps) {
@@ -12,10 +12,7 @@ export default function CtaBand({ id, eyebrow }: CtaBandProps) {
         <div className="grid items-center gap-12 py-20 md:grid-cols-[1.5fr_auto] md:gap-12 md:py-[72px]">
           <div>
             {eyebrow ? (
-              <p
-                className="eyebrow mb-3"
-                style={{ color: "var(--color-primary-700)" }}
-              >
+              <p className="eyebrow mb-3" style={{ color: "var(--color-primary-700)" }}>
                 {eyebrow}
               </p>
             ) : null}
@@ -28,15 +25,15 @@ export default function CtaBand({ id, eyebrow }: CtaBandProps) {
                 maxWidth: "24ch",
               }}
             >
-              &Uacute;nete a la conversaci&oacute;n que da forma al servicio
-              p&uacute;blico en Puerto Rico.
+              &Uacute;nete a la conversaci&oacute;n que da forma al servicio p&uacute;blico en
+              Puerto Rico.
             </h2>
             <p
               className="mt-3.5 max-w-[50ch] font-body text-base"
               style={{ color: "var(--color-primary-700)" }}
             >
-              $50 integrantes regulares &middot; $25 estudiantes. Voz y voto en
-              Asambleas y acceso a foros, talleres y conferencias.
+              $50 integrantes regulares &middot; $25 estudiantes. Voz y voto en Asambleas y acceso a
+              foros, talleres y conferencias.
             </p>
           </div>
           <Link
@@ -48,5 +45,5 @@ export default function CtaBand({ id, eyebrow }: CtaBandProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

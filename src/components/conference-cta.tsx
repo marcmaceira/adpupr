@@ -1,22 +1,22 @@
-import Link from "next/link"
-import { Calendar, MapPin } from "lucide-react"
-import type { ReactNode } from "react"
+import Link from "next/link";
+import { Calendar, MapPin } from "lucide-react";
+import type { ReactNode } from "react";
 
 interface ConferenceMeta {
-  readonly date?: string
-  readonly location?: string
-  readonly format?: string
+  readonly date?: string;
+  readonly location?: string;
+  readonly format?: string;
 }
 
 interface ConferenceCtaProps {
-  readonly eyebrow?: string
-  readonly heading?: ReactNode
-  readonly description?: string
-  readonly meta?: ConferenceMeta
-  readonly ctaLabel?: string
-  readonly ctaHref?: string
-  readonly secondaryLabel?: string
-  readonly secondaryHref?: string
+  readonly eyebrow?: string;
+  readonly heading?: ReactNode;
+  readonly description?: string;
+  readonly meta?: ConferenceMeta;
+  readonly ctaLabel?: string;
+  readonly ctaHref?: string;
+  readonly secondaryLabel?: string;
+  readonly secondaryHref?: string;
 }
 
 // Placeholder event details — replace with confirmed values once announced.
@@ -24,14 +24,14 @@ const DEFAULT_META: ConferenceMeta = {
   date: "Octubre 2026",
   location: "San Juan, Puerto Rico",
   format: "Presencial",
-}
+};
 
 export default function ConferenceCta({
   eyebrow = "Conferencia 2026",
   heading = (
     <>
-      Inscr&iacute;bete a la Conferencia de Administraci&oacute;n
-      P&uacute;blica <span className="text-mustard">2026</span>.
+      Inscr&iacute;bete a la Conferencia de Administraci&oacute;n P&uacute;blica{" "}
+      <span className="text-mustard">2026</span>.
     </>
   ),
   description = "Un encuentro de ponencias, paneles y networking en torno a la administración pública en Puerto Rico.",
@@ -42,10 +42,7 @@ export default function ConferenceCta({
   secondaryHref = "/conferencia",
 }: ConferenceCtaProps) {
   return (
-    <section
-      id="conferencia"
-      className="relative overflow-hidden bg-primary text-white"
-    >
+    <section id="conferencia" className="relative overflow-hidden bg-primary text-white">
       {/* Concentric ring ornaments — echoes the hero */}
       <div
         aria-hidden="true"
@@ -138,5 +135,5 @@ export default function ConferenceCta({
         </div>
       </div>
     </section>
-  )
+  );
 }

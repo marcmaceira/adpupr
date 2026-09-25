@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import type { FormEvent } from "react"
-import { Send } from "lucide-react"
+import type { FormEvent } from "react";
+import { Send } from "lucide-react";
 
-const RECIPIENT = "info@adpupr.com"
+const RECIPIENT = "info@adpupr.com";
 
 export default function ContactForm() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const form = new FormData(event.currentTarget)
-    const name = String(form.get("name") ?? "").trim()
-    const contact = String(form.get("contact") ?? "").trim()
-    const message = String(form.get("message") ?? "").trim()
-    const subject = `Mensaje desde adpupr.com - ${name}`
+    const form = new FormData(event.currentTarget);
+    const name = String(form.get("name") ?? "").trim();
+    const contact = String(form.get("contact") ?? "").trim();
+    const message = String(form.get("message") ?? "").trim();
+    const subject = `Mensaje desde adpupr.com - ${name}`;
     const body = [
       `Nombre: ${name}`,
       contact ? `Informaci\u00F3n de contacto: ${contact}` : null,
@@ -22,13 +22,13 @@ export default function ContactForm() {
       message,
     ]
       .filter((line) => line !== null)
-      .join("\n")
+      .join("\n");
 
-    window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  }
+    window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   const fieldClassName =
-    "mt-2 w-full rounded-sm border border-border-strong bg-surface px-4 py-3 font-body text-[15px] text-text outline-none transition-colors placeholder:text-text-faint focus:border-primary focus:ring-2 focus:ring-sky-200"
+    "mt-2 w-full rounded-sm border border-border-strong bg-surface px-4 py-3 font-body text-[15px] text-text outline-none transition-colors placeholder:text-text-faint focus:border-primary focus:ring-2 focus:ring-sky-200";
 
   return (
     <form onSubmit={handleSubmit} className="card p-6 sm:p-8">
@@ -86,5 +86,5 @@ export default function ContactForm() {
         </button>
       </div>
     </form>
-  )
+  );
 }

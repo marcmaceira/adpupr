@@ -1,13 +1,13 @@
 interface Stat {
-  readonly num: string
-  readonly suffix?: string
-  readonly label: string
+  readonly num: string;
+  readonly suffix?: string;
+  readonly label: string;
 }
 
 const STATS: readonly Stat[] = [
   { num: "50", suffix: "+", label: "Miembros activos" },
   { num: "3", label: "Comités de trabajo" },
-] as const
+] as const;
 
 export default function Stats() {
   return (
@@ -25,10 +25,7 @@ export default function Stats() {
             >
               <span>{stat.num}</span>
               {stat.suffix && (
-                <span
-                  className="text-mustard-600"
-                  style={{ fontSize: "0.55em" }}
-                >
+                <span className="text-mustard-600" style={{ fontSize: "0.55em" }}>
                   {stat.suffix}
                 </span>
               )}
@@ -46,5 +43,5 @@ export default function Stats() {
         ))}
       </div>
     </section>
-  )
+  );
 }

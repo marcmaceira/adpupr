@@ -1,7 +1,7 @@
-import { ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react";
 
-const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@ADPUPR"
-const LATEST_VIDEO_ID = "jhXQO0PB0PY"
+const YOUTUBE_CHANNEL_URL = "https://www.youtube.com/@ADPUPR";
+const LATEST_VIDEO_ID = "jhXQO0PB0PY";
 
 export default function LatestVideo() {
   return (
@@ -13,8 +13,8 @@ export default function LatestVideo() {
             Conversaciones sobre el servicio p&uacute;blico.
           </h2>
           <p className="mt-5 max-w-[46ch] font-body text-[17px] leading-[1.65] text-text-muted">
-            Mira el video m&aacute;s reciente de la ADPUPR y visita nuestro canal
-            para conocer m&aacute;s di&aacute;logos, entrevistas y actividades.
+            Mira el video m&aacute;s reciente de la ADPUPR y visita nuestro canal para conocer
+            m&aacute;s di&aacute;logos, entrevistas y actividades.
           </p>
           <a
             href={YOUTUBE_CHANNEL_URL}
@@ -40,5 +40,5 @@ export default function LatestVideo() {
         </div>
       </div>
     </section>
-  )
+  );
 }

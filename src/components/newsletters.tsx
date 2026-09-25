@@ -1,12 +1,12 @@
-import Link from "next/link"
-import GeoPlaceholder from "./geo-placeholder"
+import Link from "next/link";
+import GeoPlaceholder from "./geo-placeholder";
 
 interface Boletin {
-  readonly kind: "Boletín" | "Comunicado"
-  readonly title: string
-  readonly date: string
-  readonly cat: string
-  readonly seed: number
+  readonly kind: "Boletín" | "Comunicado";
+  readonly title: string;
+  readonly date: string;
+  readonly cat: string;
+  readonly seed: number;
 }
 
 const BOLETINES: readonly Boletin[] = [
@@ -31,7 +31,7 @@ const BOLETINES: readonly Boletin[] = [
     cat: "Educación",
     seed: 5,
   },
-] as const
+] as const;
 
 export default function Newsletters() {
   return (
@@ -88,10 +88,7 @@ export default function Newsletters() {
                 >
                   <span>{b.date}</span>
                   <span>&middot; {b.cat}</span>
-                  <span
-                    className="ml-auto text-primary"
-                    aria-hidden="true"
-                  >
+                  <span className="ml-auto text-primary" aria-hidden="true">
                     Leer &rarr;
                   </span>
                 </div>
@@ -101,5 +98,5 @@ export default function Newsletters() {
         </div>
       </div>
     </section>
-  )
+  );
 }

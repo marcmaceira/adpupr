@@ -1,40 +1,40 @@
-import "server-only"
-import { list, type ListBlobResultBlob } from "@vercel/blob"
-import { unstable_cache } from "next/cache"
+import "server-only";
+import { list, type ListBlobResultBlob } from "@vercel/blob";
+import { unstable_cache } from "next/cache";
 import {
   RESOURCE_CATEGORIES,
   type Resource,
   type ResourceCategory,
-} from "@/lib/resource-categories"
+} from "@/lib/resource-categories";
 
-const RESOURCE_PREFIX = "recursos/"
+const RESOURCE_PREFIX = "recursos/";
 const CATEGORY_BY_SLUG = new Map<string, ResourceCategory>(
   RESOURCE_CATEGORIES.map(({ slug, label }) => [slug, label]),
-)
+);
 
 function hasBlobConfiguration() {
   // At runtime, Vercel supplies OIDC through request context rather than process.env.
   // The Blob SDK resolves that token; the store ID is enough to select OIDC auth.
-  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID);
 }
 
 function getFileTitle(pathname: string) {
-  const encodedFileName = pathname.split("/").at(-1)
+  const encodedFileName = pathname.split("/").at(-1);
 
   if (!encodedFileName) {
-    return null
+    return null;
   }
 
-  let fileName = encodedFileName
+  let fileName = encodedFileName;
 
   try {
-    fileName = decodeURIComponent(encodedFileName)
+    fileName = decodeURIComponent(encodedFileName);
   } catch {
     // Keep the original pathname segment when an uploaded name contains an invalid escape.
   }
 
   if (fileName.toLocaleLowerCase("en").endsWith(".ds_store")) {
-    return null
+    return null;
   }
 
   const title = fileName
@@ -43,82 +43,82 @@ function getFileTitle(pathname: string) {
     .replace(/[-_]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
-    .normalize("NFC")
+    .normalize("NFC");
 
-  return title ? title.charAt(0).toLocaleUpperCase("es") + title.slice(1) : null
+  return title ? title.charAt(0).toLocaleUpperCase("es") + title.slice(1) : null;
 }
 
 function toResource(blob: ListBlobResultBlob): Resource | null {
-  const [, categorySlug] = blob.pathname.split("/")
-  const category = CATEGORY_BY_SLUG.get(categorySlug)
-  const title = getFileTitle(blob.pathname)
+  const [, categorySlug] = blob.pathname.split("/");
+  const category = CATEGORY_BY_SLUG.get(categorySlug);
+  const title = getFileTitle(blob.pathname);
 
   if (!category || !title) {
-    return null
+    return null;
   }
 
   return {
     title,
     category,
     href: blob.downloadUrl,
-  }
+  };
 }
 
 async function listResources(storeId: string): Promise<readonly Resource[]> {
   // The non-secret store ID is part of the cache key through this argument.
-  void storeId
+  void storeId;
 
   try {
-    const blobs: ListBlobResultBlob[] = []
-    let cursor: string | undefined
+    const blobs: ListBlobResultBlob[] = [];
+    let cursor: string | undefined;
 
     do {
       const result = await list({
         prefix: RESOURCE_PREFIX,
         limit: 1000,
         cursor,
-      })
+      });
 
-      blobs.push(...result.blobs)
-      cursor = result.hasMore ? result.cursor : undefined
-    } while (cursor)
+      blobs.push(...result.blobs);
+      cursor = result.hasMore ? result.cursor : undefined;
+    } while (cursor);
 
-    const resources: Resource[] = []
+    const resources: Resource[] = [];
 
     for (const blob of blobs.toSorted(
       (first, second) => second.uploadedAt.getTime() - first.uploadedAt.getTime(),
     )) {
-      const resource = toResource(blob)
+      const resource = toResource(blob);
 
       if (resource) {
-        resources.push(resource)
+        resources.push(resource);
       }
     }
 
-    return resources
+    return resources;
   } catch (error) {
     throw new Error("Unable to list documents from Vercel Blob.", {
       cause: error,
-    })
+    });
   }
 }
 
 const getCachedResources = unstable_cache(listResources, ["resources-v5"], {
   revalidate: 3600,
   tags: ["resources"],
-})
+});
 
 export async function getResources(): Promise<readonly Resource[]> {
   if (!hasBlobConfiguration()) {
-    const message = "Vercel Blob is not configured for the resource library."
+    const message = "Vercel Blob is not configured for the resource library.";
 
     if (process.env.VERCEL === "1") {
-      throw new Error(message)
+      throw new Error(message);
     }
 
-    console.warn(`${message} Rendering without documents outside Vercel.`)
-    return []
+    console.warn(`${message} Rendering without documents outside Vercel.`);
+    return [];
   }
 
-  return getCachedResources(process.env.BLOB_STORE_ID ?? "token-authenticated-store")
+  return getCachedResources(process.env.BLOB_STORE_ID ?? "token-authenticated-store");
 }

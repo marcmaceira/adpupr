@@ -1,8 +1,8 @@
-import type { Metadata } from "next"
-import { DirectorCard, type Director } from "@/components/directors"
-import Footer from "@/components/footer"
-import Header from "@/components/header"
-import { BLOB_STORAGE_URL } from "@/lib/constants"
+import type { Metadata } from "next";
+import { DirectorCard, type Director } from "@/components/directors";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
+import { BLOB_STORAGE_URL } from "@/lib/constants";
 
 const ACHIEVEMENTS = [
   "Constituy\u00F3 y organiz\u00F3 la ADPUPR, estableciendo su estructura de gobernanza, reglamentaci\u00F3n y procesos institucionales.",
@@ -10,7 +10,7 @@ const ACHIEVEMENTS = [
   "Impuls\u00F3 la presencia institucional de la Asociaci\u00F3n, mediante el desarrollo de la p\u00E1gina web oficial y el lanzamiento del bolet\u00EDn informativo.",
   "Fortaleci\u00F3 la sostenibilidad administrativa y financiera, gestionando el cumplimiento de los requisitos legales, las membres\u00EDas y las obligaciones institucionales.",
   "Promovi\u00F3 el crecimiento organizacional, impulsando nuevos comit\u00E9s de trabajo, publicaciones acad\u00E9micas y proyectos para asegurar la continuidad de la Asociaci\u00F3n.",
-] as const
+] as const;
 
 const FOUNDING_BOARD: readonly Director[] = [
   {
@@ -48,14 +48,14 @@ const FOUNDING_BOARD: readonly Director[] = [
     role: "Vocal",
     image: `${BLOB_STORAGE_URL}/jonuel-negron-12649ace-f27c-4fab-af6a-a5cc253c78fd.png`,
   },
-] as const
+] as const;
 
 const MILESTONES = [
   { value: "2023", label: "A\u00F1o de fundaci\u00F3n" },
   { value: "2", label: "Conferencias organizadas" },
   { value: "1", label: "Bolet\u00EDn institucional creado" },
   { value: "7", label: "Miembros de la Junta Fundadora" },
-] as const
+] as const;
 
 export const metadata: Metadata = {
   title: "Historia de Fundaci\u00F3n",
@@ -67,7 +67,7 @@ export const metadata: Metadata = {
       "Conoce la gesti\u00F3n, la Junta Fundadora y los principales hitos que dieron origen a la Asociaci\u00F3n de Administraci\u00F3n P\u00FAblica de Puerto Rico.",
     url: "/nosotros/historia-fundacion",
   },
-}
+};
 
 export default function HistoriaFundacionPage() {
   return (
@@ -89,10 +89,9 @@ export default function HistoriaFundacionPage() {
               Historia de Fundaci&oacute;n
             </h1>
             <p className="mt-7 max-w-[760px] font-body text-lg leading-[1.75] text-text-on-dark-muted md:text-xl">
-              Durante el per&iacute;odo 2023&ndash;2025, la Junta Fundadora
-              estableci&oacute; las bases institucionales que dieron origen y
-              proyecci&oacute;n a la Asociaci&oacute;n de Administraci&oacute;n
-              P&uacute;blica de Puerto Rico.
+              Durante el per&iacute;odo 2023&ndash;2025, la Junta Fundadora estableci&oacute; las
+              bases institucionales que dieron origen y proyecci&oacute;n a la Asociaci&oacute;n de
+              Administraci&oacute;n P&uacute;blica de Puerto Rico.
             </p>
           </div>
         </section>
@@ -103,19 +102,14 @@ export default function HistoriaFundacionPage() {
               <p className="eyebrow mb-3.5">Liderazgo inaugural</p>
               <h2 className="h-section text-text">Junta Fundadora</h2>
               <p className="lede mt-5">
-                Siete profesionales asumieron la responsabilidad de convertir
-                una visi&oacute;n compartida en una instituci&oacute;n con bases
-                firmes.
+                Siete profesionales asumieron la responsabilidad de convertir una visi&oacute;n
+                compartida en una instituci&oacute;n con bases firmes.
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
               {FOUNDING_BOARD.map((member, index) => (
-                <DirectorCard
-                  key={member.name}
-                  director={member}
-                  seed={index}
-                />
+                <DirectorCard key={member.name} director={member} seed={index} />
               ))}
             </div>
           </div>
@@ -178,5 +172,5 @@ export default function HistoriaFundacionPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

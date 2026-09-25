@@ -1,7 +1,7 @@
 interface SubheadProps {
-  readonly eyebrow: string
-  readonly title: string
-  readonly description?: string
+  readonly eyebrow: string;
+  readonly title: string;
+  readonly description?: string;
 }
 
 export default function Subhead({ eyebrow, title, description }: SubheadProps) {
@@ -16,10 +16,7 @@ export default function Subhead({ eyebrow, title, description }: SubheadProps) {
         style={{ borderColor: "rgba(255, 210, 88, 0.4)" }}
       />
       <div className="relative mx-auto max-w-[1200px]">
-        <span
-          className="eyebrow block"
-          style={{ color: "var(--color-sky)", marginBottom: 14 }}
-        >
+        <span className="eyebrow block" style={{ color: "var(--color-sky)", marginBottom: 14 }}>
           {eyebrow}
         </span>
         <h1
@@ -49,5 +46,5 @@ export default function Subhead({ eyebrow, title, description }: SubheadProps) {
         )}
       </div>
     </section>
-  )
+  );
 }

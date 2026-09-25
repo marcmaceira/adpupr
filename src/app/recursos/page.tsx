@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { ArrowDown, ArrowRight, BookOpen, FileChartColumn, Library, Send } from "lucide-react"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import ResourceLibrary from "@/components/resource-library"
-import { getResources } from "@/lib/resources"
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowDown, ArrowRight, BookOpen, FileChartColumn, Library, Send } from "lucide-react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import ResourceLibrary from "@/components/resource-library";
+import { getResources } from "@/lib/resources";
 
 export const metadata: Metadata = {
   title: "Recursos",
@@ -16,23 +16,22 @@ export const metadata: Metadata = {
       "Publicaciones y archivo hist\u00F3rico sobre administraci\u00F3n p\u00FAblica en Puerto Rico.",
     url: "/recursos",
   },
-}
+};
 
 const RESOURCE_SECTIONS = [
   { label: "Publicaciones", href: "#publicaciones" },
   { label: "Convocatoria", href: "#convocatoria-boletin" },
   { label: "Biblioteca", href: "#biblioteca" },
-] as const
+] as const;
 
 export default async function RecursosPage() {
-  const resources = await getResources()
+  const resources = await getResources();
 
   return (
     <>
       <Header />
       <main id="main-content">
         <section className="relative overflow-hidden bg-primary px-6 py-20 text-white md:py-28">
-
           <div className="relative mx-auto grid max-w-[1200px] gap-12 lg:grid-cols-[minmax(0,1fr)_320px] lg:items-end">
             <div>
               <p className="eyebrow eyebrow-on-dark mb-5">Centro de recursos</p>
@@ -40,12 +39,15 @@ export default async function RecursosPage() {
                 Conocimiento para el servicio p&uacute;blico.
               </h1>
               <p className="mt-7 max-w-[62ch] font-body text-lg leading-[1.65] text-text-on-dark-muted">
-                Explora publicaciones, convocatorias y materiales que documentan
-                la conversaci&oacute;n sobre la administraci&oacute;n p&uacute;blica en Puerto Rico.
+                Explora publicaciones, convocatorias y materiales que documentan la
+                conversaci&oacute;n sobre la administraci&oacute;n p&uacute;blica en Puerto Rico.
               </p>
             </div>
 
-            <nav aria-label="Secciones de recursos" className="border-t border-white/20 lg:border-t-0">
+            <nav
+              aria-label="Secciones de recursos"
+              className="border-t border-white/20 lg:border-t-0"
+            >
               {RESOURCE_SECTIONS.map((section) => (
                 <Link
                   key={section.href}
@@ -68,23 +70,26 @@ export default async function RecursosPage() {
             </div>
             <div className="border-l-4 border-mustard pl-6 sm:pl-8">
               <p className="font-body text-[17px] leading-[1.75] text-text-muted">
-                Los boletines informativos de ADPUPR son publicaciones institucionales
-                que documentan, difunden y analizan iniciativas, entrevistas,
-                art&iacute;culos de opini&oacute;n y actividades relevantes para la
-                administraci&oacute;n p&uacute;blica en Puerto Rico.
+                Los boletines informativos de ADPUPR son publicaciones institucionales que
+                documentan, difunden y analizan iniciativas, entrevistas, art&iacute;culos de
+                opini&oacute;n y actividades relevantes para la administraci&oacute;n p&uacute;blica
+                en Puerto Rico.
               </p>
               <p className="mt-5 font-body text-[17px] leading-[1.75] text-text-muted">
                 A trav&eacute;s de estos boletines, la Asociaci&oacute;n promueve la
                 educaci&oacute;n p&uacute;blica profesional, el intercambio de ideas y la
-                reflexi&oacute;n cr&iacute;tica sobre los principales retos de la gobernanza,
-                la gesti&oacute;n p&uacute;blica y el servicio p&uacute;blico.
+                reflexi&oacute;n cr&iacute;tica sobre los principales retos de la gobernanza, la
+                gesti&oacute;n p&uacute;blica y el servicio p&uacute;blico.
               </p>
             </div>
           </div>
           <ResourceLibrary resources={resources} />
         </section>
 
-        <section id="convocatoria-boletin" className="scroll-mt-[72px] bg-mustard px-6 py-16 md:py-20">
+        <section
+          id="convocatoria-boletin"
+          className="scroll-mt-[72px] bg-mustard px-6 py-16 md:py-20"
+        >
           <div className="mx-auto grid max-w-[1200px] gap-10 md:grid-cols-[auto_1fr_auto] md:items-center">
             <span className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white">
               <Send className="h-6 w-6" strokeWidth={1.7} aria-hidden="true" />
@@ -119,14 +124,18 @@ export default async function RecursosPage() {
                 <h2 className="h-section text-text">Biblioteca de conferencias.</h2>
               </div>
               <p className="lede md:justify-self-end">
-                Un espacio para preservar y consultar las ideas compartidas en las
-                conferencias de la ADPUPR a trav&eacute;s de los a&ntilde;os.
+                Un espacio para preservar y consultar las ideas compartidas en las conferencias de
+                la ADPUPR a trav&eacute;s de los a&ntilde;os.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2">
               <article className="border-b border-border py-10 md:border-b-0 md:border-r md:pr-12 md:py-14">
-                <FileChartColumn className="h-8 w-8 text-sky-600" strokeWidth={1.5} aria-hidden="true" />
+                <FileChartColumn
+                  className="h-8 w-8 text-sky-600"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
                 <h3 className="mt-8 text-2xl text-primary">Presentaciones</h3>
                 <p className="mt-4 font-body text-[16px] text-text-muted">
                   Diapositivas y materiales presentados por conferenciantes y panelistas.
@@ -145,12 +154,13 @@ export default async function RecursosPage() {
 
             <div className="mt-2 flex items-center gap-3 rounded-sm bg-sky-50 px-5 py-4 font-body text-sm text-text-muted">
               <Library className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
-              La biblioteca crecer&aacute; a medida que se digitalicen los documentos hist&oacute;ricos.
+              La biblioteca crecer&aacute; a medida que se digitalicen los documentos
+              hist&oacute;ricos.
             </div>
           </div>
         </section>
       </main>
       <Footer />
     </>
-  )
+  );
 }

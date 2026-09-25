@@ -1,10 +1,10 @@
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react";
 
 const MEMBERSHIP_FORM_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSed-nAU7aA8_D4DQ7HjD0byLe3B8b_0zY0WEL-Riy1nKgbVbg/viewform"
+  "https://docs.google.com/forms/d/e/1FAIpQLSed-nAU7aA8_D4DQ7HjD0byLe3B8b_0zY0WEL-Riy1nKgbVbg/viewform";
 
 const ATH_MOVIL_URL =
-  "https://pagos.athmovilapp.com/qrCodePayment.html?133d0fe53fe0aee5f76f045eeebc2197e51d7aec08444832522d3dda729305c0"
+  "https://pagos.athmovilapp.com/qrCodePayment.html?133d0fe53fe0aee5f76f045eeebc2197e51d7aec08444832522d3dda729305c0";
 
 const BENEFITS = [
   "Acceder y participar en foros, talleres, conferencias y conversatorios a costos exclusivos, con pre-reservaciones.",
@@ -13,7 +13,7 @@ const BENEFITS = [
   "Contribuir al an\u00E1lisis, la investigaci\u00F3n y el debate p\u00FAblico informado en Puerto Rico.",
   "Tener voz y voto en las Asambleas de ADPUPR.",
   "Fortalecer tu desarrollo profesional y ampliar tus oportunidades de aprendizaje y colaboraci\u00F3n.",
-] as const
+] as const;
 
 const PAYPAL_OPTIONS = [
   {
@@ -26,10 +26,10 @@ const PAYPAL_OPTIONS = [
     price: "$25",
     href: "https://www.paypal.com/ncp/payment/MESA9TVUCWGL6",
   },
-] as const
+] as const;
 
 const externalLinkClasses =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-sm bg-primary px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-sm bg-primary px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
 
 export default function Membresia() {
   return (
@@ -64,9 +64,9 @@ export default function Membresia() {
               Completa el formulario de membres&iacute;a.
             </h2>
             <p className="mt-5 max-w-[48ch] font-body text-[16px] leading-[1.7] text-text-muted">
-              Si solicitas ingreso por primera vez, completa el formulario para
-              quedar prerregistrado como integrante de la ADPUPR. El formulario
-              y el pago son procesos separados.
+              Si solicitas ingreso por primera vez, completa el formulario para quedar
+              prerregistrado como integrante de la ADPUPR. El formulario y el pago son procesos
+              separados.
             </p>
             <a
               href={MEMBERSHIP_FORM_URL}
@@ -83,8 +83,7 @@ export default function Membresia() {
                 Confirmaci&oacute;n de membres&iacute;a
               </p>
               <p className="mt-1.5 font-body text-sm leading-[1.6] text-text-muted">
-                La membres&iacute;a se activa una vez que la ADPUPR verifica y
-                aprueba el pago.
+                La membres&iacute;a se activa una vez que la ADPUPR verifica y aprueba el pago.
               </p>
             </div>
           </div>
@@ -119,9 +118,7 @@ export default function Membresia() {
               </article>
 
               <article className="card p-6 sm:p-7">
-                <h3 className="font-heading text-xl font-extrabold text-primary">
-                  PayPal
-                </h3>
+                <h3 className="font-heading text-xl font-extrabold text-primary">PayPal</h3>
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   {PAYPAL_OPTIONS.map((option) => (
                     <a
@@ -139,9 +136,7 @@ export default function Membresia() {
               </article>
 
               <article className="card p-6 sm:p-7">
-                <h3 className="font-heading text-xl font-extrabold text-primary">
-                  Cheque o giro
-                </h3>
+                <h3 className="font-heading text-xl font-extrabold text-primary">Cheque o giro</h3>
                 <p className="mt-2 font-body text-sm leading-[1.65] text-text-muted">
                   Emite el cheque o giro a nombre de la &ldquo;Asociaci&oacute;n de
                   Administraci&oacute;n P&uacute;blica de Puerto Rico&rdquo; y env&iacute;alo por
@@ -158,5 +153,5 @@ export default function Membresia() {
         </div>
       </div>
     </section>
-  )
+  );
 }

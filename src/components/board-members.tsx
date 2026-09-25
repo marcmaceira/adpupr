@@ -1,74 +1,71 @@
-"use client"
+"use client";
 
-import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
-import { DirectorAvatar } from "./geo-placeholder"
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { DirectorAvatar } from "./geo-placeholder";
 
 interface BoardMember {
-  readonly name: string
-  readonly role: string
-  readonly bio: string
-  readonly image: string
+  readonly name: string;
+  readonly role: string;
+  readonly bio: string;
+  readonly image: string;
 }
 
 interface BoardMembersProps {
-  readonly members: readonly BoardMember[]
+  readonly members: readonly BoardMember[];
 }
 
 export default function BoardMembers({ members }: BoardMembersProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
-  const cardRefs = useRef<Array<HTMLElement | null>>([])
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    if (activeIndex === null) return
+    if (activeIndex === null) return;
 
-    const activeCard = cardRefs.current[activeIndex]
-    closeButtonRef.current?.focus()
+    const activeCard = cardRefs.current[activeIndex];
+    closeButtonRef.current?.focus();
 
     const closeCard = () => {
-      setActiveIndex(null)
-      requestAnimationFrame(() => activeCard?.focus())
-    }
+      setActiveIndex(null);
+      requestAnimationFrame(() => activeCard?.focus());
+    };
     const handlePointerDown = (event: PointerEvent) => {
-      if (!activeCard?.contains(event.target as Node)) closeCard()
-    }
+      if (!activeCard?.contains(event.target as Node)) closeCard();
+    };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closeCard()
-    }
+      if (event.key === "Escape") closeCard();
+    };
 
-    document.addEventListener("pointerdown", handlePointerDown)
-    document.addEventListener("keydown", handleKeyDown)
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener("pointerdown", handlePointerDown)
-      document.removeEventListener("keydown", handleKeyDown)
-    }
-  }, [activeIndex])
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [activeIndex]);
 
   const closeActiveCard = () => {
-    const activeCard =
-      activeIndex === null ? null : cardRefs.current[activeIndex]
-    setActiveIndex(null)
-    requestAnimationFrame(() => activeCard?.focus())
-  }
+    const activeCard = activeIndex === null ? null : cardRefs.current[activeIndex];
+    setActiveIndex(null);
+    requestAnimationFrame(() => activeCard?.focus());
+  };
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-8">
       {members.map((member, index) => {
-        const isOpen = activeIndex === index
+        const isOpen = activeIndex === index;
 
         return (
           <article
             key={member.name}
             ref={(element) => {
-              cardRefs.current[index] = element
+              cardRefs.current[index] = element;
             }}
             role={isOpen ? "region" : "button"}
             tabIndex={isOpen ? -1 : 0}
             aria-label={
-              isOpen
-                ? `Biograf\u00EDa de ${member.name}`
-                : `Ver biograf\u00EDa de ${member.name}`
+              isOpen ? `Biograf\u00EDa de ${member.name}` : `Ver biograf\u00EDa de ${member.name}`
             }
             aria-expanded={isOpen ? undefined : false}
             onClick={isOpen ? undefined : () => setActiveIndex(index)}
@@ -77,8 +74,8 @@ export default function BoardMembers({ members }: BoardMembersProps) {
                 ? undefined
                 : (event) => {
                     if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault()
-                      setActiveIndex(index)
+                      event.preventDefault();
+                      setActiveIndex(index);
                     }
                   }
             }
@@ -150,8 +147,8 @@ export default function BoardMembers({ members }: BoardMembersProps) {
               </div>
             ) : null}
           </article>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

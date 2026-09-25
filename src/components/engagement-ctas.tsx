@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { FilePenLine, HeartHandshake } from "lucide-react"
+import Link from "next/link";
+import { FilePenLine, HeartHandshake } from "lucide-react";
 
 const ACTIONS = [
   {
@@ -20,7 +20,7 @@ const ACTIONS = [
     href: "/contactanos",
     icon: HeartHandshake,
   },
-] as const
+] as const;
 
 export default function EngagementCtas() {
   return (
@@ -33,15 +33,13 @@ export default function EngagementCtas() {
 
         <div className="grid gap-6 md:grid-cols-2">
           {ACTIONS.map((action, index) => {
-            const Icon = action.icon
+            const Icon = action.icon;
 
             return (
               <article
                 key={action.label}
                 className={`flex min-h-[360px] flex-col rounded-lg border p-8 sm:p-10 ${
-                  index === 0
-                    ? "border-border bg-surface"
-                    : "border-primary bg-primary text-white"
+                  index === 0 ? "border-border bg-surface" : "border-primary bg-primary text-white"
                 }`}
               >
                 <div
@@ -54,10 +52,14 @@ export default function EngagementCtas() {
                 <p className={`eyebrow mt-8 ${index === 0 ? "" : "eyebrow-on-dark"}`}>
                   {action.eyebrow}
                 </p>
-                <h3 className={`mt-3 text-[27px] font-extrabold ${index === 0 ? "text-primary" : "text-white"}`}>
+                <h3
+                  className={`mt-3 text-[27px] font-extrabold ${index === 0 ? "text-primary" : "text-white"}`}
+                >
                   {action.title}
                 </h3>
-                <p className={`mt-4 font-body text-[16px] leading-[1.65] ${index === 0 ? "text-text-muted" : "text-text-on-dark-muted"}`}>
+                <p
+                  className={`mt-4 font-body text-[16px] leading-[1.65] ${index === 0 ? "text-text-muted" : "text-text-on-dark-muted"}`}
+                >
                   {action.description}
                 </p>
                 <Link
@@ -71,10 +73,10 @@ export default function EngagementCtas() {
                   {action.label} <span aria-hidden="true">&rarr;</span>
                 </Link>
               </article>
-            )
+            );
           })}
         </div>
       </div>
     </section>
-  )
+  );
 }

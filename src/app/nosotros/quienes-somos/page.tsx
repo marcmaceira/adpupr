@@ -1,6 +1,6 @@
-import type { Metadata } from "next"
-import Footer from "@/components/footer"
-import Header from "@/components/header"
+import type { Metadata } from "next";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
 
 const OBJECTIVES = [
   "Agrupar en una organizaci\u00F3n a los interesados en promover los valores de una sana Administraci\u00F3n P\u00FAblica en Puerto Rico.",
@@ -8,7 +8,7 @@ const OBJECTIVES = [
   "Establecer redes y conexiones de comunicaci\u00F3n entre los integrantes.",
   "Tener una participaci\u00F3n colectiva activa en los asuntos p\u00FAblicos y gobernanza de Puerto Rico.",
   "Cualquier otro objetivo establecido por la Asamblea de Integrantes.",
-] as const
+] as const;
 
 export const metadata: Metadata = {
   title: "Qui\u00E9nes somos",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
       "Conoce la historia, misi\u00F3n, visi\u00F3n y objetivos de la Asociaci\u00F3n de Administraci\u00F3n P\u00FAblica de Puerto Rico.",
     url: "/nosotros/quienes-somos",
   },
-}
+};
 
 export default function QuienesSomosPage() {
   return (
@@ -54,26 +54,22 @@ export default function QuienesSomosPage() {
 
             <div className="space-y-7 font-body text-[17px] leading-[1.8] text-text-muted md:text-lg">
               <p>
-                Fundada el 8 de agosto de 2023, la Asociaci&oacute;n de
-                Administraci&oacute;n P&uacute;blica de Puerto Rico es una
-                organizaci&oacute;n profesional sin fines de lucro dedicada a
-                fortalecer la gesti&oacute;n p&uacute;blica en nuestro
-                archipi&eacute;lago. Promovemos la investigaci&oacute;n rigurosa y
-                el an&aacute;lisis acad&eacute;mico como base para el dise&ntilde;o
-                de pol&iacute;ticas p&uacute;blicas &eacute;ticas, eficientes y
-                eficaces, poniendo este conocimiento al servicio de la toma de
-                decisiones y del inter&eacute;s p&uacute;blico.
+                Fundada el 8 de agosto de 2023, la Asociaci&oacute;n de Administraci&oacute;n
+                P&uacute;blica de Puerto Rico es una organizaci&oacute;n profesional sin fines de
+                lucro dedicada a fortalecer la gesti&oacute;n p&uacute;blica en nuestro
+                archipi&eacute;lago. Promovemos la investigaci&oacute;n rigurosa y el
+                an&aacute;lisis acad&eacute;mico como base para el dise&ntilde;o de pol&iacute;ticas
+                p&uacute;blicas &eacute;ticas, eficientes y eficaces, poniendo este conocimiento al
+                servicio de la toma de decisiones y del inter&eacute;s p&uacute;blico.
               </p>
               <p>
-                En la ADPUPR entendemos que la administraci&oacute;n de lo
-                p&uacute;blico no es &uacute;nicamente una labor t&eacute;cnica,
-                sino profundamente humana. Implica tomar decisiones que
-                impactan la vida cotidiana de las personas. Por ello, trabajamos
-                en el desarrollo de soluciones informadas para los
-                desaf&iacute;os contempor&aacute;neos, abordando problem&aacute;ticas
-                complejas desde una perspectiva interdisciplinaria. Actuamos
-                como un puente entre el conocimiento acad&eacute;mico, la
-                pr&aacute;ctica profesional y la ciudadan&iacute;a.
+                En la ADPUPR entendemos que la administraci&oacute;n de lo p&uacute;blico no es
+                &uacute;nicamente una labor t&eacute;cnica, sino profundamente humana. Implica tomar
+                decisiones que impactan la vida cotidiana de las personas. Por ello, trabajamos en
+                el desarrollo de soluciones informadas para los desaf&iacute;os
+                contempor&aacute;neos, abordando problem&aacute;ticas complejas desde una
+                perspectiva interdisciplinaria. Actuamos como un puente entre el conocimiento
+                acad&eacute;mico, la pr&aacute;ctica profesional y la ciudadan&iacute;a.
               </p>
             </div>
           </div>
@@ -88,12 +84,11 @@ export default function QuienesSomosPage() {
                   Fortalecer la sana administraci&oacute;n p&uacute;blica.
                 </h2>
                 <p className="mt-6 font-body text-base leading-[1.75] text-text-muted md:text-[17px]">
-                  La misi&oacute;n de la Asociaci&oacute;n de Administraci&oacute;n
-                  P&uacute;blica de Puerto Rico (ADPUPR) es promover y fortalecer
-                  la sana administraci&oacute;n p&uacute;blica en Puerto Rico. Nos
-                  comprometemos a impulsar la educaci&oacute;n, la investigaci&oacute;n,
-                  la innovaci&oacute;n y la participaci&oacute;n en la toma de
-                  decisiones p&uacute;blicas.
+                  La misi&oacute;n de la Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica
+                  de Puerto Rico (ADPUPR) es promover y fortalecer la sana administraci&oacute;n
+                  p&uacute;blica en Puerto Rico. Nos comprometemos a impulsar la educaci&oacute;n,
+                  la investigaci&oacute;n, la innovaci&oacute;n y la participaci&oacute;n en la toma
+                  de decisiones p&uacute;blicas.
                 </p>
               </article>
 
@@ -108,15 +103,14 @@ export default function QuienesSomosPage() {
                     Ser referente de una gesti&oacute;n eficaz y &eacute;tica.
                   </h2>
                   <p className="mt-6 font-body text-base leading-[1.75] text-text-on-dark-muted md:text-[17px]">
-                    Nuestra visi&oacute;n es ser un referente l&iacute;der en la
-                    promoci&oacute;n de una administraci&oacute;n p&uacute;blica eficaz
-                    y &eacute;tica en Puerto Rico. Aspiramos a ser un catalizador
-                    de cambios positivos en la toma de decisiones y pol&iacute;ticas
-                    p&uacute;blicas, contribuyendo al desarrollo sostenible, la
-                    equidad y la transparencia en nuestro entorno. Vemos un futuro
-                    en el que nuestra asociaci&oacute;n sea reconocida por su
-                    compromiso con la excelencia en la administraci&oacute;n
-                    p&uacute;blica y su impacto en la sociedad puertorrique&ntilde;a.
+                    Nuestra visi&oacute;n es ser un referente l&iacute;der en la promoci&oacute;n de
+                    una administraci&oacute;n p&uacute;blica eficaz y &eacute;tica en Puerto Rico.
+                    Aspiramos a ser un catalizador de cambios positivos en la toma de decisiones y
+                    pol&iacute;ticas p&uacute;blicas, contribuyendo al desarrollo sostenible, la
+                    equidad y la transparencia en nuestro entorno. Vemos un futuro en el que nuestra
+                    asociaci&oacute;n sea reconocida por su compromiso con la excelencia en la
+                    administraci&oacute;n p&uacute;blica y su impacto en la sociedad
+                    puertorrique&ntilde;a.
                   </p>
                 </div>
               </article>
@@ -156,5 +150,5 @@ export default function QuienesSomosPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

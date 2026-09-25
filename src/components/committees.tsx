@@ -1,12 +1,12 @@
-import Link from "next/link"
-import GeoPlaceholder from "./geo-placeholder"
+import Link from "next/link";
+import GeoPlaceholder from "./geo-placeholder";
 
 interface Committee {
-  readonly name: string
-  readonly desc: string
-  readonly href: string
-  readonly seed: number
-  readonly variant: "circles" | "stripes" | "grid"
+  readonly name: string;
+  readonly desc: string;
+  readonly href: string;
+  readonly seed: number;
+  readonly variant: "circles" | "stripes" | "grid";
 }
 
 const COMITES: readonly Committee[] = [
@@ -31,7 +31,7 @@ const COMITES: readonly Committee[] = [
     seed: 2,
     variant: "grid",
   },
-] as const
+] as const;
 
 export default function Committees() {
   return (
@@ -41,9 +41,9 @@ export default function Committees() {
           <p className="eyebrow mb-3.5">Comit&eacute;s de Trabajo</p>
           <h2 className="h-section text-text">Donde se hace el trabajo.</h2>
           <p className="lede mt-5">
-            Tres comit&eacute;s estructuran la actividad sustantiva de la
-            Asociaci&oacute;n, cada uno con responsabilidades definidas y
-            abierto a la participaci&oacute;n de la membres&iacute;a.
+            Tres comit&eacute;s estructuran la actividad sustantiva de la Asociaci&oacute;n, cada
+            uno con responsabilidades definidas y abierto a la participaci&oacute;n de la
+            membres&iacute;a.
           </p>
         </div>
 
@@ -69,9 +69,7 @@ export default function Committees() {
               >
                 {c.name}
               </h3>
-              <p className="mt-4 font-body text-[14.5px] leading-[1.6] text-text-muted">
-                {c.desc}
-              </p>
+              <p className="mt-4 font-body text-[14.5px] leading-[1.6] text-text-muted">{c.desc}</p>
               <Link
                 href={c.href}
                 className="mt-6 inline-flex items-center gap-1.5 font-heading text-[13px] font-semibold text-primary"
@@ -90,5 +88,5 @@ export default function Committees() {
         </div>
       </div>
     </section>
-  )
+  );
 }

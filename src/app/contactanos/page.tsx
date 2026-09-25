@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import { ExternalLink, Mail, MapPin } from "lucide-react"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import Subhead from "@/components/subhead"
-import ContactForm from "@/components/contact-form"
+import type { Metadata } from "next";
+import { ExternalLink, Mail, MapPin } from "lucide-react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import Subhead from "@/components/subhead";
+import ContactForm from "@/components/contact-form";
 
 export const metadata: Metadata = {
   title: "Cont\u00E1ctanos",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Escr\u00EDbenos y conoce los canales oficiales de la Asociaci\u00F3n de Administraci\u00F3n P\u00FAblica de Puerto Rico.",
     url: "/contactanos",
   },
-}
+};
 
 const SOCIAL_LINKS = [
   {
@@ -38,7 +38,7 @@ const SOCIAL_LINKS = [
     handle: "@adpupr",
     href: "https://youtube.com/@adpupr?si=4aX7X-C7n9VSTPbY",
   },
-] as const
+] as const;
 
 export default function ContactanosPage() {
   return (
@@ -48,7 +48,9 @@ export default function ContactanosPage() {
         <Subhead
           eyebrow="Contacto"
           title={"Las mejores iniciativas nacen de la colaboraci\u00F3n."}
-          description={"Cada conversaci\u00F3n puede abrir una nueva manera de aportar a una administraci\u00F3n p\u00FAblica m\u00E1s efectiva, \u00E9tica e innovadora."}
+          description={
+            "Cada conversaci\u00F3n puede abrir una nueva manera de aportar a una administraci\u00F3n p\u00FAblica m\u00E1s efectiva, \u00E9tica e innovadora."
+          }
         />
 
         <section className="section bg-bg px-6">
@@ -60,18 +62,16 @@ export default function ContactanosPage() {
               </h2>
               <div className="mt-7 max-w-[66ch] space-y-5 font-body text-[17px] leading-relaxed text-text-muted">
                 <p>
-                  En la ADPUPR valoramos cada conversaci&oacute;n, cada idea y cada
-                  persona interesada en aportar al desarrollo de una
-                  administraci&oacute;n p&uacute;blica m&aacute;s efectiva, &eacute;tica e
-                  innovadora.
+                  En la ADPUPR valoramos cada conversaci&oacute;n, cada idea y cada persona
+                  interesada en aportar al desarrollo de una administraci&oacute;n p&uacute;blica
+                  m&aacute;s efectiva, &eacute;tica e innovadora.
                 </p>
                 <p>
-                  Ya sea que quieras unirte a nuestras iniciativas, establecer
-                  una alianza, participar en nuestros eventos o simplemente
-                  conocer m&aacute;s sobre nuestro trabajo, estamos disponibles para
-                  todo aquel que quiera sumar a la administraci&oacute;n p&uacute;blica
-                  desde cualquier sector. Escr&iacute;benos o s&iacute;guenos en nuestras
-                  redes sociales para mantenernos en contacto.
+                  Ya sea que quieras unirte a nuestras iniciativas, establecer una alianza,
+                  participar en nuestros eventos o simplemente conocer m&aacute;s sobre nuestro
+                  trabajo, estamos disponibles para todo aquel que quiera sumar a la
+                  administraci&oacute;n p&uacute;blica desde cualquier sector. Escr&iacute;benos o
+                  s&iacute;guenos en nuestras redes sociales para mantenernos en contacto.
                 </p>
               </div>
 
@@ -80,7 +80,10 @@ export default function ContactanosPage() {
               </div>
             </div>
 
-            <aside className="lg:border-l lg:border-border lg:pl-10" aria-label="Canales de contacto">
+            <aside
+              className="lg:border-l lg:border-border lg:pl-10"
+              aria-label="Canales de contacto"
+            >
               <div className="lg:sticky lg:top-28">
                 <span className="eyebrow mb-5 block">Canales directos</span>
 
@@ -94,10 +97,16 @@ export default function ContactanosPage() {
                         Correo electr&oacute;nico
                       </h3>
                       <div className="mt-2 space-y-1 font-body text-sm">
-                        <a className="block text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary" href="mailto:info@adpupr.com">
+                        <a
+                          className="block text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary"
+                          href="mailto:info@adpupr.com"
+                        >
                           info@adpupr.com
                         </a>
-                        <a className="block break-all text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary" href="mailto:asociacion.adpupr@gmail.com">
+                        <a
+                          className="block break-all text-text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary"
+                          href="mailto:asociacion.adpupr@gmail.com"
+                        >
                           asociacion.adpupr@gmail.com
                         </a>
                       </div>
@@ -115,7 +124,8 @@ export default function ContactanosPage() {
                         Direcci&oacute;n postal
                       </h3>
                       <address className="mt-2 font-body text-sm not-italic leading-relaxed text-text-muted">
-                        PO BOX 1269<br />
+                        PO BOX 1269
+                        <br />
                         Trujillo Alto, PR 00977
                       </address>
                     </div>
@@ -123,9 +133,7 @@ export default function ContactanosPage() {
                 </div>
 
                 <div className="pt-9">
-                  <h3 className="font-heading text-lg font-extrabold text-text">
-                    S&iacute;guenos
-                  </h3>
+                  <h3 className="font-heading text-lg font-extrabold text-text">S&iacute;guenos</h3>
                   <ul className="mt-4 divide-y divide-border border-y border-border">
                     {SOCIAL_LINKS.map((social) => (
                       <li key={social.label}>
@@ -143,7 +151,11 @@ export default function ContactanosPage() {
                               {social.handle}
                             </span>
                           </span>
-                          <ExternalLink className="h-4 w-4 shrink-0 text-primary-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" strokeWidth={1.7} aria-hidden="true" />
+                          <ExternalLink
+                            className="h-4 w-4 shrink-0 text-primary-300 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                            strokeWidth={1.7}
+                            aria-hidden="true"
+                          />
                         </a>
                       </li>
                     ))}
@@ -156,5 +168,5 @@ export default function ContactanosPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

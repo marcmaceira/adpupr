@@ -1,19 +1,19 @@
-import Link from "next/link"
-import Image from "next/image"
-import { DirectorAvatar } from "./geo-placeholder"
+import Link from "next/link";
+import Image from "next/image";
+import { DirectorAvatar } from "./geo-placeholder";
 
 export interface Director {
-  readonly name: string
-  readonly role: string
-  readonly bio?: string
-  readonly image?: string
+  readonly name: string;
+  readonly role: string;
+  readonly bio?: string;
+  readonly image?: string;
 }
 
 const CURRENT_BOARD: readonly Director[] = [
   {
     name: "Jonnathan García Rosado, MPA",
     role: "Presidente",
-    bio: "Servidor público en el Departamento de Educación. Egresado de la Escuela Graduada de Administración Pública \"Roberto Sánchez Vilella\" (UPR). Cursa estudios doctorales con investigación sobre pobreza energética e inversión extranjera.",
+    bio: 'Servidor público en el Departamento de Educación. Egresado de la Escuela Graduada de Administración Pública "Roberto Sánchez Vilella" (UPR). Cursa estudios doctorales con investigación sobre pobreza energética e inversión extranjera.',
   },
   {
     name: "Luis A. Matos González, Ph.D.",
@@ -45,18 +45,18 @@ const CURRENT_BOARD: readonly Director[] = [
     role: "Vocal",
     bio: "Cursa estudios en la Escuela Graduada de Administración Pública (UPR). Bachillerato en Ciencias Políticas con concentración menor en Derechos Humanos. Enfoque en temas de gobernanza.",
   },
-] as const
+] as const;
 
 const FOUNDING_BOARD: readonly Director[] = [
   { name: "Urayoán Jordán Salivia, DPA", role: "Presidente" },
   { name: "Liz J. Ortiz Laureano, PhD", role: "Vicepresidenta" },
   { name: "Deborah R. Román Cortés, MPA", role: "Secretaria" },
   { name: "Rosalie Ayala Colón", role: "Relaciones Públicas" },
-] as const
+] as const;
 
 interface DirectorCardProps {
-  readonly director: Director
-  readonly seed: number
+  readonly director: Director;
+  readonly seed: number;
 }
 
 export function DirectorCard({ director, seed }: DirectorCardProps) {
@@ -107,11 +107,11 @@ export function DirectorCard({ director, seed }: DirectorCardProps) {
         {director.bio && <p className="dir-bio">{director.bio}</p>}
       </div>
     </div>
-  )
+  );
 }
 
 interface DirectorsProps {
-  readonly variant?: "preview" | "full"
+  readonly variant?: "preview" | "full";
 }
 
 export default function Directors({ variant = "preview" }: DirectorsProps) {
@@ -146,16 +146,13 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
         >
           <div className="mx-auto max-w-[1200px]">
             <div className="mb-12 max-w-[760px]">
-              <p className="eyebrow mb-3.5">
-                Junta fundadora &middot; 2023&ndash;2025
-              </p>
+              <p className="eyebrow mb-3.5">Junta fundadora &middot; 2023&ndash;2025</p>
               <h2 className="h-section text-text">
                 Equipo que estableci&oacute; la Asociaci&oacute;n.
               </h2>
               <p className="lede mt-3.5">
-                Equipo fundador que impuls&oacute; la creaci&oacute;n y el
-                establecimiento de ADPUPR como un espacio profesional y
-                acad&eacute;mico de impacto en Puerto Rico.
+                Equipo fundador que impuls&oacute; la creaci&oacute;n y el establecimiento de ADPUPR
+                como un espacio profesional y acad&eacute;mico de impacto en Puerto Rico.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-5 md:grid-cols-4">
@@ -166,7 +163,7 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
           </div>
         </section>
       </>
-    )
+    );
   }
 
   return (
@@ -178,10 +175,7 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-8">
           <div>
-            <p
-              className="eyebrow"
-              style={{ color: "var(--color-sky)", marginBottom: 14 }}
-            >
+            <p className="eyebrow" style={{ color: "var(--color-sky)", marginBottom: 14 }}>
               Junta de Directores &middot; 2025&ndash;2027
             </p>
             <h2 className="h-section text-white">Liderazgo y legado.</h2>
@@ -201,5 +195,5 @@ export default function Directors({ variant = "preview" }: DirectorsProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

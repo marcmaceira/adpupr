@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import Subhead from "@/components/subhead"
-import Membresia from "@/components/membresia"
-import MembershipPlan from "@/components/membership-plan"
+import type { Metadata } from "next";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import Subhead from "@/components/subhead";
+import Membresia from "@/components/membresia";
+import MembershipPlan from "@/components/membership-plan";
 
 export const metadata: Metadata = {
   title: "Membres\u00EDa",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
       "Tarifas, formulario y m\u00E9todos de pago para integrantes regulares y estudiantes de la ADPUPR.",
     url: "/membresia",
   },
-}
+};
 
 export default function MembresiaPage() {
   return (
@@ -32,5 +32,5 @@ export default function MembresiaPage() {
       </main>
       <Footer />
     </>
-  )
+  );
 }

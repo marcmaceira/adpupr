@@ -6,12 +6,12 @@ export const RESOURCE_CATEGORIES = [
   },
   { slug: "comunicados", label: "Comunicados" },
   { slug: "convocatorias", label: "Convocatorias" },
-] as const
+] as const;
 
-export type ResourceCategory = (typeof RESOURCE_CATEGORIES)[number]["label"]
+export type ResourceCategory = (typeof RESOURCE_CATEGORIES)[number]["label"];
 
 export interface Resource {
-  readonly title: string
-  readonly category: ResourceCategory
-  readonly href: string
+  readonly title: string;
+  readonly category: ResourceCategory;
+  readonly href: string;
 }

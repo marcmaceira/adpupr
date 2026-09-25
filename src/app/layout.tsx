@@ -1,18 +1,18 @@
-import type { Metadata } from "next"
-import { Be_Vietnam_Pro, Open_Sans } from "next/font/google"
-import { siteUrl } from "@/lib/site"
-import "./globals.css"
+import type { Metadata } from "next";
+import { Be_Vietnam_Pro, Open_Sans } from "next/font/google";
+import { siteUrl } from "@/lib/site";
+import "./globals.css";
 
 const beVietnamPro = Be_Vietnam_Pro({
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-be-vietnam-pro",
-})
+});
 
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-open-sans",
-})
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -42,11 +42,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ADPUPR — Asociación de Administración Pública de Puerto Rico",
-    description:
-      "Promovemos y fortalecemos la sana administración pública en Puerto Rico.",
+    description: "Promovemos y fortalecemos la sana administración pública en Puerto Rico.",
     images: ["/opengraph-image.jpg"],
   },
-}
+};
 
 const organizationSchema = {
   "@context": "https://schema.org",
@@ -73,12 +72,12 @@ const organizationSchema = {
     postalCode: "00977",
     addressCountry: "US",
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="es">
@@ -96,5 +95,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  )
+  );
 }

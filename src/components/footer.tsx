@@ -1,8 +1,8 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
 interface FooterColumn {
-  readonly heading: string
-  readonly links: ReadonlyArray<{ readonly label: string; readonly href: string }>
+  readonly heading: string;
+  readonly links: ReadonlyArray<{ readonly label: string; readonly href: string }>;
 }
 
 const COLUMNS: readonly FooterColumn[] = [
@@ -36,25 +36,19 @@ const COLUMNS: readonly FooterColumn[] = [
       { label: "Cont\u00E1ctanos", href: "/contactanos" },
     ],
   },
-] as const
+] as const;
 
 interface SocialLink {
-  readonly label: string
-  readonly href: string
-  readonly icon: ReactNode
+  readonly label: string;
+  readonly href: string;
+  readonly icon: ReactNode;
 }
 
 const FacebookIcon = (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M9 8H6v4h3v12h5V12h3.6l.4-4H14V6.3c0-1 .2-1.3 1.2-1.3H18V0h-3.6C10.7 0 9 1.7 9 5v3z" />
   </svg>
-)
+);
 
 const InstagramIcon = (
   <svg
@@ -70,19 +64,13 @@ const InstagramIcon = (
     <circle cx="12" cy="12" r="4" />
     <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
   </svg>
-)
+);
 
 const LinkedInIcon = (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 24 24"
-    fill="currentColor"
-    aria-hidden="true"
-  >
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.22 8h4.56v15.5H.22V8zm7.27 0h4.37v2.13h.06c.61-1.15 2.1-2.37 4.32-2.37 4.62 0 5.47 3.04 5.47 7v8.74h-4.56v-7.75c0-1.85-.04-4.23-2.58-4.23-2.58 0-2.98 2.01-2.98 4.1v7.88H7.49V8z" />
   </svg>
-)
+);
 
 const SOCIAL: readonly SocialLink[] = [
   {
@@ -100,7 +88,7 @@ const SOCIAL: readonly SocialLink[] = [
     href: "https://www.linkedin.com/in/asociaci%C3%B3n-de-administraci%C3%B3n-p%C3%BAblica-de-puerto-rico-adpupr-7b7290316/",
     icon: LinkedInIcon,
   },
-] as const
+] as const;
 
 export default function Footer() {
   return (
@@ -126,10 +114,9 @@ export default function Footer() {
               className="max-w-[36ch] font-body text-sm leading-[1.6]"
               style={{ color: "var(--color-text-on-dark-muted)" }}
             >
-              Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica de
-              Puerto Rico &mdash; comprometida con la sana administraci&oacute;n
-              p&uacute;blica, la educaci&oacute;n c&iacute;vica y la
-              investigaci&oacute;n aplicada al servicio p&uacute;blico.
+              Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica de Puerto Rico &mdash;
+              comprometida con la sana administraci&oacute;n p&uacute;blica, la educaci&oacute;n
+              c&iacute;vica y la investigaci&oacute;n aplicada al servicio p&uacute;blico.
             </p>
             <div className="mt-4 flex gap-2.5">
               {SOCIAL.map((social) => (
@@ -279,12 +266,11 @@ export default function Footer() {
           style={{ color: "var(--color-text-on-dark-muted)" }}
         >
           <span>
-            &copy; {new Date().getFullYear()} ADPUPR &middot; Todos los derechos
-            reservados
+            &copy; {new Date().getFullYear()} ADPUPR &middot; Todos los derechos reservados
           </span>
           <span>San Juan, Puerto Rico</span>
         </div>
       </div>
     </footer>
-  )
+  );
 }

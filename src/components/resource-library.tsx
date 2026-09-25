@@ -1,34 +1,33 @@
-"use client"
+"use client";
 
-import { useDeferredValue, useState } from "react"
-import { Download, FileText, Search } from "lucide-react"
+import { useDeferredValue, useState } from "react";
+import { Download, FileText, Search } from "lucide-react";
 import {
   RESOURCE_CATEGORIES,
   type Resource,
   type ResourceCategory,
-} from "@/lib/resource-categories"
+} from "@/lib/resource-categories";
 
-const ALL_CATEGORIES = "Todos" as const
-type CategoryFilter = ResourceCategory | typeof ALL_CATEGORIES
+const ALL_CATEGORIES = "Todos" as const;
+type CategoryFilter = ResourceCategory | typeof ALL_CATEGORIES;
 const CATEGORY_FILTERS: readonly CategoryFilter[] = [
   ALL_CATEGORIES,
   ...RESOURCE_CATEGORIES.map(({ label }) => label),
-]
+];
 
 interface ResourceLibraryProps {
-  readonly resources: readonly Resource[]
+  readonly resources: readonly Resource[];
 }
 
 export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
-  const [category, setCategory] = useState<CategoryFilter>(ALL_CATEGORIES)
-  const [query, setQuery] = useState("")
-  const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase("es"))
+  const [category, setCategory] = useState<CategoryFilter>(ALL_CATEGORIES);
+  const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase("es"));
   const filteredResources = resources.filter(
     (resource) =>
       (category === ALL_CATEGORIES || resource.category === category) &&
-      (deferredQuery === "" ||
-        resource.title.toLocaleLowerCase("es").includes(deferredQuery)),
-  )
+      (deferredQuery === "" || resource.title.toLocaleLowerCase("es").includes(deferredQuery)),
+  );
 
   return (
     <div>
@@ -40,7 +39,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
             aria-label="Filtrar recursos por categor\u00EDa"
           >
             {CATEGORY_FILTERS.map((item) => {
-              const active = category === item
+              const active = category === item;
 
               return (
                 <button
@@ -56,7 +55,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
                 >
                   {item}
                 </button>
-              )
+              );
             })}
           </div>
         </div>
@@ -105,7 +104,9 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
             </span>
             {resources.length === 0 ? (
               <>
-                <h3 className="text-xl text-primary">El archivo est&aacute; en preparaci&oacute;n.</h3>
+                <h3 className="text-xl text-primary">
+                  El archivo est&aacute; en preparaci&oacute;n.
+                </h3>
                 <p className="mt-2 max-w-[52ch] font-body text-[15px] text-text-muted">
                   Los documentos se publicar&aacute;n aqu&iacute; tan pronto formen parte del
                   archivo digital de la ADPUPR.
@@ -123,5 +124,5 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
         )}
       </div>
     </div>
-  )
+  );
 }

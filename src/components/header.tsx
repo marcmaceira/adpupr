@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect, useCallback } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { ChevronDown, Menu, X } from "lucide-react"
+import { useState, useEffect, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Inicio", href: "/" },
@@ -11,7 +11,7 @@ const NAV_LINKS = [
   { label: "Recursos", href: "/recursos" },
   { label: "Conferencia 2026", href: "/conferencia" },
   { label: "Cont\u00E1ctanos", href: "/contactanos" },
-] as const
+] as const;
 
 const NOSOTROS_LINKS = [
   { label: "Qui\u00E9nes somos", href: "/nosotros/quienes-somos" },
@@ -28,67 +28,59 @@ const NOSOTROS_LINKS = [
     label: "Historia de Fundaci\u00F3n",
     href: "/nosotros/historia-fundacion",
   },
-] as const
+] as const;
 
 export default function Header() {
-  const pathname = usePathname()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [nosotrosMenuOpen, setNosotrosMenuOpen] = useState(false)
+  const pathname = usePathname();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [nosotrosMenuOpen, setNosotrosMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!mobileMenuOpen) return
+    if (!mobileMenuOpen) return;
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileMenuOpen(false)
-    }
+      if (e.key === "Escape") setMobileMenuOpen(false);
+    };
 
-    document.body.style.overflow = "hidden"
-    document.addEventListener("keydown", handleEscape)
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscape);
 
     return () => {
-      document.body.style.overflow = ""
-      document.removeEventListener("keydown", handleEscape)
-    }
-  }, [mobileMenuOpen])
+      document.body.style.overflow = "";
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
-    if (!nosotrosMenuOpen) return
+    if (!nosotrosMenuOpen) return;
 
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setNosotrosMenuOpen(false)
-    }
+      if (event.key === "Escape") setNosotrosMenuOpen(false);
+    };
 
-    document.addEventListener("keydown", handleEscape)
-    return () => document.removeEventListener("keydown", handleEscape)
-  }, [nosotrosMenuOpen])
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [nosotrosMenuOpen]);
 
   const closeMobileMenu = useCallback(() => {
-    setMobileMenuOpen(false)
-    setNosotrosMenuOpen(false)
-  }, [])
-  const toggleMobileMenu = useCallback(() => setMobileMenuOpen((p) => !p), [])
+    setMobileMenuOpen(false);
+    setNosotrosMenuOpen(false);
+  }, []);
+  const toggleMobileMenu = useCallback(() => setMobileMenuOpen((p) => !p), []);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href)
+  const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
     <header className="sticky top-0 z-50 h-[72px] border-b border-border bg-surface">
       <div className="mx-auto flex h-full max-w-[1200px] items-center gap-8 px-6">
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2.5"
-          aria-label="ADPUPR - Inicio"
-        >
+        <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="ADPUPR - Inicio">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo-color.png" alt="ADPUPR" width={142} height={40} className="h-10 w-auto" />
         </Link>
 
-        <nav
-          className="hidden flex-1 items-center gap-1 md:flex"
-          aria-label="Principal"
-        >
+        <nav className="hidden flex-1 items-center gap-1 md:flex" aria-label="Principal">
           {NAV_LINKS.map((link, index) => {
-            const active = isActive(link.href)
+            const active = isActive(link.href);
             return (
               <div key={link.href} className="contents">
                 <Link
@@ -110,7 +102,7 @@ export default function Header() {
                     className="relative"
                     onBlur={(event) => {
                       if (!event.currentTarget.contains(event.relatedTarget)) {
-                        setNosotrosMenuOpen(false)
+                        setNosotrosMenuOpen(false);
                       }
                     }}
                   >
@@ -157,7 +149,7 @@ export default function Header() {
                   </div>
                 ) : null}
               </div>
-            )
+            );
           })}
         </nav>
 
@@ -222,10 +214,7 @@ export default function Header() {
 
                     {nosotrosMenuOpen ? (
                       <div id="nosotros-mobile-menu" className="pb-2">
-                        <div
-                          className="ml-3 h-0.5 w-7 bg-mustard"
-                          aria-hidden="true"
-                        />
+                        <div className="ml-3 h-0.5 w-7 bg-mustard" aria-hidden="true" />
                         <div className="mt-1 flex flex-col pl-5">
                           {NOSOTROS_LINKS.map((subLink) => (
                             <Link
@@ -255,5 +244,5 @@ export default function Header() {
         </nav>
       )}
     </header>
-  )
+  );
 }

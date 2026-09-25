@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function About() {
   return (
@@ -13,10 +13,9 @@ export default function About() {
 
         <div className="border-l-4 border-mustard pl-6 sm:pl-8">
           <p className="font-body text-[18px] leading-[1.7] text-text-muted">
-            La ADPUPR re&uacute;ne a profesionales, acad&eacute;micos y estudiantes
-            para analizar los retos del servicio p&uacute;blico, compartir
-            conocimiento y promover soluciones que fortalezcan la
-            administraci&oacute;n p&uacute;blica en Puerto Rico.
+            La ADPUPR re&uacute;ne a profesionales, acad&eacute;micos y estudiantes para analizar
+            los retos del servicio p&uacute;blico, compartir conocimiento y promover soluciones que
+            fortalezcan la administraci&oacute;n p&uacute;blica en Puerto Rico.
           </p>
           <Link
             href="/nosotros/quienes-somos"
@@ -27,5 +26,5 @@ export default function About() {
         </div>
       </div>
     </section>
-  )
+  );
 }

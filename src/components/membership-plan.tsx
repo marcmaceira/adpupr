@@ -58,43 +58,34 @@ export default function MembershipPlan() {
         <div className="grid gap-10 border-b border-border pb-16 lg:grid-cols-[0.7fr_1.3fr] lg:gap-20 lg:pb-20">
           <div>
             <p className="eyebrow mb-3.5">Una comunidad que aporta</p>
-            <h2 className="h-section max-w-[12ch] text-text">
-              Crecer y servir, en comunidad.
-            </h2>
+            <h2 className="h-section max-w-[12ch] text-text">Crecer y servir, en comunidad.</h2>
           </div>
           <div className="space-y-5 font-body text-[16px] leading-[1.75] text-text-muted md:text-[17px]">
             <p>
-              Pertenecer a la Asociaci&oacute;n de Administraci&oacute;n
-              P&uacute;blica de Puerto Rico (ADPUPR) brinda la oportunidad de
-              integrarse a una red de profesionales, acad&eacute;micos,
-              estudiantes y personas interesadas en fortalecer la
-              administraci&oacute;n y el servicio p&uacute;blico puertorrique&ntilde;o.
-              Esta comunidad facilita el intercambio de conocimientos y
-              experiencias entre personas que se desempe&ntilde;an en el gobierno,
-              la academia, organizaciones comunitarias y otros sectores
-              relacionados con la gesti&oacute;n p&uacute;blica.
+              Pertenecer a la Asociaci&oacute;n de Administraci&oacute;n P&uacute;blica de Puerto
+              Rico (ADPUPR) brinda la oportunidad de integrarse a una red de profesionales,
+              acad&eacute;micos, estudiantes y personas interesadas en fortalecer la
+              administraci&oacute;n y el servicio p&uacute;blico puertorrique&ntilde;o. Esta
+              comunidad facilita el intercambio de conocimientos y experiencias entre personas que
+              se desempe&ntilde;an en el gobierno, la academia, organizaciones comunitarias y otros
+              sectores relacionados con la gesti&oacute;n p&uacute;blica.
             </p>
             <p>
-              Nuestra membres&iacute;a tambi&eacute;n promueve el desarrollo
-              profesional mediante talleres, conferencias, conversatorios,
-              publicaciones y otras actividades educativas sobre temas
-              pertinentes para la administraci&oacute;n p&uacute;blica
-              puertorrique&ntilde;a. Asimismo, sus miembros pueden beneficiarse de
-              tarifas preferenciales en determinadas actividades, mantenerse
-              informados sobre iniciativas de la Asociaci&oacute;n y ampliar su
-              red de contactos profesionales.
+              Nuestra membres&iacute;a tambi&eacute;n promueve el desarrollo profesional mediante
+              talleres, conferencias, conversatorios, publicaciones y otras actividades educativas
+              sobre temas pertinentes para la administraci&oacute;n p&uacute;blica
+              puertorrique&ntilde;a. Asimismo, sus miembros pueden beneficiarse de tarifas
+              preferenciales en determinadas actividades, mantenerse informados sobre iniciativas de
+              la Asociaci&oacute;n y ampliar su red de contactos profesionales.
             </p>
             <p>
-              Adem&aacute;s, la ADPUPR ofrece espacios para participar en
-              comit&eacute;s de trabajo, asambleas y proyectos institucionales,
-              permitiendo que sus integrantes aporten sus conocimientos,
-              desarrollen destrezas de liderazgo y colaboren en el
-              an&aacute;lisis de los asuntos p&uacute;blicos. Ser parte de la
-              Asociaci&oacute;n no solo representa una oportunidad de crecimiento
-              profesional, sino tambi&eacute;n una forma de contribuir al
-              desarrollo de una administraci&oacute;n p&uacute;blica m&aacute;s
-              &eacute;tica, eficiente, transparente y comprometida con las
-              necesidades de Puerto Rico.
+              Adem&aacute;s, la ADPUPR ofrece espacios para participar en comit&eacute;s de trabajo,
+              asambleas y proyectos institucionales, permitiendo que sus integrantes aporten sus
+              conocimientos, desarrollen destrezas de liderazgo y colaboren en el an&aacute;lisis de
+              los asuntos p&uacute;blicos. Ser parte de la Asociaci&oacute;n no solo representa una
+              oportunidad de crecimiento profesional, sino tambi&eacute;n una forma de contribuir al
+              desarrollo de una administraci&oacute;n p&uacute;blica m&aacute;s &eacute;tica,
+              eficiente, transparente y comprometida con las necesidades de Puerto Rico.
             </p>
           </div>
         </div>
@@ -147,5 +138,5 @@ export default function MembershipPlan() {
         */}
       </div>
     </section>
-  )
+  );
 }

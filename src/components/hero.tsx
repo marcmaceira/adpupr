@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -42,9 +42,9 @@ export default function Hero() {
           className="mt-6 max-w-[56ch] font-body text-[19px] leading-[1.55]"
           style={{ color: "var(--color-text-on-dark-muted)" }}
         >
-          ADPUPR convoca a profesionales, acad&eacute;micos y estudiantes en
-          torno al estudio, la pr&aacute;ctica y la mejora continua de la
-          administraci&oacute;n p&uacute;blica en Puerto Rico.
+          ADPUPR convoca a profesionales, acad&eacute;micos y estudiantes en torno al estudio, la
+          pr&aacute;ctica y la mejora continua de la administraci&oacute;n p&uacute;blica en Puerto
+          Rico.
         </p>
 
         <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -63,5 +63,5 @@ export default function Hero() {
         </div>
       </div>
     </section>
-  )
+  );
 }
