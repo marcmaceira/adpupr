@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DirectorCard, type Director } from "@/components/directors";
+import { DirectorCard, type Director } from "@/components/director-card";
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { BLOB_STORAGE_URL } from "@/lib/constants";

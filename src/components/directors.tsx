@@ -1,13 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
-import { DirectorAvatar } from "./geo-placeholder";
-
-export interface Director {
-  readonly name: string;
-  readonly role: string;
-  readonly bio?: string;
-  readonly image?: string;
-}
+import { DirectorCard, type Director } from "./director-card";
 
 const CURRENT_BOARD: readonly Director[] = [
   {
@@ -53,62 +45,6 @@ const FOUNDING_BOARD: readonly Director[] = [
   { name: "Deborah R. Román Cortés, MPA", role: "Secretaria" },
   { name: "Rosalie Ayala Colón", role: "Relaciones Públicas" },
 ] as const;
-
-interface DirectorCardProps {
-  readonly director: Director;
-  readonly seed: number;
-}
-
-export function DirectorCard({ director, seed }: DirectorCardProps) {
-  return (
-    <div
-      className={`dir-card ${director.bio ? "dir-card-has-bio" : ""}`}
-      tabIndex={director.bio ? 0 : undefined}
-    >
-      <div className="dir-photo">
-        {director.image ? (
-          <Image
-            src={director.image}
-            alt={`Retrato de ${director.name}`}
-            fill
-            sizes="(min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw"
-            className="object-cover object-top"
-          />
-        ) : (
-          <DirectorAvatar seed={seed} />
-        )}
-      </div>
-      <div className="dir-overlay">
-        <p
-          className="font-heading"
-          style={{
-            fontSize: 11.5,
-            fontWeight: 600,
-            textTransform: "uppercase",
-            letterSpacing: "0.12em",
-            color: "var(--color-mustard)",
-            margin: 0,
-          }}
-        >
-          {director.role}
-        </p>
-        <h3
-          className="font-heading"
-          style={{
-            fontSize: 18,
-            fontWeight: 800,
-            letterSpacing: "-0.01em",
-            margin: "4px 0 0",
-            color: "#fff",
-          }}
-        >
-          {director.name}
-        </h3>
-        {director.bio && <p className="dir-bio">{director.bio}</p>}
-      </div>
-    </div>
-  );
-}
 
 interface DirectorsProps {
   readonly variant?: "preview" | "full";

@@ -52,9 +52,9 @@ export default function Newsletters() {
 
         <div className="grid gap-6 md:grid-cols-3">
           {BOLETINES.map((b, i) => (
-            <a
+            <Link
               key={b.title}
-              href="#"
+              href="/recursos#publicaciones"
               className={`flex flex-col overflow-hidden rounded-lg border border-border bg-surface no-underline transition-shadow ${
                 i === 0 ? "border-t-[4px] border-t-mustard" : ""
               }`}
@@ -93,7 +93,7 @@ export default function Newsletters() {
                   </span>
                 </div>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

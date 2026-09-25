@@ -18,20 +18,22 @@ interface BoardMembersProps {
 export default function BoardMembers({ members }: BoardMembersProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const openButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    if (activeIndex === null) return;
+    if (activeIndex === null) return undefined;
 
     const activeCard = cardRefs.current[activeIndex];
+    const openButton = openButtonRefs.current[activeIndex];
     closeButtonRef.current?.focus();
 
     const closeCard = () => {
       setActiveIndex(null);
-      requestAnimationFrame(() => activeCard?.focus());
+      requestAnimationFrame(() => openButton?.focus());
     };
     const handlePointerDown = (event: PointerEvent) => {
-      if (!activeCard?.contains(event.target as Node)) closeCard();
+      if (!(event.target instanceof Node) || !activeCard?.contains(event.target)) closeCard();
     };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") closeCard();
@@ -46,15 +48,16 @@ export default function BoardMembers({ members }: BoardMembersProps) {
   }, [activeIndex]);
 
   const closeActiveCard = () => {
-    const activeCard = activeIndex === null ? null : cardRefs.current[activeIndex];
+    const openButton = activeIndex === null ? null : openButtonRefs.current[activeIndex];
     setActiveIndex(null);
-    requestAnimationFrame(() => activeCard?.focus());
+    requestAnimationFrame(() => openButton?.focus());
   };
 
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-8">
       {members.map((member, index) => {
         const isOpen = activeIndex === index;
+        const bioId = `board-member-bio-${index}`;
 
         return (
           <article
@@ -62,37 +65,29 @@ export default function BoardMembers({ members }: BoardMembersProps) {
             ref={(element) => {
               cardRefs.current[index] = element;
             }}
-            role={isOpen ? "region" : "button"}
-            tabIndex={isOpen ? -1 : 0}
-            aria-label={
-              isOpen ? `Biograf\u00EDa de ${member.name}` : `Ver biograf\u00EDa de ${member.name}`
-            }
-            aria-expanded={isOpen ? undefined : false}
-            onClick={isOpen ? undefined : () => setActiveIndex(index)}
-            onKeyDown={
-              isOpen
-                ? undefined
-                : (event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      setActiveIndex(index);
-                    }
-                  }
-            }
-            className={`group relative grid cursor-pointer grid-cols-[112px_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-surface shadow-[var(--shadow-card)] transition-[box-shadow,transform,min-height] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary sm:block sm:aspect-[4/5] lg:col-span-2 ${
+            className={`group relative grid grid-cols-[112px_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-surface shadow-[var(--shadow-card)] transition-[box-shadow,transform,min-height] duration-200 hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-hover)] has-[[data-open-button]:focus-visible]:outline-2 has-[[data-open-button]:focus-visible]:outline-offset-4 has-[[data-open-button]:focus-visible]:outline-primary sm:block sm:aspect-[4/5] lg:col-span-2 ${
               index === 4 ? "lg:col-start-2" : ""
             } ${isOpen ? "min-h-[340px]" : "min-h-[190px]"} sm:min-h-0`}
           >
+            <button
+              ref={(element) => {
+                openButtonRefs.current[index] = element;
+              }}
+              type="button"
+              data-open-button
+              onClick={() => setActiveIndex(index)}
+              aria-expanded={isOpen}
+              aria-controls={bioId}
+              aria-label={`Ver biograf\u00EDa de ${member.name}`}
+              className="absolute inset-0 z-[3] cursor-pointer rounded-lg focus-visible:outline-none"
+            />
+
             <div className="min-h-full sm:absolute sm:inset-0">
-              <div
-                className="relative h-full min-h-40 overflow-hidden"
-                aria-label={`Espacio reservado para la fotograf\u00EDa de ${member.name}`}
-                role="img"
-              >
+              <div className="relative h-full min-h-40 overflow-hidden">
                 <DirectorAvatar seed={index} />
                 <Image
                   src={member.image}
-                  alt=""
+                  alt={`Retrato de ${member.name}`}
                   fill
                   sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 112px"
                   className="z-[1] object-cover object-top"
@@ -119,7 +114,11 @@ export default function BoardMembers({ members }: BoardMembersProps) {
             </div>
 
             {isOpen ? (
-              <div className="animate-fade-in absolute inset-0 z-10 flex cursor-default flex-col bg-primary-900/95 p-5 text-white backdrop-blur-sm sm:p-6">
+              <section
+                id={bioId}
+                aria-label={`Biograf\u00EDa de ${member.name}`}
+                className="animate-fade-in absolute inset-0 z-10 flex cursor-default flex-col bg-primary-900/95 p-5 text-white backdrop-blur-sm sm:p-6"
+              >
                 <div className="flex items-start justify-between gap-4 border-b border-white/15 pb-4">
                   <div>
                     <p className="font-heading text-[10px] font-bold uppercase tracking-[0.12em] text-sky">
@@ -144,7 +143,7 @@ export default function BoardMembers({ members }: BoardMembersProps) {
                     {member.bio}
                   </p>
                 </div>
-              </div>
+              </section>
             ) : null}
           </article>
         );

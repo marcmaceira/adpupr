@@ -5,31 +5,36 @@ import { Send } from "lucide-react";
 
 const RECIPIENT = "info@adpupr.com";
 
+function getTextField(form: FormData, field: string): string {
+  const value = form.get(field);
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+
+  const form = new FormData(event.currentTarget);
+  const name = getTextField(form, "name");
+  const contact = getTextField(form, "contact");
+  const message = getTextField(form, "message");
+  const subject = `Mensaje desde adpupr.com - ${name}`;
+  const body = [
+    `Nombre: ${name}`,
+    contact ? `Informaci\u00F3n de contacto: ${contact}` : null,
+    "",
+    "Mensaje:",
+    message,
+  ]
+    .filter((line) => line !== null)
+    .join("\n");
+
+  window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+const fieldClassName =
+  "mt-2 w-full rounded-sm border border-border-strong bg-surface px-4 py-3 font-body text-[15px] text-text outline-none transition-colors placeholder:text-text-faint focus:border-primary focus:ring-2 focus:ring-sky-200";
+
 export default function ContactForm() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const form = new FormData(event.currentTarget);
-    const name = String(form.get("name") ?? "").trim();
-    const contact = String(form.get("contact") ?? "").trim();
-    const message = String(form.get("message") ?? "").trim();
-    const subject = `Mensaje desde adpupr.com - ${name}`;
-    const body = [
-      `Nombre: ${name}`,
-      contact ? `Informaci\u00F3n de contacto: ${contact}` : null,
-      "",
-      "Mensaje:",
-      message,
-    ]
-      .filter((line) => line !== null)
-      .join("\n");
-
-    window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  };
-
-  const fieldClassName =
-    "mt-2 w-full rounded-sm border border-border-strong bg-surface px-4 py-3 font-body text-[15px] text-text outline-none transition-colors placeholder:text-text-faint focus:border-primary focus:ring-2 focus:ring-sky-200";
-
   return (
     <form onSubmit={handleSubmit} className="card p-6 sm:p-8">
       <div className="mb-8">

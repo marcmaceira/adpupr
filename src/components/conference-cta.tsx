@@ -26,14 +26,16 @@ const DEFAULT_META: ConferenceMeta = {
   format: "Presencial",
 };
 
+const DEFAULT_HEADING = (
+  <>
+    Inscr&iacute;bete a la Conferencia de Administraci&oacute;n P&uacute;blica{" "}
+    <span className="text-mustard">2026</span>.
+  </>
+);
+
 export default function ConferenceCta({
   eyebrow = "Conferencia 2026",
-  heading = (
-    <>
-      Inscr&iacute;bete a la Conferencia de Administraci&oacute;n P&uacute;blica{" "}
-      <span className="text-mustard">2026</span>.
-    </>
-  ),
+  heading = DEFAULT_HEADING,
   description = "Un encuentro de ponencias, paneles y networking en torno a la administración pública en Puerto Rico.",
   meta = DEFAULT_META,
   ctaLabel = "Inscríbete ahora",

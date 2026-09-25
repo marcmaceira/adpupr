@@ -1,9 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
+import logoColor from "../../public/logo-color.png";
 
 const NAV_LINKS = [
   { label: "Inicio", href: "/" },
@@ -36,7 +38,7 @@ export default function Header() {
   const [nosotrosMenuOpen, setNosotrosMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!mobileMenuOpen) return;
+    if (!mobileMenuOpen) return undefined;
 
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileMenuOpen(false);
@@ -52,7 +54,7 @@ export default function Header() {
   }, [mobileMenuOpen]);
 
   useEffect(() => {
-    if (!nosotrosMenuOpen) return;
+    if (!nosotrosMenuOpen) return undefined;
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape") setNosotrosMenuOpen(false);
@@ -74,8 +76,14 @@ export default function Header() {
     <header className="sticky top-0 z-50 h-[72px] border-b border-border bg-surface">
       <div className="mx-auto flex h-full max-w-[1200px] items-center gap-8 px-6">
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="ADPUPR - Inicio">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo-color.png" alt="ADPUPR" width={142} height={40} className="h-10 w-auto" />
+          <Image
+            src={logoColor}
+            alt="ADPUPR"
+            width={142}
+            height={40}
+            loading="eager"
+            className="h-10 w-auto"
+          />
         </Link>
 
         <nav className="hidden flex-1 items-center gap-1 md:flex" aria-label="Principal">
@@ -134,14 +142,14 @@ export default function Header() {
                         id="nosotros-desktop-menu"
                         className="absolute left-0 top-[calc(100%+8px)] w-72 rounded-md border border-border bg-surface p-2 shadow-[var(--shadow-popover)]"
                       >
-                        {NOSOTROS_LINKS.map((link) => (
+                        {NOSOTROS_LINKS.map((subLink) => (
                           <Link
-                            key={link.href}
-                            href={link.href}
+                            key={subLink.href}
+                            href={subLink.href}
                             onClick={() => setNosotrosMenuOpen(false)}
                             className="block rounded-sm px-3.5 py-2.5 font-heading text-[13px] font-semibold text-text transition-colors hover:bg-sky-50 focus-visible:bg-sky-50 focus-visible:outline-none"
                           >
-                            {link.label}
+                            {subLink.label}
                           </Link>
                         ))}
                       </div>

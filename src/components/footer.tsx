@@ -1,4 +1,6 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
+import logoWhiteTagline from "../../public/logo-white-tagline.png";
 
 interface FooterColumn {
   readonly heading: string;
@@ -102,9 +104,8 @@ export default function Footer() {
       <div className="mx-auto max-w-[1200px]">
         <div className="mb-14 grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
           <div>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo-white-tagline.png"
+            <Image
+              src={logoWhiteTagline}
               alt="ADPUPR — Asociación de Administración Pública de Puerto Rico"
               width={120}
               height={120}

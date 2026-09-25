@@ -28,8 +28,15 @@ export default function LatestVideo() {
         </div>
 
         <div className="overflow-hidden rounded-lg border border-border bg-primary shadow-[var(--shadow-card)]">
+          {/*
+            YouTube's player needs allow-scripts + allow-same-origin to run. The rule forbids the pair
+            because it lets a same-origin frame remove its own sandbox; this frame is cross-origin
+            (youtube-nocookie.com), so the remaining restrictions still apply.
+          */}
           <iframe
             className="aspect-video w-full"
+            // oxlint-disable-next-line react/iframe-missing-sandbox
+            sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
             src={`https://www.youtube-nocookie.com/embed/${LATEST_VIDEO_ID}`}
             title="Video m&aacute;s reciente de la ADPUPR en YouTube"
             loading="lazy"

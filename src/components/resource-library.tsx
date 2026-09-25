@@ -33,11 +33,8 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
     <div>
       <div className="border-y border-border bg-surface">
         <div className="mx-auto max-w-[1200px] px-6 py-5">
-          <div
-            className="flex gap-2 overflow-x-auto pb-1"
-            role="group"
-            aria-label="Filtrar recursos por categor\u00EDa"
-          >
+          <fieldset className="flex min-w-0 gap-2 overflow-x-auto pb-1">
+            <legend className="sr-only">Filtrar recursos por categor&iacute;a</legend>
             {CATEGORY_FILTERS.map((item) => {
               const active = category === item;
 
@@ -57,7 +54,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
                 </button>
               );
             })}
-          </div>
+          </fieldset>
         </div>
       </div>
 

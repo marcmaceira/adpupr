@@ -211,16 +211,18 @@ function CommitteeArticle({
               <div className="mt-9 border-t border-border-strong pt-8">
                 <h5 className="eyebrow">Responsabilidades</h5>
                 <ol className="mt-5 space-y-5">
-                  {committee.administration.responsibilities.map((responsibility, index) => (
-                    <li key={responsibility} className="grid grid-cols-[32px_1fr] gap-4">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-heading text-[11px] font-black text-white">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <p className="font-body text-[15px] leading-[1.75] text-text-muted">
-                        {responsibility}
-                      </p>
-                    </li>
-                  ))}
+                  {committee.administration.responsibilities.map(
+                    (responsibility, responsibilityIndex) => (
+                      <li key={responsibility} className="grid grid-cols-[32px_1fr] gap-4">
+                        <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary font-heading text-[11px] font-black text-white">
+                          {String(responsibilityIndex + 1).padStart(2, "0")}
+                        </span>
+                        <p className="font-body text-[15px] leading-[1.75] text-text-muted">
+                          {responsibility}
+                        </p>
+                      </li>
+                    ),
+                  )}
                 </ol>
               </div>
             </div>

@@ -343,6 +343,29 @@
   transition: background var(--t-base) var(--ease-standard);
 }
 
+/* The name button's hit area covers the whole card. */
+.dir-card .dir-toggle {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dir-card .dir-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.dir-card:has(.dir-toggle:focus-visible) {
+  outline: 2px solid var(--color-mustard);
+  outline-offset: 3px;
+}
+
+.dir-card .dir-toggle:focus-visible {
+  outline: none;
+}
+
 .dir-card .dir-bio {
   margin-top: 12px;
   font-family: var(--font-open-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -359,7 +382,7 @@
 }
 
 .dir-card:hover .dir-overlay,
-.dir-card:focus-within .dir-overlay {
+.dir-card-open .dir-overlay {
   background: linear-gradient(
     180deg,
     rgba(6, 19, 49, 0.2) 0%,
@@ -369,7 +392,7 @@
 }
 
 .dir-card:hover .dir-bio,
-.dir-card:focus-within .dir-bio {
+.dir-card-open .dir-bio {
   max-height: 280px;
   opacity: 1;
   margin-top: 12px;

@@ -149,7 +149,7 @@ function ScheduleEntry({ entry }: { readonly entry: AgendaEntry }) {
 
 function Schedule({ entries }: { readonly entries: readonly AgendaEntry[] }) {
   return (
-    <ol role="list">
+    <ol>
       {entries.map((entry) => (
         <ScheduleEntry key={entry.start} entry={entry} />
       ))}

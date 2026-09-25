@@ -64,24 +64,27 @@ function toResource(blob: ListBlobResultBlob): Resource | null {
   };
 }
 
+// Blob listing is cursor-paginated, so each page must be requested after the previous one.
+async function listAllBlobs(cursor?: string): Promise<ListBlobResultBlob[]> {
+  const result = await list({
+    prefix: RESOURCE_PREFIX,
+    limit: 1000,
+    cursor,
+  });
+
+  if (!result.hasMore || !result.cursor) {
+    return result.blobs;
+  }
+
+  return [...result.blobs, ...(await listAllBlobs(result.cursor))];
+}
+
 async function listResources(storeId: string): Promise<readonly Resource[]> {
   // The non-secret store ID is part of the cache key through this argument.
   void storeId;
 
   try {
-    const blobs: ListBlobResultBlob[] = [];
-    let cursor: string | undefined;
-
-    do {
-      const result = await list({
-        prefix: RESOURCE_PREFIX,
-        limit: 1000,
-        cursor,
-      });
-
-      blobs.push(...result.blobs);
-      cursor = result.hasMore ? result.cursor : undefined;
-    } while (cursor);
+    const blobs = await listAllBlobs();
 
     const resources: Resource[] = [];
 
