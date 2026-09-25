@@ -1,23 +1,28 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 import {
   ArrowUpRight,
   BadgeCheck,
   CalendarDays,
   Check,
   Clock3,
+  Coffee,
+  FileText,
   MapPin,
+  Presentation,
   Smartphone,
+  Store,
+  Utensils,
   Users,
-} from "lucide-react"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import ConferenceAgenda from "@/components/conference-agenda"
+} from "lucide-react";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import ConferenceAgenda from "@/components/conference-agenda";
 
 const REGISTRATION_URL =
-  "https://docs.google.com/forms/d/e/1FAIpQLSd3Nc0d9srM9AgoSQal0RWS__ARj53TacAYnNQ24VxXYYAbHA/viewform"
+  "https://docs.google.com/forms/d/e/1FAIpQLSd3Nc0d9srM9AgoSQal0RWS__ARj53TacAYnNQ24VxXYYAbHA/viewform";
 
 const ATH_MOVIL_URL =
-  "https://pagos.athmovilapp.com/qrCodePayment.html?133d0fe53fe0aee5f76f045eeebc2197e51d7aec08444832522d3dda729305c0"
+  "https://pagos.athmovilapp.com/qrCodePayment.html?133d0fe53fe0aee5f76f045eeebc2197e51d7aec08444832522d3dda729305c0";
 
 const THEMES = [
   {
@@ -44,7 +49,7 @@ const THEMES = [
     description:
       "Nuevas arquitecturas de gobernanza. Este eje promueve la reflexi\u00F3n sobre la colaboraci\u00F3n entre el Estado, la academia, el tercer sector, la empresa privada y la ciudadan\u00EDa como mecanismo para fortalecer la gobernanza democr\u00E1tica y la creaci\u00F3n de valor p\u00FAblico. Asimismo, aborda temas como la coproducci\u00F3n de valor p\u00FAblico, el cooperativismo, la gobernanza municipal y otros modelos de colaboraci\u00F3n intersectorial que contribuyan al desarrollo sostenible y al fortalecimiento de las instituciones p\u00FAblicas.",
   },
-] as const
+] as const;
 
 const PRICES = [
   {
@@ -68,7 +73,33 @@ const PRICES = [
     href: "https://www.paypal.com/ncp/payment/FAW7NTNWFWQXL",
     featured: true,
   },
-] as const
+] as const;
+
+const BENEFITS = [
+  { title: "Conferencias y paneles", detail: "Acceso al programa completo.", icon: Presentation },
+  {
+    title: "Materiales y recursos",
+    detail: "Contenido exclusivo para participantes.",
+    icon: FileText,
+  },
+  { title: "Certificado", detail: "Certificado de participaci\u00F3n.", icon: BadgeCheck },
+  {
+    title: "Desayuno, almuerzo y meriendas",
+    detail: "Incluidos en tu inscripci\u00F3n.",
+    icon: Utensils,
+  },
+  { title: "Caf\u00E9 y agua", detail: "Acceso a estaciones de caf\u00E9 y agua.", icon: Coffee },
+  {
+    title: "Networking",
+    detail: "Con profesionales, estudiantes graduados, servidores p\u00FAblicos y organizaciones.",
+    icon: Users,
+  },
+  {
+    title: "Exhibiciones y aliados",
+    detail: "Acceso a booths, exhibiciones y aliados.",
+    icon: Store,
+  },
+] as const;
 
 export const metadata: Metadata = {
   title: "Conferencia 2026",
@@ -80,13 +111,13 @@ export const metadata: Metadata = {
       "Estado, sociedad y colaboraci\u00F3n p\u00FAblica: nuevas arquitecturas de gobernanza.",
     url: "/conferencia",
   },
-}
+};
 
 export default function ConferenciaPage() {
   return (
     <>
       <Header />
-      <main id="main-content">
+      <main id="main-content" className="isolate">
         <section className="relative overflow-hidden bg-primary px-6 py-16 text-white sm:py-20 lg:py-24">
           <div
             aria-hidden="true"
@@ -108,8 +139,8 @@ export default function ConferenciaPage() {
                   Tema central
                 </p>
                 <p className="font-heading text-xl font-bold leading-snug text-white sm:text-2xl">
-                  Estado, sociedad y colaboraci&oacute;n p&uacute;blica: nuevas
-                  arquitecturas de gobernanza
+                  Estado, sociedad y colaboraci&oacute;n p&uacute;blica: nuevas arquitecturas de
+                  gobernanza
                 </p>
               </div>
             </div>
@@ -142,8 +173,7 @@ export default function ConferenciaPage() {
                 7:30 a.m. &ndash; 5:00 p.m.
               </EventDetail>
               <EventDetail icon={<MapPin />} label="Lugar">
-                Sal&oacute;n Teatro Ing. Salvador V. Caro, sede de Hato Rey del
-                CIAPR
+                Sal&oacute;n Teatro Ing. Salvador V. Caro, sede de Hato Rey del CIAPR
               </EventDetail>
             </div>
 
@@ -166,9 +196,9 @@ export default function ConferenciaPage() {
                       Asiste para participar en:
                     </h3>
                     <p className="text-lg leading-relaxed text-text-muted">
-                      Una conferencia magistral, paneles acad&eacute;micos,
-                      discusiones multisectoriales, networking y experiencias de
-                      profesionales de la pr&aacute;ctica.
+                      Una conferencia magistral, paneles acad&eacute;micos, discusiones
+                      multisectoriales, networking y experiencias de profesionales de la
+                      pr&aacute;ctica.
                     </p>
                   </div>
                 </div>
@@ -179,14 +209,47 @@ export default function ConferenciaPage() {
                     aria-hidden="true"
                   />
                   <p className="text-lg font-semibold leading-relaxed text-primary">
-                    Certificaci&oacute;n de Convalidaci&oacute;n de hasta un
-                    m&aacute;ximo de 8.5 horas en educaci&oacute;n continua de la
-                    Oficina de &Eacute;tica Gubernamental (OEG)
+                    Certificaci&oacute;n de Convalidaci&oacute;n de hasta un m&aacute;ximo de 8.5
+                    horas en educaci&oacute;n continua de la Oficina de &Eacute;tica Gubernamental
+                    (OEG)
                   </p>
                 </div>
               </div>
             </div>
             <ConferenceAgenda />
+          </div>
+        </section>
+
+        <section id="beneficios" className="bg-primary py-16 text-text-on-dark sm:py-20">
+          <div className="mx-auto max-w-[1248px] px-6">
+            <div className="grid gap-8 lg:grid-cols-[4fr_6fr] lg:gap-20">
+              <div>
+                <p className="eyebrow eyebrow-on-dark mb-3">Tu inscripci&oacute;n incluye</p>
+                <h2 className="h-section max-w-[20ch] text-text-on-dark">
+                  Todo lo que incluye tu experiencia.
+                </h2>
+                <div className="mt-10 border-l-4 border-mustard pl-6">
+                  <p className="font-heading text-base text-text-on-dark-muted">
+                    Educaci&oacute;n continua
+                  </p>
+                  <p className="my-3 font-heading text-5xl font-semibold tabular-nums tracking-tight text-mustard">
+                    <span className="sr-only">Hasta </span>8.5 h
+                  </p>
+                  <p className="max-w-[35ch] text-base text-text-on-dark-muted sm:text-sm">
+                    Hasta 8.5 horas de la Oficina de &Eacute;tica Gubernamental (OEG).
+                  </p>
+                </div>
+              </div>
+              <dl className="grid gap-x-8 sm:grid-cols-2">
+                {BENEFITS.map((benefit) => (
+                  <BenefitItem key={benefit.title} benefit={benefit} />
+                ))}
+              </dl>
+            </div>
+            <p className="mt-8 border-t border-text-on-dark/20 pt-6 text-base text-text-on-dark-muted sm:text-sm">
+              <strong className="font-semibold text-mustard">Asamblea Ordinaria</strong>
+              {" \u00B7 "}Exclusiva para miembros activos de ADPUPR.
+            </p>
           </div>
         </section>
 
@@ -196,9 +259,9 @@ export default function ConferenciaPage() {
               <p className="eyebrow mb-3">Inscripci&oacute;n &middot; Paso 1</p>
               <h2 className="h-section mb-4 text-primary">Realiza tu pago.</h2>
               <p className="text-text-muted">
-                Selecciona tu tarifa y realiza el pago con PayPal o ATH
-                M&oacute;vil. Conserva tu evidencia de pago, ya que
-                deber&aacute;s incluirla en el formulario de inscripci&oacute;n.
+                Selecciona tu tarifa y realiza el pago con PayPal o ATH M&oacute;vil. Conserva tu
+                evidencia de pago, ya que deber&aacute;s incluirla en el formulario de
+                inscripci&oacute;n.
               </p>
             </div>
 
@@ -207,9 +270,7 @@ export default function ConferenciaPage() {
                 <article
                   key={price.name}
                   className={`relative flex flex-col rounded-lg border bg-surface p-7 shadow-[var(--shadow-card)] sm:p-8 ${
-                    price.featured
-                      ? "border-primary ring-1 ring-primary"
-                      : "border-border"
+                    price.featured ? "border-primary ring-1 ring-primary" : "border-border"
                   }`}
                 >
                   {price.featured ? (
@@ -217,9 +278,7 @@ export default function ConferenciaPage() {
                       Miembros
                     </span>
                   ) : null}
-                  <h3 className="font-heading text-base font-bold text-primary">
-                    {price.name}
-                  </h3>
+                  <h3 className="font-heading text-base font-bold text-primary">{price.name}</h3>
                   <p className="my-5 font-heading text-5xl font-black tracking-[-0.03em] text-primary">
                     {price.price}
                   </p>
@@ -252,20 +311,15 @@ export default function ConferenciaPage() {
               <div className="grid md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
                 <div className="flex gap-5 p-7 sm:p-8">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-50 text-primary">
-                    <Smartphone
-                      className="h-6 w-6"
-                      strokeWidth={1.75}
-                      aria-hidden="true"
-                    />
+                    <Smartphone className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
                   </span>
                   <div>
                     <h3 className="mb-2 font-heading text-xl font-bold text-white">
                       Pago con ATH M&oacute;vil
                     </h3>
                     <p className="max-w-[65ch] text-sm leading-relaxed text-text-on-dark-muted sm:text-base">
-                      Al continuar, ser&aacute;s redirigido a ATH M&oacute;vil. Escribe
-                      manualmente el monto correspondiente a tu tarifa para
-                      finalizar la transacci&oacute;n.
+                      Al continuar, ser&aacute;s redirigido a ATH M&oacute;vil. Escribe manualmente
+                      el monto correspondiente a tu tarifa para finalizar la transacci&oacute;n.
                     </p>
                   </div>
                 </div>
@@ -284,8 +338,7 @@ export default function ConferenciaPage() {
             </div>
 
             <p className="mt-7 text-sm text-text-faint">
-              Las tarifas preferenciales aplican exclusivamente a miembros
-              activos de ADPUPR.
+              Las tarifas preferenciales aplican exclusivamente a miembros activos de ADPUPR.
             </p>
           </div>
         </section>
@@ -293,15 +346,13 @@ export default function ConferenciaPage() {
         <section className="bg-primary-900 px-6 py-16 text-white sm:py-20">
           <div className="mx-auto flex max-w-[1200px] flex-col gap-8 md:flex-row md:items-center md:justify-between">
             <div>
-              <p className="eyebrow eyebrow-on-dark mb-3">
-                Inscripci&oacute;n &middot; Paso 2
-              </p>
+              <p className="eyebrow eyebrow-on-dark mb-3">Inscripci&oacute;n &middot; Paso 2</p>
               <h2 className="max-w-[18ch] font-heading text-3xl font-black leading-tight text-white sm:text-4xl">
                 Completa tu registro.
               </h2>
               <p className="mt-4 max-w-[58ch] text-text-on-dark-muted">
-                Una vez realizado el pago, completa el Formulario de
-                Inscripci&oacute;n e incluye tu evidencia de pago.
+                Una vez realizado el pago, completa el Formulario de Inscripci&oacute;n e incluye tu
+                evidencia de pago.
               </p>
             </div>
             <a
@@ -324,8 +375,7 @@ export default function ConferenciaPage() {
                 <h2 className="h-section text-primary">Ejes tem&aacute;ticos</h2>
               </div>
               <p className="max-w-[52ch] text-text-muted md:justify-self-end">
-                Funcionar&aacute;n como hilos conductores en las actividades
-                preconferencia.
+                Funcionar&aacute;n como hilos conductores en las actividades preconferencia.
               </p>
             </div>
 
@@ -356,7 +406,25 @@ export default function ConferenciaPage() {
       </main>
       <Footer />
     </>
-  )
+  );
+}
+
+function BenefitItem({
+  benefit,
+}: Readonly<{
+  benefit: (typeof BENEFITS)[number];
+}>) {
+  const Icon = benefit.icon;
+
+  return (
+    <div className="border-t border-text-on-dark/20 py-5">
+      <dt className="flex items-start gap-3 font-heading text-base font-semibold text-text-on-dark">
+        <Icon className="size-6 shrink-0 stroke-sky" strokeWidth={1.75} aria-hidden="true" />
+        <span className="min-w-0">{benefit.title}</span>
+      </dt>
+      <dd className="mt-2 pl-9 text-base text-text-on-dark-muted sm:text-sm">{benefit.detail}</dd>
+    </div>
+  );
 }
 
 function EventDetail({
@@ -364,9 +432,9 @@ function EventDetail({
   label,
   children,
 }: Readonly<{
-  icon: React.ReactNode
-  label: string
-  children: React.ReactNode
+  icon: React.ReactNode;
+  label: string;
+  children: React.ReactNode;
 }>) {
   return (
     <div className="flex gap-4 border-b border-border p-6 last:border-b-0 md:border-b-0 md:border-r md:p-7 md:last:border-r-0">
@@ -377,10 +445,8 @@ function EventDetail({
         <p className="mb-1 font-heading text-[11px] font-bold uppercase tracking-[0.12em] text-text-muted">
           {label}
         </p>
-        <p className="text-sm font-semibold leading-relaxed text-primary">
-          {children}
-        </p>
+        <p className="text-sm font-semibold leading-relaxed text-primary">{children}</p>
       </div>
     </div>
-  )
+  );
 }
