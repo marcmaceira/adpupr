@@ -2,25 +2,24 @@
 
 import { useDeferredValue, useState } from "react";
 import { Download, FileText, Search } from "lucide-react";
-import {
-  RESOURCE_CATEGORIES,
-  type Resource,
-  type ResourceCategory,
-} from "@/lib/resource-categories";
 
-const ALL_CATEGORIES = "Todos" as const;
-type CategoryFilter = ResourceCategory | typeof ALL_CATEGORIES;
-const CATEGORY_FILTERS: readonly CategoryFilter[] = [
-  ALL_CATEGORIES,
-  ...RESOURCE_CATEGORIES.map(({ label }) => label),
-];
+export interface Resource {
+  readonly id: number;
+  readonly title: string;
+  readonly category: string;
+  readonly href: string;
+}
+
+const ALL_CATEGORIES = "Todos";
 
 interface ResourceLibraryProps {
   readonly resources: readonly Resource[];
+  readonly categories: readonly string[];
 }
 
-export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
-  const [category, setCategory] = useState<CategoryFilter>(ALL_CATEGORIES);
+export default function ResourceLibrary({ resources, categories }: ResourceLibraryProps) {
+  const categoryFilters = [ALL_CATEGORIES, ...categories];
+  const [category, setCategory] = useState(ALL_CATEGORIES);
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query.trim().toLocaleLowerCase("es"));
   const filteredResources = resources.filter(
@@ -35,7 +34,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
         <div className="mx-auto max-w-[1200px] px-6 py-5">
           <fieldset className="flex min-w-0 gap-2 overflow-x-auto pb-1">
             <legend className="sr-only">Filtrar recursos por categor&iacute;a</legend>
-            {CATEGORY_FILTERS.map((item) => {
+            {categoryFilters.map((item) => {
               const active = category === item;
 
               return (
@@ -46,7 +45,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
                   aria-pressed={active}
                   className={`min-h-11 shrink-0 rounded-full border px-4 py-2 font-heading text-[13px] font-bold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
                     active
-                      ? "border-primary bg-primary text-white"
+                      ? "border-primary bg-primary text-text-on-dark"
                       : "border-border-strong bg-surface text-text hover:border-primary-300 hover:bg-sky-50"
                   }`}
                 >
@@ -76,7 +75,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
           <ul className="mt-8 divide-y divide-border border-y border-border">
             {filteredResources.map((resource) => (
               <li
-                key={resource.href}
+                key={resource.id}
                 className="grid gap-5 bg-surface px-5 py-6 sm:grid-cols-[1fr_auto] sm:items-center"
               >
                 <div>
@@ -86,7 +85,7 @@ export default function ResourceLibrary({ resources }: ResourceLibraryProps) {
                 <a
                   href={resource.href}
                   aria-label={`Descargar ${resource.title}`}
-                  className="inline-flex min-h-11 items-center justify-center gap-2 self-start rounded-sm bg-primary px-5 py-3 font-heading text-sm font-bold text-white transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:self-auto"
+                  className="inline-flex min-h-11 items-center justify-center gap-2 self-start rounded-sm bg-primary px-5 py-3 font-heading text-sm font-bold text-text-on-dark transition-colors hover:bg-primary-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary sm:self-auto"
                 >
                   <Download className="h-4 w-4" aria-hidden="true" />
                   Descargar

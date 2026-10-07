@@ -24,7 +24,17 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": [".next/**", "out/**", "build/**", "next-env.d.ts", ".agents/**", ".claude/**"],
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    ".agents/**",
+    ".claude/**",
+    "src/payload-types.ts",
+    "src/migrations/**",
+    "src/app/(payload)/admin/importMap.js"
+  ],
   "rules": {
     "no-array-constructor": "error",
     "no-unused-expressions": "warn",
@@ -115,7 +125,7 @@
     "import/no-unassigned-import": [
       "error",
       {
-        "allow": ["**/*.css", "server-only"]
+        "allow": ["**/*.css", "server-only", "@payloadcms/next/css"]
       }
     ],
     "next-js/no-location-assign-relative-destination": "error",

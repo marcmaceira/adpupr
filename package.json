@@ -2,21 +2,43 @@
   "name": "adpupr",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "vercel-build": "payload migrate && next build",
     "start": "next start",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "test": "tsx --test src/tests/*.test.ts",
+    "db:up": "docker compose -p adpupr up -d",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
+    "migrate": "payload migrate",
+    "migrate:create": "payload migrate:create",
+    "seed": "tsx --env-file-if-exists=.env src/scripts/seed.ts",
+    "import:resources": "tsx --env-file-if-exists=.env src/scripts/import-resources.ts"
   },
   "dependencies": {
+    "@payloadcms/db-postgres": "3.90.2",
+    "@payloadcms/live-preview-react": "3.90.2",
+    "@payloadcms/next": "3.90.2",
+    "@payloadcms/plugin-seo": "3.90.2",
+    "@payloadcms/richtext-lexical": "3.90.2",
+    "@payloadcms/storage-vercel-blob": "3.90.2",
+    "@payloadcms/translations": "3.90.2",
+    "@payloadcms/ui": "3.90.2",
     "@vercel/blob": "^2.8.0",
+    "graphql": "^16.14.2",
     "lucide-react": "^1.41.0",
     "next": "^16.3.4",
+    "payload": "3.90.2",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "16.3.4",
@@ -28,6 +50,10 @@
     "oxlint": "^1.85.0",
     "oxlint-tsgolint": "^7.0.2002",
     "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
     "typescript": "^7.0.2"
+  },
+  "engines": {
+    "node": ">=22.9.0"
   }
 }
