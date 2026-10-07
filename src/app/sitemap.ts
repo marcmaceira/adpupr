@@ -1,49 +1,13 @@
 import type { MetadataRoute } from "next";
+import { getPublishedPageSlugs } from "@/lib/cms";
+import { HOME_SLUG, pathFromSlug } from "@/lib/paths";
 import { siteUrl } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: siteUrl,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${siteUrl}/nosotros/quienes-somos`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/nosotros/estructura-organizacional`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/nosotros/historia-fundacion`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/recursos`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${siteUrl}/membresia`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${siteUrl}/contactanos`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-  ];
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  return (await getPublishedPageSlugs()).map((page) => ({
+    url: `${siteUrl}${pathFromSlug(page.slug)}`,
+    lastModified: page.updatedAt,
+    changeFrequency: "monthly",
+    priority: page.slug === HOME_SLUG ? 1 : 0.8,
+  }));
 }

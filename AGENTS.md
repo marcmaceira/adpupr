@@ -11,15 +11,16 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Commands
 
 ```bash
-pnpm dev          # Start dev server (http://localhost:3000)
+pnpm dev --hostname 192.168.9.4 --port 3002 # Private-network preview
 pnpm build        # Production build (Next.js 16 + Turbopack)
+pnpm vercel-build # Payload migrations, then production build
 pnpm lint         # Oxlint, type-aware + type-check (.oxlintrc.json); warnings fail
 pnpm lint:fix     # Oxlint with auto-fixes
 pnpm format       # Oxfmt (.oxfmtrc.json)
 pnpm format:check # Oxfmt check only
 ```
 
-No test framework is configured yet.
+`pnpm test` runs the unit suite with `node:test` and `tsx`. The destructive API integration suite in `src/tests/cms.integration.ts` is opt-in and must run only against its isolated local server/database on port 3003; never point it at the editor preview or production. See `docs/cms-verification.md`.
 
 ## Linting and formatting
 
@@ -34,35 +35,35 @@ Use Conventional Commits for every commit message (for example, `feat: add membe
 
 ## Architecture
 
-**Stack**: Next.js 16 (App Router), React 19, Tailwind CSS 4 (v4 syntax with `@theme inline`), TypeScript 5, pnpm.
+**Stack**: Next.js 16 (App Router), React 19, Tailwind CSS 4 (v4 syntax with `@theme inline`), TypeScript 7, pnpm, Payload CMS 3, Postgres and Vercel Blob.
 
 **Language**: All user-facing content is in **Spanish**. Use HTML entities (`&oacute;`) in JSX and Unicode escapes (`\u00F3`) in JS strings for accented characters. Never omit Spanish diacritics.
 
-### Design System (`src/app/globals.css`)
+### Design System (`src/app/(frontend)/globals.css`)
 
 Colors and fonts are defined as CSS custom properties in `:root` and registered in a `@theme inline` block so they work as Tailwind utilities:
 
-- **Brand colors**: primary `#1C376D`, accent blue `#5C93BC`, dark `#0f1f3d`. Gold `#c8a04a` is a POC design accent, not part of the official brand.
-- **Color utilities**: `bg-primary`, `bg-primary-light`, `bg-primary-dark`, `bg-accent`, `bg-accent-light`, `bg-bg`, `bg-surface`, `bg-cream`, `text-text`, `text-text-muted`
-- **Fonts**: `font-heading` (DM Serif Display), `font-body` (Source Sans 3), `font-be-vietnam-pro` (Be Vietnam Pro, brand logo font) — loaded via `next/font/google` in `layout.tsx`
-- **Utility classes**: `.section-padding`, `.gold-rule`, `.card-accent-left`, `.card-accent-top`
+- **Current design colors**: primary `#0d285b`, sky `#75bdf0`, mustard `#ffd258`, dark `#061331`. Preserve the existing site's palette during CMS changes.
+- **Color utilities**: `bg-primary`, `bg-primary-700`, `bg-primary-900`, `bg-sky-50`, `bg-mustard`, `bg-bg`, `bg-surface`, `bg-surface-2`, `text-text`, `text-text-muted`, `text-text-on-dark`, `border-border`
+- **Fonts**: `font-heading` (Be Vietnam Pro), `font-body` (Open Sans) — loaded via `next/font/google` in the frontend layout
+- **Utility classes**: `.eyebrow`, `.eyebrow-on-dark`, `.h-display`, `.h-section`, `.lede`, `.card`
 - **Logo assets** (`public/`): `logo-clear.png` (transparent bg, white+blue text), `logo-gray.png` (full logo on gray bg). Original JPEGs were removed.
 
 Always use theme tokens (`bg-bg`, `border-primary/10`) instead of hardcoded values (`bg-white`, `border-gray-200`).
 
-### Page Structure (`src/app/page.tsx`)
+### CMS and Page Structure
 
-Single-page site composed of section components rendered in order:
+Separate root layouts: `src/app/(frontend)/` owns the website; `src/app/(payload)/` owns `/admin` and `/api`. Keep metadata routes `robots.ts` and `sitemap.ts` at `src/app/` (outside route groups).
 
-```
-Header → Hero → Stats → About → ConferenceCta → LatestVideo → EngagementCtas → CtaBand → Footer
-```
+`(frontend)/page.tsx` renders the CMS page with slug `inicio`; `(frontend)/[...slug]/page.tsx` renders published nested/new pages. `src/lib/page-view.tsx` wraps `RenderBlocks`, while `src/lib/cms.ts` handles access-aware content queries. Header/footer/site settings are Payload globals. Production content lives in Postgres, not `src/seed/content.ts`.
 
-All components are **server components** except `header.tsx` (mobile navigation state), `board-members.tsx` (interactive biography overlays), `director-card.tsx` (biography toggle), `contact-form.tsx`, `resource-library.tsx`, and `conference-agenda.tsx`.
+`src/blocks/*-blocks.ts` defines the 24 editorial section schemas; matching `*-components.tsx` files render them. Add a block to `src/blocks/index.ts` and the exhaustive renderer, then regenerate Payload types and create a migration. Preserve editor-owned content; seed/import scripts are idempotent and never overwrite existing pages or globals.
+
+Most renderers are **server components**. Client components handle mobile navigation, people/committee biography toggles, conference agenda, contact form, resource filtering, and live-preview refresh.
 
 ### Components (`src/components/`)
 
-Each section is a self-contained file with its own data constants, sub-components, and TypeScript interfaces. Homepage section IDs for anchor navigation: `#inicio`, `#nosotros`, `#conferencia`.
+Shared typed components receive CMS content as props. Homepage section IDs remain `#inicio`, `#nosotros`, and `#conferencia`; editorial anchor IDs are optional on other sections. Use `CmsLink` and the safe URL helpers for editor-supplied links.
 
 ### Key Patterns
 
@@ -75,4 +76,8 @@ Each section is a self-contained file with its own data constants, sub-component
 ### Gotchas
 
 - **`@theme inline` must use direct hex values**, never `var()` references — creates circular CSS custom property definitions that resolve to empty strings
-- **Local images**: use `next/image` with a static import (`import logo from "../../public/logo.png"`), not a string path or `<img>`
+- **Bundled images**: use `next/image` with a static import, not a string path or `<img>`. **CMS images** use Payload relationships and `src/lib/media.ts`; that helper normalizes local file URLs and supplies dimensions.
+- **Generated files**: regenerate `src/payload-types.ts` and the admin import map instead of hand-editing them. Commit migrations and generated files alongside schema changes.
+- **Database safety**: deployed databases require `PAYLOAD_DB_PUSH=false` and committed migrations. Preview databases must be isolated from production. Do not run the seed/import against a remote database or Blob without approval and `CMS_ALLOW_REMOTE_WRITES=true`.
+- **Upload durability**: Vercel requires `BLOB_READ_WRITE_TOKEN`; OIDC-only Blob configuration is insufficient for Payload's adapter. `uploads/` is a local-only fallback, ignored by Git.
+- **Draft access**: preview requires both Next Draft Mode and a verified Payload session. Never infer authentication from the draft cookie alone or weaken production CSRF checks for plain-HTTP QA.

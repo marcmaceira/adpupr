@@ -1,0 +1,108 @@
+{
+  "snapshotSource": "https://www.adpupr.com/recursos",
+  "categories": [
+    {
+      "slug": "boletines",
+      "title": "Boletines"
+    },
+    {
+      "slug": "articulos-de-opinion-edicion-especial",
+      "title": "Art\u00edculos de opini\u00f3n especial"
+    },
+    {
+      "slug": "comunicados",
+      "title": "Comunicados"
+    },
+    {
+      "slug": "convocatorias",
+      "title": "Convocatorias"
+    }
+  ],
+  "documents": [
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/articulos-de-opinion-edicion-especial/Arti%CC%81culo%20de%20Opinio%CC%81n%20Edicio%CC%81n%20Especial%20sept%202026-wIz8r2kBZ5fPlqV4a7i7sUv0UAejzI.pdf",
+      "title": "Art\u00edculo de Opini\u00f3n Edici\u00f3n Especial sept 2026",
+      "category": "articulos-de-opinion-edicion-especial"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/boletines/V%20Boleti%CC%81n%20Informativo%20ADPUPR%202026.pdf",
+      "title": "V Bolet\u00edn Informativo ADPUPR 2026",
+      "category": "boletines"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/articulos-de-opinion-edicion-especial/Arti%CC%81culo%20de%20Opinio%CC%81n%20Especial%20ago%202026.pdf",
+      "title": "Art\u00edculo de Opini\u00f3n Especial ago 2026",
+      "category": "articulos-de-opinion-edicion-especial"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/articulos-de-opinion-edicion-especial/Arti%CC%81culo%20de%20opinio%CC%81n%20especial%20-%20junio%202026.pdf",
+      "title": "Art\u00edculo de opini\u00f3n especial junio 2026",
+      "category": "articulos-de-opinion-edicion-especial"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/boletines/Nu%CC%81m%202%20-%20Boleti%CC%81n%20Informativo%20septiembre%202025.pdf",
+      "title": "N\u00fam 2 Bolet\u00edn Informativo septiembre 2025",
+      "category": "boletines"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/boletines/Nu%CC%81m%204%20-%20Boleti%CC%81n%20Informativo%20marzo%202026.pdf",
+      "title": "N\u00fam 4 Bolet\u00edn Informativo marzo 2026",
+      "category": "boletines"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/boletines/Nu%CC%81m%201%20-%20Boleti%CC%81n%20Informativo%20junio%202025.pdf",
+      "title": "N\u00fam 1 Bolet\u00edn Informativo junio 2025",
+      "category": "boletines"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/comunicados/Conmemoracio%CC%81n%20del%20Di%CC%81a%20del%20Periodista%20y%20la%20Semana%20de%20la%20Prensa%207-28-2026.pdf",
+      "title": "Conmemoraci\u00f3n del D\u00eda del Periodista y la Semana de la Prensa 7 28 2026",
+      "category": "comunicados"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/comunicados/ADPU%20Comunicado%20Junta%20Directiva.pdf",
+      "title": "ADPU Comunicado Junta Directiva",
+      "category": "comunicados"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/comunicados/Comunicado%20Oficial%20Enero.pdf",
+      "title": "Comunicado Oficial Enero",
+      "category": "comunicados"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Conferencia%20ADPUPR%202026%20%E2%80%93%20Apertura%20de%20Inscripciones.pdf",
+      "title": "Conferencia ADPUPR 2026 \u2013 Apertura de Inscripciones",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20Arti%CC%81culos%20ADPUPR.pdf",
+      "title": "Convocatoria Art\u00edculos ADPUPR",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20ponencias%20Conferencia%202026%202.jpeg",
+      "title": "Convocatoria ponencias Conferencia 2026 2",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20ponencias%20Conferencia%202026%203.jpeg",
+      "title": "Convocatoria ponencias Conferencia 2026 3",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20ponencias%20Conferencia%202026%204.jpeg",
+      "title": "Convocatoria ponencias Conferencia 2026 4",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20ponencias%20Conferencia%202026%205.jpeg",
+      "title": "Convocatoria ponencias Conferencia 2026 5",
+      "category": "convocatorias"
+    },
+    {
+      "url": "https://2yohsk2xwqevfocw.public.blob.vercel-storage.com/recursos/convocatorias/Convocatoria%20ponencias%20Conferencia%202026.jpeg",
+      "title": "Convocatoria ponencias Conferencia 2026",
+      "category": "convocatorias"
+    }
+  ]
+}
