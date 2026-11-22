@@ -170,6 +170,8 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    documents: Document;
+    'document-categories': DocumentCategory;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -181,6 +183,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    'document-categories': DocumentCategoriesSelect<false> | DocumentCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -247,7 +251,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: (HeroBlock | EventOverviewBlock | EventBenefitsBlock | PricingTableBlock | NumberedGridBlock)[] | null;
+  layout?: (HeroBlock | MembershipEnrollmentBlock | ContactSectionBlock | ResourceLibraryBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -336,7 +340,7 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
- * Por ejemplo, a la sección de tarifas (URL #inscripcion).
+ * Normalmente un formulario externo que se abre en una pestaña nueva.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
@@ -357,137 +361,144 @@ export interface CmsLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventOverviewBlock".
+ * via the `definition` "MembershipEnrollmentBlock".
  */
-export interface EventOverviewBlock {
-  /**
-   * La franja con fecha, horario y lugar. Se muestran en una fila de tres.
-   */
-  details?:
-    | {
-        icon:
-          | 'arrow-down'
-          | 'arrow-right'
-          | 'arrow-up'
-          | 'arrow-up-right'
-          | 'badge-check'
-          | 'book-open'
-          | 'calendar'
-          | 'calendar-days'
-          | 'check'
-          | 'clock'
-          | 'coffee'
-          | 'download'
-          | 'external-link'
-          | 'file-chart-column'
-          | 'file-pen-line'
-          | 'file-text'
-          | 'heart-handshake'
-          | 'library'
-          | 'mail'
-          | 'map-pin'
-          | 'presentation'
-          | 'search'
-          | 'send'
-          | 'smartphone'
-          | 'store'
-          | 'users'
-          | 'utensils';
-        label: string;
-        value: string;
-        id?: string | null;
-      }[]
-    | null;
-  intro: {
+export interface MembershipEnrollmentBlock {
+  benefits: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    text?: string | null;
+    link?: CmsLink;
+    callout?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
+  payment: {
     eyebrow?: string | null;
     /**
      * Cada salto de línea se muestra como un salto de línea.
      */
     heading: string;
     /**
-     * Se muestran a la derecha del título.
+     * El enlace de pago se edita en Configuración del sitio → Pagos.
      */
-    rows?:
-      | {
-          icon:
-            | 'arrow-down'
-            | 'arrow-right'
-            | 'arrow-up'
-            | 'arrow-up-right'
-            | 'badge-check'
-            | 'book-open'
-            | 'calendar'
-            | 'calendar-days'
-            | 'check'
-            | 'clock'
-            | 'coffee'
-            | 'download'
-            | 'external-link'
-            | 'file-chart-column'
-            | 'file-pen-line'
-            | 'file-text'
-            | 'heart-handshake'
-            | 'library'
-            | 'mail'
-            | 'map-pin'
-            | 'presentation'
-            | 'search'
-            | 'send'
-            | 'smartphone'
-            | 'store'
-            | 'users'
-            | 'utensils';
-          /**
-           * Opcional.
-           */
-          heading?: string | null;
-          text: string;
-          /**
-           * Muestra el texto en azul y en negrita.
-           */
-          emphasis?: boolean | null;
-          id?: string | null;
-        }[]
-      | null;
+    athMovil: {
+      title: string;
+      text?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+      buttonLabel: string;
+    };
+    paypal: {
+      title: string;
+      plans?:
+        | {
+            name: string;
+            price: string;
+            url: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    /**
+     * La dirección postal se edita en Configuración del sitio → Contacto.
+     */
+    check: {
+      title: string;
+      text?: string | null;
+    };
   };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'membershipEnrollment';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  eyebrow?: string | null;
   /**
-   * La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.
+   * Cada salto de línea se muestra como un salto de línea.
    */
-  agenda: {
+  heading: string;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  /**
+   * El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.
+   */
+  form: {
+    eyebrow?: string | null;
     heading: string;
-    expandLabel: string;
+    nameLabel: string;
+    namePlaceholder?: string | null;
+    contactLabel: string;
+    contactPlaceholder?: string | null;
+    messageLabel: string;
+    messagePlaceholder?: string | null;
+    privacyNote?: string | null;
+    submitLabel: string;
+    email: {
+      /**
+       * Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.
+       */
+      recipient?: string | null;
+      /**
+       * Escribe {nombre} donde debe ir el nombre de la persona.
+       */
+      subjectTemplate: string;
+      /**
+       * Por ejemplo «Nombre:». Le sigue el nombre escrito.
+       */
+      nameLine: string;
+      /**
+       * Se omite si la persona no escribe su contacto.
+       */
+      contactLine: string;
+      /**
+       * Va en su propia línea, antes del mensaje.
+       */
+      messageLine: string;
+    };
+  };
+  /**
+   * Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.
+   */
+  channels: {
+    eyebrow?: string | null;
+    ariaLabel: string;
+    emailHeading?: string | null;
+    postalHeading?: string | null;
+    socialHeading?: string | null;
     /**
-     * Se usa arriba (con la agenda abierta) y al final de la agenda.
+     * En el orden en que aparecen. Solo se muestran redes configuradas.
      */
-    collapseLabel: string;
-    periods?:
+    networks?:
       | {
-          title: string;
-          summary?: string | null;
-          entries?:
-            | {
-                start: string;
-                end: string;
-                title: string;
-                /**
-                 * Opcional. El visitante la despliega con el botón +.
-                 */
-                description?: string | null;
-                /**
-                 * Se muestra en gris y nunca despliega la descripción.
-                 */
-                quiet?: boolean | null;
-                id?: string | null;
-              }[]
-            | null;
+          network: 'facebook' | 'instagram' | 'linkedin' | 'youtube';
           id?: string | null;
         }[]
       | null;
-    /**
-     * Por ejemplo: Programa sujeto a ajustes.
-     */
-    note?: string | null;
-    registrationLink?: CmsLink;
   };
   settings?: {
     /**
@@ -497,69 +508,40 @@ export interface EventOverviewBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'eventOverview';
+  blockType: 'contactSection';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventBenefitsBlock".
+ * via the `definition` "ResourceLibraryBlock".
  */
-export interface EventBenefitsBlock {
+export interface ResourceLibraryBlock {
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
    */
   heading: string;
-  callout?: {
-    label?: string | null;
-    /**
-     * No se ve; se lee antes de la cifra. Por ejemplo: Hasta
-     */
-    srPrefix?: string | null;
-    /**
-     * Por ejemplo: 8.5 h
-     */
-    value?: string | null;
-    note?: string | null;
-  };
-  benefits?:
-    | {
-        icon:
-          | 'arrow-down'
-          | 'arrow-right'
-          | 'arrow-up'
-          | 'arrow-up-right'
-          | 'badge-check'
-          | 'book-open'
-          | 'calendar'
-          | 'calendar-days'
-          | 'check'
-          | 'clock'
-          | 'coffee'
-          | 'download'
-          | 'external-link'
-          | 'file-chart-column'
-          | 'file-pen-line'
-          | 'file-text'
-          | 'heart-handshake'
-          | 'library'
-          | 'mail'
-          | 'map-pin'
-          | 'presentation'
-          | 'search'
-          | 'send'
-          | 'smartphone'
-          | 'store'
-          | 'users'
-          | 'utensils';
-        title: string;
-        detail?: string | null;
-        id?: string | null;
-      }[]
-    | null;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
   /**
-   * El texto en negrita se muestra en mostaza.
+   * Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.
    */
-  footnote?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  library: {
+    filterLegend: string;
+    allLabel: string;
+    searchLabel: string;
+    searchPlaceholder?: string | null;
+    /**
+     * Los lectores de pantalla lo leen seguido del título del documento.
+     */
+    downloadLabel: string;
+    emptyArchive?: {
+      title?: string | null;
+      text?: string | null;
+    };
+    noResults?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -568,95 +550,7 @@ export interface EventBenefitsBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'eventBenefits';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PricingTableBlock".
- */
-export interface PricingTableBlock {
-  eyebrow?: string | null;
-  /**
-   * Cada salto de línea se muestra como un salto de línea.
-   */
-  heading: string;
-  intro?: string | null;
-  prices?:
-    | {
-        name: string;
-        price: string;
-        note?: string | null;
-        buttonLabel: string;
-        /**
-         * Se abre en una pestaña nueva.
-         */
-        paymentUrl: string;
-        /**
-         * Borde azul, botón sólido y la insignia de arriba.
-         */
-        featured?: boolean | null;
-        badge?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  /**
-   * El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.
-   */
-  athMovil?: {
-    title?: string | null;
-    text?: string | null;
-    buttonLabel?: string | null;
-  };
-  footnote?: string | null;
-  settings?: {
-    /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
-     */
-    anchorId?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'pricingTable';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NumberedGridBlock".
- */
-export interface NumberedGridBlock {
-  eyebrow?: string | null;
-  /**
-   * Cada salto de línea se muestra como un salto de línea.
-   */
-  heading: string;
-  /**
-   * Se muestra a la derecha del título.
-   */
-  intro?: string | null;
-  /**
-   * Por ejemplo: EJE (se muestra «EJE 01»).
-   */
-  numberPrefix?: string | null;
-  /**
-   * Va antes de cada descripción. Por ejemplo: Enfoque:
-   */
-  leadIn?: string | null;
-  items?:
-    | {
-        number: string;
-        title: string;
-        description?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  settings?: {
-    /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
-     */
-    anchorId?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'numberedGrid';
+  blockType: 'resourceLibrary';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -760,6 +654,93 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * Así aparece en la lista y en el botón de descarga.
+   */
+  title: string;
+  category: number | DocumentCategory;
+  /**
+   * La lista muestra primero los documentos más recientes.
+   */
+  publishedAt: string;
+  /**
+   * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
+   */
+  sortOrder?: number | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  _stored?: boolean | null;
+  _transforms?: UploadTransforms;
+  original?: {
+    filename?: string | null;
+    url?: string | null;
+    mimeType?: string | null;
+    filesize?: number | null;
+    width?: number | null;
+    height?: number | null;
+    prefix?: string | null;
+    _objectKey?: string | null;
+    _stored?: boolean | null;
+  };
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-categories".
+ */
+export interface DocumentCategory {
+  id: number;
+  /**
+   * Texto del botón de filtro y de la etiqueta sobre cada documento.
+   */
+  label: string;
+  /**
+   * Minúsculas, números y guiones. No se muestra a visitantes.
+   */
+  slug: string;
+  /**
+   * Las categorías con número menor aparecen primero.
+   */
+  order: number;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -786,6 +767,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'document-categories';
+        value: number | DocumentCategory;
       } | null)
     | ({
         relationTo: 'media';
@@ -870,10 +859,9 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
-        eventOverview?: T | EventOverviewBlockSelect<T>;
-        eventBenefits?: T | EventBenefitsBlockSelect<T>;
-        pricingTable?: T | PricingTableBlockSelect<T>;
-        numberedGrid?: T | NumberedGridBlockSelect<T>;
+        membershipEnrollment?: T | MembershipEnrollmentBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        resourceLibrary?: T | ResourceLibraryBlockSelect<T>;
       };
   meta?:
     | T
@@ -955,57 +943,120 @@ export interface CmsLinkSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventOverviewBlock_select".
+ * via the `definition` "MembershipEnrollmentBlock_select".
  */
-export interface EventOverviewBlockSelect<T extends boolean = true> {
-  details?:
-    | T
-    | {
-        icon?: T;
-        label?: T;
-        value?: T;
-        id?: T;
-      };
-  intro?:
+export interface MembershipEnrollmentBlockSelect<T extends boolean = true> {
+  benefits?:
     | T
     | {
         eyebrow?: T;
         heading?: T;
-        rows?:
+        items?:
           | T
           | {
-              icon?: T;
-              heading?: T;
               text?: T;
-              emphasis?: T;
               id?: T;
             };
       };
-  agenda?:
+  form?:
     | T
     | {
+        eyebrow?: T;
         heading?: T;
-        expandLabel?: T;
-        collapseLabel?: T;
-        periods?:
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
+        callout?:
           | T
           | {
               title?: T;
-              summary?: T;
-              entries?:
+              text?: T;
+            };
+      };
+  payment?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        athMovil?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              buttonLabel?: T;
+            };
+        paypal?:
+          | T
+          | {
+              title?: T;
+              plans?:
                 | T
                 | {
-                    start?: T;
-                    end?: T;
-                    title?: T;
-                    description?: T;
-                    quiet?: T;
+                    name?: T;
+                    price?: T;
+                    url?: T;
                     id?: T;
                   };
+            };
+        check?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock_select".
+ */
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        nameLabel?: T;
+        namePlaceholder?: T;
+        contactLabel?: T;
+        contactPlaceholder?: T;
+        messageLabel?: T;
+        messagePlaceholder?: T;
+        privacyNote?: T;
+        submitLabel?: T;
+        email?:
+          | T
+          | {
+              recipient?: T;
+              subjectTemplate?: T;
+              nameLine?: T;
+              contactLine?: T;
+              messageLine?: T;
+            };
+      };
+  channels?:
+    | T
+    | {
+        eyebrow?: T;
+        ariaLabel?: T;
+        emailHeading?: T;
+        postalHeading?: T;
+        socialHeading?: T;
+        networks?:
+          | T
+          | {
+              network?: T;
               id?: T;
             };
-        note?: T;
-        registrationLink?: T | CmsLinkSelect<T>;
       };
   settings?:
     | T
@@ -1017,28 +1068,33 @@ export interface EventOverviewBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "EventBenefitsBlock_select".
+ * via the `definition` "ResourceLibraryBlock_select".
  */
-export interface EventBenefitsBlockSelect<T extends boolean = true> {
+export interface ResourceLibraryBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   heading?: T;
-  callout?:
+  body?: T;
+  library?:
     | T
     | {
-        label?: T;
-        srPrefix?: T;
-        value?: T;
-        note?: T;
+        filterLegend?: T;
+        allLabel?: T;
+        searchLabel?: T;
+        searchPlaceholder?: T;
+        downloadLabel?: T;
+        emptyArchive?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+        noResults?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
       };
-  benefits?:
-    | T
-    | {
-        icon?: T;
-        title?: T;
-        detail?: T;
-        id?: T;
-      };
-  footnote?: T;
   settings?:
     | T
     | {
@@ -1049,65 +1105,56 @@ export interface EventBenefitsBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "PricingTableBlock_select".
+ * via the `definition` "documents_select".
  */
-export interface PricingTableBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  intro?: T;
-  prices?:
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  publishedAt?: T;
+  sortOrder?: T;
+  prefix?: T;
+  _objectKey?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  _stored?: T;
+  _transforms?: T;
+  original?:
     | T
     | {
-        name?: T;
-        price?: T;
-        note?: T;
-        buttonLabel?: T;
-        paymentUrl?: T;
-        featured?: T;
-        badge?: T;
-        id?: T;
+        filename?: T;
+        url?: T;
+        mimeType?: T;
+        filesize?: T;
+        width?: T;
+        height?: T;
+        prefix?: T;
+        _objectKey?: T;
+        _stored?: T;
       };
-  athMovil?:
-    | T
-    | {
-        title?: T;
-        text?: T;
-        buttonLabel?: T;
-      };
-  footnote?: T;
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NumberedGridBlock_select".
+ * via the `definition` "document-categories_select".
  */
-export interface NumberedGridBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  intro?: T;
-  numberPrefix?: T;
-  leadIn?: T;
-  items?:
-    | T
-    | {
-        number?: T;
-        title?: T;
-        description?: T;
-        id?: T;
-      };
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
+export interface DocumentCategoriesSelect<T extends boolean = true> {
+  label?: T;
+  slug?: T;
+  order?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1406,7 +1453,7 @@ export interface CollectionsWidget {
 export interface CollectionQueryWidget {
   data?: {
     title?: string | null;
-    relatedCollection: 'pages' | 'media' | 'users';
+    relatedCollection: 'pages' | 'documents' | 'document-categories' | 'media' | 'users';
     where?:
       | {
           [k: string]: unknown;
@@ -1428,7 +1475,7 @@ export interface CollectionQueryWidget {
  */
 export interface ActivityWidget {
   data?: {
-    excludedCollections?: ('pages' | 'media' | 'users')[] | null;
+    excludedCollections?: ('pages' | 'documents' | 'document-categories' | 'media' | 'users')[] | null;
   };
   width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1438,7 +1485,7 @@ export interface ActivityWidget {
  */
 export interface UploadDropzoneWidget {
   data?: {
-    excludedCollections?: 'media'[] | null;
+    excludedCollections?: ('documents' | 'media')[] | null;
   };
   width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
