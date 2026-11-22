@@ -57,6 +57,10 @@ const HEADING = {
   },
 } as const;
 
+/** Lists inherit the column's type; only bullets, numbers and indentation are added. */
+const LIST =
+  "list-outside space-y-2 pl-6 font-body text-text-muted [&:is(ol)]:list-decimal [&:is(ul)]:list-disc";
+
 const RIGHT_RULE = "border-l-4 border-mustard pl-6 sm:pl-8";
 const BOTTOM_RULE = "border-b border-border pb-16 lg:pb-20";
 
@@ -73,7 +77,7 @@ export function TextSplit({
   const preset = RATIO[ratio] ?? RATIO.wideLeft;
   const headingStyle = HEADING[headingSize] ?? HEADING.section;
   const resolved = resolveLink(link);
-  const paragraphClasses: RichTextClasses = { paragraph: preset.paragraph };
+  const bodyClasses: RichTextClasses = { paragraph: preset.paragraph, list: LIST };
 
   const columns = (
     <>
@@ -92,7 +96,7 @@ export function TextSplit({
       </div>
 
       <div className={cx(accent === "rightRule" && RIGHT_RULE, preset.body) || undefined}>
-        <RichText data={body} classes={paragraphClasses} />
+        <RichText data={body} classes={bodyClasses} />
         {resolved ? (
           <TextLink href={resolved.href} newTab={resolved.newTab} className="mt-7">
             {resolved.label} <ArrowGlyph />
