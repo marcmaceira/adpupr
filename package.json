@@ -2,6 +2,7 @@
   "name": "adpupr",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +10,11 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
-    "format:check": "oxfmt --check"
+    "format:check": "oxfmt --check",
+    "payload": "payload",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
+    "seed": "payload run src/seed/index.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "4.0.0-beta.11",
@@ -31,6 +36,7 @@
     "sharp": "0.35.5"
   },
   "devDependencies": {
+    "@modelcontextprotocol/client": "2.4.0",
     "@next/eslint-plugin-next": "16.4.6",
     "@tailwindcss/postcss": "^4.3.5",
     "@types/node": "^26.6.6",
