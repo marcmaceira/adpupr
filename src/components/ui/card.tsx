@@ -39,6 +39,9 @@ export const CHIP_VARIANTS = {
   circle48:
     "flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sky-50 text-primary",
   circle56Primary: "flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white",
+  /** 40px circle that sizes its icon to 20px with a 1.75 stroke (event detail strip). */
+  circle40SmallIcon:
+    "flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sky-50 text-primary [&>svg]:h-5 [&>svg]:w-5 [&>svg]:stroke-[1.75]",
 } as const;
 
 export type ChipVariant = keyof typeof CHIP_VARIANTS;

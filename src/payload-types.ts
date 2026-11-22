@@ -247,17 +247,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?:
-    | (
-        | HeroBlock
-        | TextSplitBlock
-        | FeatureCardsBlock
-        | NumberedListBlock
-        | IconColumnsBlock
-        | VideoFeatureBlock
-        | RichTextBlock
-      )[]
-    | null;
+  layout?: (HeroBlock | EventOverviewBlock | EventBenefitsBlock | PricingTableBlock | NumberedGridBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -346,7 +336,7 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
- * Se muestra con un ícono de enlace externo.
+ * Por ejemplo, a la sección de tarifas (URL #inscripcion).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
@@ -367,51 +357,15 @@ export interface CmsLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TextSplitBlock".
+ * via the `definition` "EventOverviewBlock".
  */
-export interface TextSplitBlock {
+export interface EventOverviewBlock {
   /**
-   * También ajusta el tamaño del texto y el espaciado de la sección.
+   * La franja con fecha, horario y lugar. Se muestran en una fila de tres.
    */
-  ratio: 'wideLeft' | 'fixedLeft' | 'narrowLeft';
-  accent: 'rightRule' | 'goldBar' | 'bottomRule' | 'none';
-  headingSize: 'section' | 'compact';
-  eyebrow?: string | null;
-  /**
-   * Cada salto de línea se muestra como un salto de línea.
-   */
-  heading: string;
-  body: LexicalRichText<LexicalNodes_ABC6E12E>;
-  link?: CmsLink;
-  settings: {
-    /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
-     */
-    anchorId?: string | null;
-    tone: 'bg' | 'surface';
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'textSplit';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureCardsBlock".
- */
-export interface FeatureCardsBlock {
-  /**
-   * Los paneles unidos muestran el título de cada panel en tamaño grande.
-   */
-  variant: 'separate' | 'joined';
-  eyebrow?: string | null;
-  /**
-   * Cada salto de línea se muestra como un salto de línea.
-   */
-  heading?: string | null;
-  items: {
-    tone: 'light' | 'dark';
-    icon?:
-      | (
+  details?:
+    | {
+        icon:
           | 'arrow-down'
           | 'arrow-right'
           | 'arrow-up'
@@ -438,44 +392,103 @@ export interface FeatureCardsBlock {
           | 'smartphone'
           | 'store'
           | 'users'
-          | 'utensils'
-        )
-      | null;
+          | 'utensils';
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  intro: {
     eyebrow?: string | null;
-    title: string;
-    text: string;
-    link?: CmsLink;
-    id?: string | null;
-  }[];
-  settings: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Cada salto de línea se muestra como un salto de línea.
      */
-    anchorId?: string | null;
-    tone: 'bg' | 'surface2';
+    heading: string;
+    /**
+     * Se muestran a la derecha del título.
+     */
+    rows?:
+      | {
+          icon:
+            | 'arrow-down'
+            | 'arrow-right'
+            | 'arrow-up'
+            | 'arrow-up-right'
+            | 'badge-check'
+            | 'book-open'
+            | 'calendar'
+            | 'calendar-days'
+            | 'check'
+            | 'clock'
+            | 'coffee'
+            | 'download'
+            | 'external-link'
+            | 'file-chart-column'
+            | 'file-pen-line'
+            | 'file-text'
+            | 'heart-handshake'
+            | 'library'
+            | 'mail'
+            | 'map-pin'
+            | 'presentation'
+            | 'search'
+            | 'send'
+            | 'smartphone'
+            | 'store'
+            | 'users'
+            | 'utensils';
+          /**
+           * Opcional.
+           */
+          heading?: string | null;
+          text: string;
+          /**
+           * Muestra el texto en azul y en negrita.
+           */
+          emphasis?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
   };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'featureCards';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NumberedListBlock".
- */
-export interface NumberedListBlock {
   /**
-   * La numeración (01, 02, 03…) se genera sola según el orden.
+   * La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.
    */
-  variant: 'stacked' | 'sidebar';
-  eyebrow?: string | null;
-  /**
-   * Cada salto de línea se muestra como un salto de línea.
-   */
-  heading: string;
-  items: {
-    text: string;
-    id?: string | null;
-  }[];
+  agenda: {
+    heading: string;
+    expandLabel: string;
+    /**
+     * Se usa arriba (con la agenda abierta) y al final de la agenda.
+     */
+    collapseLabel: string;
+    periods?:
+      | {
+          title: string;
+          summary?: string | null;
+          entries?:
+            | {
+                start: string;
+                end: string;
+                title: string;
+                /**
+                 * Opcional. El visitante la despliega con el botón +.
+                 */
+                description?: string | null;
+                /**
+                 * Se muestra en gris y nunca despliega la descripción.
+                 */
+                quiet?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Por ejemplo: Programa sujeto a ajustes.
+     */
+    note?: string | null;
+    registrationLink?: CmsLink;
+  };
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -484,22 +497,33 @@ export interface NumberedListBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'numberedList';
+  blockType: 'eventOverview';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IconColumnsBlock".
+ * via the `definition` "EventBenefitsBlock".
  */
-export interface IconColumnsBlock {
+export interface EventBenefitsBlock {
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
    */
   heading: string;
-  intro?: string | null;
-  columns: {
-    icon?:
-      | (
+  callout?: {
+    label?: string | null;
+    /**
+     * No se ve; se lee antes de la cifra. Por ejemplo: Hasta
+     */
+    srPrefix?: string | null;
+    /**
+     * Por ejemplo: 8.5 h
+     */
+    value?: string | null;
+    note?: string | null;
+  };
+  benefits?:
+    | {
+        icon:
           | 'arrow-down'
           | 'arrow-right'
           | 'arrow-up'
@@ -526,51 +550,16 @@ export interface IconColumnsBlock {
           | 'smartphone'
           | 'store'
           | 'users'
-          | 'utensils'
-        )
-      | null;
-    title: string;
-    text?: string | null;
-    /**
-     * Por ejemplo: Archivo en preparación.
-     */
-    status?: string | null;
-    id?: string | null;
-  }[];
-  note?: {
-    icon?:
-      | (
-          | 'arrow-down'
-          | 'arrow-right'
-          | 'arrow-up'
-          | 'arrow-up-right'
-          | 'badge-check'
-          | 'book-open'
-          | 'calendar'
-          | 'calendar-days'
-          | 'check'
-          | 'clock'
-          | 'coffee'
-          | 'download'
-          | 'external-link'
-          | 'file-chart-column'
-          | 'file-pen-line'
-          | 'file-text'
-          | 'heart-handshake'
-          | 'library'
-          | 'mail'
-          | 'map-pin'
-          | 'presentation'
-          | 'search'
-          | 'send'
-          | 'smartphone'
-          | 'store'
-          | 'users'
-          | 'utensils'
-        )
-      | null;
-    text?: string | null;
-  };
+          | 'utensils';
+        title: string;
+        detail?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El texto en negrita se muestra en mostaza.
+   */
+  footnote?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -579,28 +568,46 @@ export interface IconColumnsBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'iconColumns';
+  blockType: 'eventBenefits';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "VideoFeatureBlock".
+ * via the `definition` "PricingTableBlock".
  */
-export interface VideoFeatureBlock {
+export interface PricingTableBlock {
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
    */
   heading: string;
   intro?: string | null;
-  channelLink?: CmsLink;
+  prices?:
+    | {
+        name: string;
+        price: string;
+        note?: string | null;
+        buttonLabel: string;
+        /**
+         * Se abre en una pestaña nueva.
+         */
+        paymentUrl: string;
+        /**
+         * Borde azul, botón sólido y la insignia de arriba.
+         */
+        featured?: boolean | null;
+        badge?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   /**
-   * Los 11 caracteres después de «v=» o de «youtu.be/» en el enlace del video. Por ejemplo: jhXQO0PB0PY
+   * El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.
    */
-  youtubeId: string;
-  /**
-   * Lo anuncian los lectores de pantalla. Describe el video brevemente.
-   */
-  videoTitle: string;
+  athMovil?: {
+    title?: string | null;
+    text?: string | null;
+    buttonLabel?: string | null;
+  };
+  footnote?: string | null;
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -609,29 +616,47 @@ export interface VideoFeatureBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'videoFeature';
+  blockType: 'pricingTable';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichTextBlock".
+ * via the `definition` "NumberedGridBlock".
  */
-export interface RichTextBlock {
+export interface NumberedGridBlock {
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
    */
-  heading?: string | null;
-  body: LexicalRichText<LexicalNodes_ABC6E12E>;
-  settings: {
+  heading: string;
+  /**
+   * Se muestra a la derecha del título.
+   */
+  intro?: string | null;
+  /**
+   * Por ejemplo: EJE (se muestra «EJE 01»).
+   */
+  numberPrefix?: string | null;
+  /**
+   * Va antes de cada descripción. Por ejemplo: Enfoque:
+   */
+  leadIn?: string | null;
+  items?:
+    | {
+        number: string;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
      */
     anchorId?: string | null;
-    tone: 'bg' | 'surface';
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'richTextBlock';
+  blockType: 'numberedGrid';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -845,12 +870,10 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
-        textSplit?: T | TextSplitBlockSelect<T>;
-        featureCards?: T | FeatureCardsBlockSelect<T>;
-        numberedList?: T | NumberedListBlockSelect<T>;
-        iconColumns?: T | IconColumnsBlockSelect<T>;
-        videoFeature?: T | VideoFeatureBlockSelect<T>;
-        richTextBlock?: T | RichTextBlockSelect<T>;
+        eventOverview?: T | EventOverviewBlockSelect<T>;
+        eventBenefits?: T | EventBenefitsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        numberedGrid?: T | NumberedGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -932,138 +955,156 @@ export interface CmsLinkSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "TextSplitBlock_select".
+ * via the `definition` "EventOverviewBlock_select".
  */
-export interface TextSplitBlockSelect<T extends boolean = true> {
-  ratio?: T;
-  accent?: T;
-  headingSize?: T;
-  eyebrow?: T;
-  heading?: T;
-  body?: T;
-  link?: T | CmsLinkSelect<T>;
-  settings?:
+export interface EventOverviewBlockSelect<T extends boolean = true> {
+  details?:
     | T
     | {
-        anchorId?: T;
-        tone?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "FeatureCardsBlock_select".
- */
-export interface FeatureCardsBlockSelect<T extends boolean = true> {
-  variant?: T;
-  eyebrow?: T;
-  heading?: T;
-  items?:
-    | T
-    | {
-        tone?: T;
         icon?: T;
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  intro?:
+    | T
+    | {
         eyebrow?: T;
-        title?: T;
-        text?: T;
-        link?: T | CmsLinkSelect<T>;
-        id?: T;
+        heading?: T;
+        rows?:
+          | T
+          | {
+              icon?: T;
+              heading?: T;
+              text?: T;
+              emphasis?: T;
+              id?: T;
+            };
+      };
+  agenda?:
+    | T
+    | {
+        heading?: T;
+        expandLabel?: T;
+        collapseLabel?: T;
+        periods?:
+          | T
+          | {
+              title?: T;
+              summary?: T;
+              entries?:
+                | T
+                | {
+                    start?: T;
+                    end?: T;
+                    title?: T;
+                    description?: T;
+                    quiet?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        note?: T;
+        registrationLink?: T | CmsLinkSelect<T>;
       };
   settings?:
     | T
     | {
         anchorId?: T;
-        tone?: T;
       };
   id?: T;
   blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "NumberedListBlock_select".
+ * via the `definition` "EventBenefitsBlock_select".
  */
-export interface NumberedListBlockSelect<T extends boolean = true> {
-  variant?: T;
+export interface EventBenefitsBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   heading?: T;
+  callout?:
+    | T
+    | {
+        label?: T;
+        srPrefix?: T;
+        value?: T;
+        note?: T;
+      };
+  benefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        detail?: T;
+        id?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingTableBlock_select".
+ */
+export interface PricingTableBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  prices?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        note?: T;
+        buttonLabel?: T;
+        paymentUrl?: T;
+        featured?: T;
+        badge?: T;
+        id?: T;
+      };
+  athMovil?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonLabel?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock_select".
+ */
+export interface NumberedGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  numberPrefix?: T;
+  leadIn?: T;
   items?:
     | T
     | {
-        text?: T;
-        id?: T;
-      };
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "IconColumnsBlock_select".
- */
-export interface IconColumnsBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  intro?: T;
-  columns?:
-    | T
-    | {
-        icon?: T;
+        number?: T;
         title?: T;
-        text?: T;
-        status?: T;
+        description?: T;
         id?: T;
       };
-  note?:
-    | T
-    | {
-        icon?: T;
-        text?: T;
-      };
   settings?:
     | T
     | {
         anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "VideoFeatureBlock_select".
- */
-export interface VideoFeatureBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  intro?: T;
-  channelLink?: T | CmsLinkSelect<T>;
-  youtubeId?: T;
-  videoTitle?: T;
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "RichTextBlock_select".
- */
-export interface RichTextBlockSelect<T extends boolean = true> {
-  eyebrow?: T;
-  heading?: T;
-  body?: T;
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-        tone?: T;
       };
   id?: T;
   blockName?: T;
