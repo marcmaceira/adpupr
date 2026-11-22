@@ -44,3 +44,4 @@ next-env.d.ts
 /data/
 /media/
 /.seed-cache/
+!.env.example
