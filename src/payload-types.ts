@@ -139,6 +139,19 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LexicalNodes_ABC6E12E".
+ */
+export type LexicalNodes_ABC6E12E =
+  | SerializedTextNode
+  | SerializedTabNode
+  | SerializedLineBreakNode
+  | SerializedParagraphNode<LexicalNodes_ABC6E12E>
+  | SerializedListNode<LexicalNodes_ABC6E12E>
+  | SerializedListItemNode<LexicalNodes_ABC6E12E>
+  | SerializedAutoLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>
+  | SerializedLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
  */
 export type LexicalNodes_3DE324E4 =
@@ -234,7 +247,17 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: HeroBlock[] | null;
+  layout?:
+    | (
+        | HeroBlock
+        | TextSplitBlock
+        | FeatureCardsBlock
+        | NumberedListBlock
+        | IconColumnsBlock
+        | VideoFeatureBlock
+        | RichTextBlock
+      )[]
+    | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -323,6 +346,8 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * Se muestra con un ícono de enlace externo.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
  */
@@ -339,6 +364,274 @@ export interface CmsLink {
    */
   url?: string | null;
   newTab?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextSplitBlock".
+ */
+export interface TextSplitBlock {
+  /**
+   * También ajusta el tamaño del texto y el espaciado de la sección.
+   */
+  ratio: 'wideLeft' | 'fixedLeft' | 'narrowLeft';
+  accent: 'rightRule' | 'goldBar' | 'bottomRule' | 'none';
+  headingSize: 'section' | 'compact';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body: LexicalRichText<LexicalNodes_ABC6E12E>;
+  link?: CmsLink;
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textSplit';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock".
+ */
+export interface FeatureCardsBlock {
+  /**
+   * Los paneles unidos muestran el título de cada panel en tamaño grande.
+   */
+  variant: 'separate' | 'joined';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading?: string | null;
+  items: {
+    tone: 'light' | 'dark';
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    eyebrow?: string | null;
+    title: string;
+    text: string;
+    link?: CmsLink;
+    id?: string | null;
+  }[];
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface2';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedListBlock".
+ */
+export interface NumberedListBlock {
+  /**
+   * La numeración (01, 02, 03…) se genera sola según el orden.
+   */
+  variant: 'stacked' | 'sidebar';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  items: {
+    text: string;
+    id?: string | null;
+  }[];
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'numberedList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconColumnsBlock".
+ */
+export interface IconColumnsBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  columns: {
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    title: string;
+    text?: string | null;
+    /**
+     * Por ejemplo: Archivo en preparación.
+     */
+    status?: string | null;
+    id?: string | null;
+  }[];
+  note?: {
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    text?: string | null;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconColumns';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoFeatureBlock".
+ */
+export interface VideoFeatureBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  channelLink?: CmsLink;
+  /**
+   * Los 11 caracteres después de «v=» o de «youtu.be/» en el enlace del video. Por ejemplo: jhXQO0PB0PY
+   */
+  youtubeId: string;
+  /**
+   * Lo anuncian los lectores de pantalla. Describe el video brevemente.
+   */
+  videoTitle: string;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoFeature';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading?: string | null;
+  body: LexicalRichText<LexicalNodes_ABC6E12E>;
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richTextBlock';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -552,6 +845,12 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        textSplit?: T | TextSplitBlockSelect<T>;
+        featureCards?: T | FeatureCardsBlockSelect<T>;
+        numberedList?: T | NumberedListBlockSelect<T>;
+        iconColumns?: T | IconColumnsBlockSelect<T>;
+        videoFeature?: T | VideoFeatureBlockSelect<T>;
+        richTextBlock?: T | RichTextBlockSelect<T>;
       };
   meta?:
     | T
@@ -630,6 +929,144 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextSplitBlock_select".
+ */
+export interface TextSplitBlockSelect<T extends boolean = true> {
+  ratio?: T;
+  accent?: T;
+  headingSize?: T;
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  link?: T | CmsLinkSelect<T>;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock_select".
+ */
+export interface FeatureCardsBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        tone?: T;
+        icon?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedListBlock_select".
+ */
+export interface NumberedListBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconColumnsBlock_select".
+ */
+export interface IconColumnsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  columns?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        status?: T;
+        id?: T;
+      };
+  note?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoFeatureBlock_select".
+ */
+export interface VideoFeatureBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  channelLink?: T | CmsLinkSelect<T>;
+  youtubeId?: T;
+  videoTitle?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1037,12 +1474,24 @@ export interface SerializedListItemNode<TChildren> extends SerializedLexicalElem
   value: number;
 }
 
-export interface SerializedHeadingNode<
-  TChildren,
-  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
-> extends SerializedLexicalElementBase<TChildren> {
-  type: 'heading';
-  tag: TTag;
+export interface LexicalLinkFields {
+  [k: string]: unknown;
+  doc?: {
+    relationTo: string;
+    value: Config['db']['defaultIDType'] | { [k: string]: unknown; id: Config['db']['defaultIDType'] };
+  } | null;
+  linkType: 'custom' | 'internal';
+  newTab: boolean;
+  url?: string;
+}
+export interface SerializedLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'link';
+  fields: TFields;
+  id?: string;
+}
+export interface SerializedAutoLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'autolink';
+  fields: TFields;
 }
 
 /** Shape of a Lexical `richText` field. */
@@ -1056,6 +1505,14 @@ export interface LexicalRichText<TNode> {
     /** @deprecated Ignored when loading. Typed as required only to match Lexical's types: rich text sent through the API, CLI or MCP may not contain it. */
     version: number;
   };
+}
+
+export interface SerializedHeadingNode<
+  TChildren,
+  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+> extends SerializedLexicalElementBase<TChildren> {
+  type: 'heading';
+  tag: TTag;
 }
 
 
