@@ -15,7 +15,7 @@ export interface CommitteeView {
   /** Short name, used in the jump cards. */
   readonly name: string;
   /**
-   * Title of the article split around the committee name (`["Comité de ", name]`), so
+   * Title of the article split around the committee name (`[prefix, name]`), so
    * the text renders as the same separate text nodes as the original markup.
    */
   readonly headingParts: readonly string[];

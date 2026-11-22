@@ -2,7 +2,7 @@ import type { Committee, CommitteesBlock, Person } from "@/payload-types";
 import { Committees, type CommitteeView } from "@/components/sections/committees";
 import { fillName, getCommittees, populatedMedia, relationId } from "@/lib/data/people";
 
-/** "Comité de {nombre}" → ["Comité de ", name], dropping empty pieces. */
+/** Splits a label template around its {nombre} token: "X {nombre}" → ["X ", name]. */
 function splitName(template: string, name: string): string[] {
   return template
     .split("{nombre}")

@@ -18,7 +18,7 @@ export interface BoardCard {
 
 interface BoardGridProps {
   readonly cards: readonly BoardCard[];
-  /** Visible footer text of every card ("Ver biografía"). */
+  /** Visible footer text of every card (the "see biography" label). */
   readonly openLabel: string;
 }
 
