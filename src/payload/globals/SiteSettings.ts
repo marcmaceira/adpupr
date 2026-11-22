@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
 import { anyone, authenticated } from "../access";
-import { array, media, text } from "../fields";
+import { array, link, media, text } from "../fields";
 
 /**
  * Facts shown in more than one place live here: organization name, emails, postal address,
@@ -125,6 +125,17 @@ export const SiteSettings: GlobalConfig = {
             media("ogImage", "Imagen para redes sociales (1200×630)"),
             text("locale", "Configuración regional (Open Graph)", { required: true }),
             text("skipLinkLabel", "Texto del enlace «saltar al contenido»", { required: true }),
+          ],
+        },
+        {
+          name: "notFound",
+          label: "Página no encontrada",
+          description: "Lo que ve quien abre una dirección que no existe (error 404).",
+          fields: [
+            text("eyebrow", "Antetítulo"),
+            text("title", "Título", { required: true }),
+            text("text", "Texto", { required: true, textarea: true }),
+            link({ label: "Botón", required: true }),
           ],
         },
       ],
