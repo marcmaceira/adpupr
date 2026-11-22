@@ -14,6 +14,17 @@ const registry = {
   ...peopleComponents,
 } satisfies BlockRegistry;
 
+type AnyBlockComponent = ComponentType<{ readonly block: LayoutBlock }>;
+
+/**
+ * The registry pairs each slug with its own renderer, which TypeScript cannot express for
+ * a lookup by a runtime slug (and a cast is rejected once there is more than one block
+ * type). Lookup goes through `unknown` plus this guard instead.
+ */
+function isBlockComponent(value: unknown): value is AnyBlockComponent {
+  return typeof value === "function";
+}
+
 /** Renders a page layout. Unknown block types render nothing. */
 export function RenderBlocks({
   blocks,
@@ -24,10 +35,8 @@ export function RenderBlocks({
   return (
     <>
       {blocks.map((block, index) => {
-        const Component = registry[block.blockType] as
-          | ComponentType<{ readonly block: LayoutBlock }>
-          | undefined;
-        if (!Component) return null;
+        const Component: unknown = Reflect.get(registry, block.blockType);
+        if (!isBlockComponent(Component)) return null;
         return <Component key={block.id ?? `${block.blockType}-${index}`} block={block} />;
       })}
     </>
