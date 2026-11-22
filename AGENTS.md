@@ -15,6 +15,8 @@ pnpm dev                 # Dev server (http://localhost:3000); admin at /admin
 pnpm build               # Production build (Next.js 16 + Turbopack)
 pnpm start               # Serve the production build
 pnpm seed                # Rebuild all content from an empty database (idempotent)
+pnpm migrate             # Apply src/migrations to the Postgres DATABASE_URL (Neon in production)
+pnpm migrate:create <n>  # New migration; run against Postgres after any schema change (see README)
 pnpm generate:types      # Regenerate src/payload-types.ts after any Payload config change
 pnpm generate:importmap  # Regenerate the admin import map after adding admin components
 pnpm lint                # Oxlint, type-aware + type-check (.oxlintrc.json); warnings fail
@@ -77,7 +79,7 @@ docs/block-contract.md         how blocks, fields, sections and seed data fit to
 
 ### Environment
 
-- `DATABASE_URL`: `file:./data/payload.db` (SQLite, default) or `postgres://…` (Postgres). Chosen in `src/payload/db.ts` only.
+- `DATABASE_URL`: `file:./data/payload.db` (SQLite, default, schema synced automatically) or `postgres://…` (Neon in production). Chosen in `src/payload/db.ts` only. On Postgres the schema comes only from `src/migrations/` (`push: false`): **any change to a collection, global, block or field needs a new migration** (`pnpm migrate:create`, against Postgres; see the README). Migration files are generated and excluded from oxlint and oxfmt.
 - `PAYLOAD_SECRET`, `PREVIEW_SECRET`, `NEXT_PUBLIC_SERVER_URL`.
 - `USE_VERCEL_BLOB=true` turns on Vercel Blob for uploads (prefixes `cms/media`, `cms/documents`). `BLOB_READ_WRITE_TOKEN` alone never enables it.
 - `SEED_ADMIN_EMAIL`, `SEED_ADMIN_PASSWORD`, `SEED_MCP_EMAIL`, `SEED_MCP_API_KEY` for the seed.

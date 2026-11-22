@@ -32,7 +32,8 @@
     ".agents/**",
     ".claude/**",
     "src/payload-types.ts",
-    "src/app/(payload)/**"
+    "src/app/(payload)/**",
+    "src/migrations/**"
   ],
   "rules": {
     "no-array-constructor": "error",

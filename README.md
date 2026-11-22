@@ -21,7 +21,7 @@ pnpm dev                # http://localhost:3000, admin at http://localhost:3000/
 | ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
 | `PAYLOAD_SECRET`                          | Long random string; signs admin sessions.                                                        |
 | `PREVIEW_SECRET`                          | Random string shared by the admin preview links and `/next/preview`.                             |
-| `DATABASE_URL`                            | `file:./data/payload.db` locally; a `postgres://…` URL in production.                            |
+| `DATABASE_URL`                            | `file:./data/payload.db` locally (SQLite); the Neon Postgres URL in production.                  |
 | `NEXT_PUBLIC_SERVER_URL`                  | Public origin, e.g. `http://localhost:3000` or `https://www.adpupr.com`.                         |
 | `USE_VERCEL_BLOB`                         | Leave empty locally. Set to `true` in production to store uploads in Vercel Blob (under `cms/`). |
 | `BLOB_READ_WRITE_TOKEN`                   | Vercel Blob token. The seed reads the existing resource files with it; it never writes.          |
@@ -112,4 +112,30 @@ node --env-file=.env scripts/mcp-demo.mjs / "Nuevo antetítulo"
 
 ## Deploying
 
-Production needs a hosted Postgres database (`DATABASE_URL`), Vercel Blob enabled for uploads (`USE_VERCEL_BLOB=true` plus the token), and the environment variables above. Before the first deploy, create the database schema with Payload migrations (`pnpm payload migrate:create` against Postgres, commit the files in `src/migrations/`, then run `pnpm payload migrate` before `pnpm build`), and run `pnpm seed` once against the production database. Locally the schema is created automatically (Payload's development schema push).
+Production runs on Vercel with a **Neon Postgres** database and Vercel Blob for uploads.
+
+### Database schema (migrations)
+
+On Postgres the schema comes only from the migrations in `src/migrations/`; Payload never changes it automatically (`push: false`). Locally, SQLite keeps Payload's automatic schema sync, so day-to-day work needs no migrations.
+
+- **Apply migrations:** `pnpm migrate` with `DATABASE_URL` set to the Neon **direct** connection string (the host without `-pooler`). Run it before deploying code that includes a new migration. It does nothing when the database is already up to date; `pnpm migrate:status` lists what has run.
+- **After changing a collection, global, block or field:** create a migration against a Postgres database that already has every earlier migration applied, review it, and commit it with the change:
+
+  ```bash
+  docker run -d --name adpupr-pg -e POSTGRES_PASSWORD=dev -p 127.0.0.1:55432:5432 postgres:17-alpine
+  export DATABASE_URL=postgres://postgres:dev@127.0.0.1:55432/postgres
+  pnpm migrate                          # bring the scratch database up to date
+  pnpm migrate:create describe-change   # writes src/migrations/<timestamp>_describe-change.ts
+  ```
+
+  A Neon branch of production works in place of Docker.
+
+- The build doesn't need the database, so `pnpm build` works before or after migrating.
+
+### First deploy
+
+1. In Vercel, set `DATABASE_URL` (Neon pooled connection string, for the running site), `PAYLOAD_SECRET`, `PREVIEW_SECRET`, `NEXT_PUBLIC_SERVER_URL=https://www.adpupr.com`, `USE_VERCEL_BLOB=true` and `BLOB_READ_WRITE_TOKEN`.
+2. From a terminal, with the Neon direct connection string as `DATABASE_URL` and `USE_VERCEL_BLOB=true`: `pnpm migrate`, then `pnpm seed` once. The seed creates the admin (and optionally the AI assistant) from the `SEED_*` variables and uploads the site images and documents to Blob under `cms/`.
+3. Deploy. Then sign in, create the AI assistant's API key, and check that `/api/media/file/…` and `/api/documents/file/…` load.
+
+Preview deployments should use their own Neon branch, not the production database.

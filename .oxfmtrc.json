@@ -6,6 +6,7 @@
     "skills-lock.json",
     "pnpm-lock.yaml",
     "src/payload-types.ts",
-    "src/app/(payload)/**"
+    "src/app/(payload)/**",
+    "src/migrations/**"
   ]
 }
