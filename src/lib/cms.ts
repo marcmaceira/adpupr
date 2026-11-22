@@ -4,6 +4,7 @@ import { draftMode } from "next/headers";
 import { getPayload } from "payload";
 import { cache } from "react";
 import type { Page, SiteSetting } from "@/payload-types";
+import { applySiteEmail } from "@/lib/site-email";
 
 /**
  * Server-side reads from Payload. Pages render dynamically on each request, so a published
@@ -28,7 +29,10 @@ export const getPageByPath = cache(async (path: string): Promise<Page | null> =>
     limit: 1,
     pagination: false,
   });
-  return docs[0] ?? null;
+  const page = docs[0];
+  if (!page) return null;
+  const settings = await getSiteSettings();
+  return applySiteEmail(page, settings.contact?.emails?.[0]?.email);
 });
 
 export const getSiteSettings = cache(async (): Promise<SiteSetting> => {

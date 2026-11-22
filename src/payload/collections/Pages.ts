@@ -5,7 +5,7 @@ import {
   OverviewField,
   PreviewField,
 } from "@payloadcms/plugin-seo/fields";
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, PayloadRequest } from "payload";
 import { blocks } from "../../blocks";
 import { authenticated, authenticatedOrPublished, humanEditors } from "../access";
 
@@ -24,6 +24,7 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "path", "_status", "updatedAt"],
+    pagination: { defaultLimit: 50 },
     group: "Contenido",
     description:
       "Cada página del sitio. Se compone de secciones (bloques) en la pestaña Contenido.",
@@ -60,14 +61,28 @@ export const Pages: CollectionConfig = {
         position: "sidebar",
         description: "Ejemplos: / · /membresia · /nosotros/quienes-somos",
       },
-      validate: (value: unknown) => {
+      validate: async (
+        value: unknown,
+        { req, id }: { req: PayloadRequest; id?: number | string },
+      ) => {
         if (typeof value !== "string" || !value) return "Escribe la ruta de la página.";
         if (!PATH_PATTERN.test(value)) {
           return "La ruta debe empezar con / y usar solo minúsculas, números y guiones (por ejemplo: /nosotros/historia).";
         }
         const first = value.split("/")[1];
         if (first && RESERVED.has(first)) return `La ruta no puede empezar con /${first}.`;
-        return true;
+        const taken = await req.payload.find({
+          collection: "pages",
+          where: id
+            ? { path: { equals: value }, id: { not_equals: id } }
+            : { path: { equals: value } },
+          depth: 0,
+          limit: 1,
+          overrideAccess: true,
+          req,
+        });
+        const other = taken.docs[0];
+        return other ? `La ruta ${value} ya la usa la página «${other.title}». Elige otra.` : true;
       },
     },
     {

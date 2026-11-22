@@ -7,7 +7,8 @@ import type { CmsLink } from "@/payload-types";
 export function resolveHref(link: CmsLink | null | undefined): string | null {
   if (!link) return null;
 
-  if (link.type === "custom") {
+  // "email" links get their mailto: url from the site settings (src/lib/site-email.ts).
+  if (link.type === "custom" || link.type === "email") {
     return link.url?.trim() || null;
   }
 

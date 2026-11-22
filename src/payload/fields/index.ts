@@ -7,7 +7,7 @@ import { ICON_OPTIONS } from "../../lib/icons";
  */
 
 const ANCHOR_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-const URL_PATTERN = /^(https?:\/\/|mailto:|tel:|\/|#)/;
+const URL_PATTERN = /^(https?:\/\/|mailto:|tel:|\/|#)\S*$/;
 
 type Option = { readonly label: string; readonly value: string };
 
@@ -216,7 +216,8 @@ export const link = (
           defaultValue: "internal",
           options: [
             { label: "Página del sitio", value: "internal" },
-            { label: "URL o correo", value: "custom" },
+            { label: "URL", value: "custom" },
+            { label: "Correo del sitio", value: "email" },
           ],
           admin: { layout: "horizontal", width: "50%" },
         },
@@ -232,10 +233,14 @@ export const link = (
           label: "Página",
           admin: {
             width: "50%",
-            condition: (_: unknown, sibling: Record<string, unknown>) => sibling?.type !== "custom",
+            condition: (_: unknown, sibling: Record<string, unknown>) =>
+              sibling?.type !== "custom" && sibling?.type !== "email",
           },
           validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) =>
-            siblingData.type === "custom" || value || (!opts.required && !siblingData.label)
+            siblingData.type === "custom" ||
+            siblingData.type === "email" ||
+            value ||
+            (!opts.required && !siblingData.label)
               ? true
               : "Elige la página de destino.",
         },
@@ -246,7 +251,8 @@ export const link = (
           admin: {
             width: "50%",
             description: "Opcional, sin #. Por ejemplo: comites",
-            condition: (_: unknown, sibling: Record<string, unknown>) => sibling?.type !== "custom",
+            condition: (_: unknown, sibling: Record<string, unknown>) =>
+              sibling?.type !== "custom" && sibling?.type !== "email",
           },
           validate: (value: unknown) =>
             !value || (typeof value === "string" && ANCHOR_PATTERN.test(value))
@@ -268,7 +274,17 @@ export const link = (
         if (!value) return opts.required || siblingData.label ? "Escribe la URL." : true;
         return typeof value === "string" && URL_PATTERN.test(value)
           ? true
-          : "La URL debe empezar con https://, mailto:, tel:, / o #.";
+          : "La URL debe empezar con https://, mailto:, tel:, / o # y no puede tener espacios.";
+      },
+    },
+    {
+      name: "emailSubject",
+      type: "text",
+      label: "Asunto del correo",
+      admin: {
+        description:
+          "Opcional. El enlace abre un correo dirigido al correo principal de Configuración del sitio.",
+        condition: (_: unknown, sibling: Record<string, unknown>) => sibling?.type === "email",
       },
     },
     {

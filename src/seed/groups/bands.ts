@@ -166,8 +166,8 @@ const resourcesCallBand = (): CtaBandInput => ({
   meta: [],
   primaryAction: {
     label: "Someter propuesta",
-    type: "custom",
-    url: "mailto:info@adpupr.com?subject=Propuesta%20para%20el%20V%20Bolet%C3%ADn%20Informativo",
+    type: "email",
+    emailSubject: "Propuesta para el V Boletín Informativo",
   },
   settings: { anchorId: "convocatoria-boletin" },
 });

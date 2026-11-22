@@ -3,20 +3,25 @@ import { cache } from "react";
 import { getPayloadClient, getSiteSettings } from "@/lib/cms";
 import { type ResolvedLink, resolveLink } from "@/lib/links";
 import type { CmsLink, Footer, Header, Media, SiteSetting } from "@/payload-types";
+import { applySiteEmail } from "@/lib/site-email";
 
 /**
  * Header and footer data, resolved into plain props (links as hrefs, media populated,
  * the copyright year filled in) so the layout components never talk to Payload.
  */
 
+const siteEmail = async () => (await getSiteSettings()).contact?.emails?.[0]?.email;
+
 export const getHeader = cache(async (): Promise<Header> => {
   const payload = await getPayloadClient();
-  return payload.findGlobal({ slug: "header", depth: 2, overrideAccess: false });
+  const header = await payload.findGlobal({ slug: "header", depth: 2, overrideAccess: false });
+  return applySiteEmail(header, await siteEmail());
 });
 
 export const getFooter = cache(async (): Promise<Footer> => {
   const payload = await getPayloadClient();
-  return payload.findGlobal({ slug: "footer", depth: 2, overrideAccess: false });
+  const footer = await payload.findGlobal({ slug: "footer", depth: 2, overrideAccess: false });
+  return applySiteEmail(footer, await siteEmail());
 });
 
 /* ───────────── Header ───────────── */

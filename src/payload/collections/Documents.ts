@@ -28,6 +28,11 @@ export const Documents: CollectionConfig = {
     // USE_VERCEL_BLOB=true (see payload.config.ts).
     staticDir: path.resolve(dirname, "../../../media/documents"),
     mimeTypes: ["application/pdf", "image/*"],
+    // Library links download the file, as the old Blob `?download=1` links did.
+    modifyResponseHeaders: ({ headers }) => {
+      headers.set("Content-Disposition", "attachment");
+      return headers;
+    },
   },
   fields: [
     {

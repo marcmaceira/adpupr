@@ -63,7 +63,8 @@ export const PeopleGridBlock: Block = {
           fields: [
             text("role", "Cargo en esta sección", { required: true }),
             text("displayName", "Nombre a mostrar (opcional)", {
-              description: "Déjalo vacío para usar el nombre de la persona.",
+              description:
+                "Déjalo vacío para usar el nombre de Personas. Si lo llenas, reemplaza el nombre solo en esta sección (cambiarlo en Personas no lo actualiza aquí).",
             }),
           ],
         },

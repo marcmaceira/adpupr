@@ -360,5 +360,22 @@ export const peopleSeed: GroupSeed = {
     "committees.all": () => committeesBlock("comites"),
   },
   // Same content without anchors, so the guide page never duplicates the real ids.
-  guide: async (ctx) => [await board(ctx, null), await founders(ctx, null), committeesBlock(null)],
+  // The guide adds the two secondary options: portrait bios turned on, and hand-picked
+  // committees (in a different order than the collection).
+  guide: async (ctx) => {
+    const picked = await ctx.payload.find({
+      collection: "committees",
+      sort: "-order",
+      limit: 2,
+      depth: 0,
+      overrideAccess: true,
+    });
+    return [
+      await board(ctx, null),
+      await founders(ctx, null),
+      { ...(await founders(ctx, null)), showBios: true },
+      committeesBlock(null),
+      { ...committeesBlock(null), selection: "selected", committees: picked.docs.map((d) => d.id) },
+    ];
+  },
 };

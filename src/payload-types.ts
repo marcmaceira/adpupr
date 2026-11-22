@@ -398,7 +398,7 @@ export interface HeroBlock {
  */
 export interface CmsLink {
   label?: string | null;
-  type?: ('internal' | 'custom') | null;
+  type?: ('internal' | 'custom' | 'email') | null;
   page?: (number | null) | Page;
   /**
    * Opcional, sin #. Por ejemplo: comites
@@ -408,6 +408,10 @@ export interface CmsLink {
    * https://…, mailto:…, tel:…, una ruta /… o un ancla #…
    */
   url?: string | null;
+  /**
+   * Opcional. El enlace abre un correo dirigido al correo principal de Configuración del sitio.
+   */
+  emailSubject?: string | null;
   newTab?: boolean | null;
 }
 /**
@@ -1340,7 +1344,7 @@ export interface PeopleGridBlock {
     person: number | Person;
     role: string;
     /**
-     * Déjalo vacío para usar el nombre de la persona.
+     * Déjalo vacío para usar el nombre de Personas. Si lo llenas, reemplaza el nombre solo en esta sección (cambiarlo en Personas no lo actualiza aquí).
      */
     displayName?: string | null;
     id?: string | null;
@@ -1978,6 +1982,7 @@ export interface CmsLinkSelect<T extends boolean = true> {
   page?: T;
   anchor?: T;
   url?: T;
+  emailSubject?: T;
   newTab?: T;
 }
 /**

@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
       userAgent: "*",
-      // Uploaded images (logo, social image) are served under /api/media/file/.
-      allow: ["/", "/api/media/file/"],
+      // Uploaded images (logo, social image) and library documents are public files.
+      allow: ["/", "/api/media/file/", "/api/documents/file/"],
       // The CMS admin, its API and the preview routes are not content.
       disallow: ["/api/", "/admin", "/next/"],
     },
