@@ -1,5 +1,5 @@
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated, humanEditors } from "../access";
+import { anyone, staff, humanEditors } from "../access";
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -16,7 +16,13 @@ export const DocumentCategories: CollectionConfig = {
     description:
       "Categories of the Resources library. Each one appears as a filter button, in the order set.",
   },
-  access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
+  access: {
+    create: staff,
+    read: anyone,
+    readVersions: staff,
+    update: staff,
+    delete: humanEditors,
+  },
   fields: [
     {
       name: "label",

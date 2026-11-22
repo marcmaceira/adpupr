@@ -1,5 +1,5 @@
 import type { Condition, GlobalConfig } from "payload";
-import { anyone, authenticated } from "../access";
+import { anyone, staff } from "../access";
 import { withRowLabel } from "./row-label";
 import { array, link, media, showWhen, text } from "../fields";
 
@@ -14,7 +14,7 @@ export const Header: GlobalConfig = {
     group: "Settings",
     description: "Logo, navigation menu and main button shown at the top of every page.",
   },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, readVersions: staff, update: staff },
   versions: { max: 25 },
   fields: [
     {

@@ -1,6 +1,6 @@
 # ADPUPR website
 
-The site of the Asociación de Administración Pública de Puerto Rico ([adpupr.com](https://www.adpupr.com)). Next.js 16 with Payload CMS 4 (beta): every page, the menu, the footer and the shared site facts are edited in the admin panel (in English; the site content is Spanish) or through an AI assistant connected over MCP.
+The site of the Asociación de Administración Pública de Puerto Rico ([adpupr.com](https://www.adpupr.com)). Next.js 16 with Payload CMS 4 (beta): every page, the menu, the footer and the shared site facts are edited in the admin panel, **ADPUPR CMS** (in English; the site content is Spanish), or through an AI assistant connected over MCP.
 
 Architecture and conventions for developers: [`AGENTS.md`](AGENTS.md) and [`docs/block-contract.md`](docs/block-contract.md).
 
@@ -32,13 +32,24 @@ pnpm dev                # http://localhost:3000, admin at http://localhost:3000/
 
 ## Editing content
 
-Sign in at `/admin`.
+Sign in to ADPUPR CMS at `/admin`.
 
 - **Pages**: each page is a list of sections (blocks). Open a page, change text in the **Content** tab, and click **Publish changes**. The change is live on the next page load. Edits save as drafts automatically; **Preview** shows the draft before publishing, and **Versions** keeps the history.
 - **New page**: **Pages → Create New**, give it a title and a path (for example `/eventos` or `/nosotros/aliados`), add sections with **Add Section**, and publish. The page `/guia-de-componentes` shows every available section in every variant.
 - **Documents** and **Document Categories**: the files of the Recursos library. Upload, title, categorize or delete them here.
 - **People** and **Committees**: board members, founders and committees. A person exists once; their portrait and biography update everywhere.
 - **Header**, **Footer** and **Site Settings**: menu, footer, emails, postal address, social profiles, the ATH Móvil link and SEO defaults.
+
+## Who can do what
+
+|                                                                                      | Visitors (not signed in) | AI assistant (MCP) | Editor                                              | Admin                                      |
+| ------------------------------------------------------------------------------------ | ------------------------ | ------------------ | --------------------------------------------------- | ------------------------------------------ |
+| Published pages, people, committees, documents, media, header, footer, site settings | Read                     | Read, create, edit | Read, create, edit, delete                          | Everything                                 |
+| Drafts and version history                                                           | No                       | Read               | Read                                                | Read                                       |
+| Users                                                                                | No                       | Read own account   | Read and edit own account (not its role or API key) | Create, edit, delete, unlock, set API keys |
+| Admin panel                                                                          | No                       | No                 | Yes                                                 | Yes                                        |
+
+Visitors can't create, edit or delete anything. After 5 failed sign-ins an account is locked for 15 minutes; an admin can unlock it. Uploads accept PDFs and JPEG, PNG, WebP, AVIF or GIF images (no SVG), up to 25 MB. GraphQL is turned off; the site and the admin use the REST API.
 
 ## Connect Claude Desktop (MCP)
 
@@ -47,6 +58,8 @@ The site exposes Payload's official MCP endpoint at `/api/mcp` (Streamable HTTP)
 ### 1. Create a scoped API key
 
 Use a dedicated user with the **AI assistant (MCP)** role. It can read and edit content, but cannot delete anything, manage users, or sign in to the admin panel.
+
+An admin does these steps; editors can't create users or API keys.
 
 1. In the admin, open **Users → Create New** (or the user created by `pnpm seed` from `SEED_MCP_EMAIL`).
 2. Set **Role** to **AI assistant (MCP)** and save.

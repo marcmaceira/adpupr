@@ -1,7 +1,8 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated, humanEditors } from "../access";
+import { anyone, staff, humanEditors } from "../access";
+import { RASTER_IMAGE_TYPES } from "../upload";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -13,12 +14,18 @@ export const Media: CollectionConfig = {
     group: "Content",
     description: "Site images: logos, portraits and photos. Every image requires alt text.",
   },
-  access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
+  access: {
+    create: staff,
+    read: anyone,
+    readVersions: staff,
+    update: staff,
+    delete: humanEditors,
+  },
   upload: {
     // Local disk during development. In production, Vercel Blob takes over when
     // USE_VERCEL_BLOB=true (see payload.config.ts).
     staticDir: path.resolve(dirname, "../../../media/images"),
-    mimeTypes: ["image/*"],
+    mimeTypes: RASTER_IMAGE_TYPES,
   },
   fields: [
     {

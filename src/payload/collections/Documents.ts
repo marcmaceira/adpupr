@@ -1,7 +1,8 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import type { CollectionConfig } from "payload";
-import { anyone, authenticated, humanEditors } from "../access";
+import { anyone, staff, humanEditors } from "../access";
+import { RASTER_IMAGE_TYPES } from "../upload";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,12 +23,18 @@ export const Documents: CollectionConfig = {
     description:
       "Files downloaded from the Resources library. Upload the file, enter the title and choose the category.",
   },
-  access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
+  access: {
+    create: staff,
+    read: anyone,
+    readVersions: staff,
+    update: staff,
+    delete: humanEditors,
+  },
   upload: {
     // Local disk during development. In production, Vercel Blob takes over when
     // USE_VERCEL_BLOB=true (see payload.config.ts).
     staticDir: path.resolve(dirname, "../../../media/documents"),
-    mimeTypes: ["application/pdf", "image/*"],
+    mimeTypes: ["application/pdf", ...RASTER_IMAGE_TYPES],
     // Library links download the file, as the old Blob `?download=1` links did.
     modifyResponseHeaders: ({ headers }) => {
       headers.set("Content-Disposition", "attachment");

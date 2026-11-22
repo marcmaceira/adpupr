@@ -1,0 +1,35 @@
+/* ADPUPR CMS branding (src/payload/admin/BrandLogo.tsx, BrandIcon.tsx). */
+.adpupr-cms-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.adpupr-cms-logo__mark {
+  width: 180px;
+  height: auto;
+}
+.adpupr-cms-logo__mark--dark,
+html[data-theme="dark"] .adpupr-cms-logo__mark--light {
+  display: none;
+}
+html[data-theme="dark"] .adpupr-cms-logo__mark--dark {
+  display: block;
+}
+.adpupr-cms-logo__label {
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #0d285b;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+html[data-theme="dark"] .adpupr-cms-logo__label {
+  background: #ffd258;
+  color: #0d285b;
+}
+.adpupr-cms-icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}

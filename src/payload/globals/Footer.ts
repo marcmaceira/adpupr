@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { anyone, authenticated } from "../access";
+import { anyone, staff } from "../access";
 import { withRowLabel } from "./row-label";
 import { array, link, media, text } from "../fields";
 
@@ -15,7 +15,7 @@ export const Footer: GlobalConfig = {
     description:
       'Footer content. Social profiles, the address and the emails are edited in "Site Settings".',
   },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, readVersions: staff, update: staff },
   versions: { max: 25 },
   fields: [
     media("logo", "Logo", {

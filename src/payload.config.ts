@@ -9,6 +9,7 @@ import { collections } from "./payload/collections";
 import { databaseAdapter } from "./payload/db";
 import { siteEditor } from "./payload/editor";
 import { globals } from "./payload/globals";
+import { MAX_UPLOAD_BYTES } from "./payload/upload";
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const serverURL = process.env.NEXT_PUBLIC_SERVER_URL || "http://localhost:3000";
@@ -18,6 +19,8 @@ function stringField(doc: unknown, key: string): string {
   const value: unknown = doc && typeof doc === "object" ? Reflect.get(doc, key) : undefined;
   return typeof value === "string" ? value : "";
 }
+
+const BRAND = "ADPUPR CMS";
 
 const PAGES_MCP_INSTRUCTIONS =
   "Pages of the ADPUPR website. Find a page by its `path` field (for example `/` or `/membresia`). " +
@@ -31,7 +34,28 @@ export default buildConfig({
   admin: {
     user: "users",
     importMap: { baseDir: path.resolve(dirname) },
-    meta: { titleSuffix: " · ADPUPR" },
+    meta: {
+      titleSuffix: ` · ${BRAND}`,
+      description: "Content management for adpupr.com.",
+      icons: [
+        { rel: "icon", type: "image/png", url: "/icon.png" },
+        { rel: "apple-touch-icon", url: "/apple-icon.png" },
+      ],
+      // No generated preview image (Payload's carries its own branding); use the site's.
+      defaultOGImageType: "off",
+      openGraph: {
+        siteName: BRAND,
+        description: "Content management for adpupr.com.",
+        images: [{ url: "/opengraph-image.jpg", width: 1200, height: 630 }],
+      },
+      robots: "noindex, nofollow",
+    },
+    components: {
+      graphics: {
+        Logo: "/payload/admin/BrandLogo#BrandLogo",
+        Icon: "/payload/admin/BrandIcon#BrandIcon",
+      },
+    },
     livePreview: {
       collections: ["pages"],
       breakpoints: [
@@ -41,7 +65,17 @@ export default buildConfig({
       ],
     },
   },
-  i18n: { supportedLanguages: { en }, fallbackLanguage: "en" },
+  i18n: {
+    supportedLanguages: { en },
+    fallbackLanguage: "en",
+    translations: { en: { general: { payloadSettings: `${BRAND} Settings` } } },
+  },
+  // Cookies from the admin are only honored on requests from the site's own origin.
+  csrf: [serverURL],
+  cors: [serverURL],
+  // The site and admin use the REST API; GraphQL stays off to keep the surface small.
+  graphQL: { disable: true },
+  upload: { limits: { fileSize: MAX_UPLOAD_BYTES } },
   collections,
   globals,
   editor: siteEditor,

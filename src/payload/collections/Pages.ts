@@ -7,7 +7,7 @@ import {
 } from "@payloadcms/plugin-seo/fields";
 import type { CollectionConfig, PayloadRequest } from "payload";
 import { blocks } from "../../blocks";
-import { authenticated, authenticatedOrPublished, humanEditors } from "../access";
+import { staff, publishedOrStaff, humanEditors } from "../access";
 
 const PATH_PATTERN = /^\/([a-z0-9]+(-[a-z0-9]+)*(\/[a-z0-9]+(-[a-z0-9]+)*)*)?$/;
 const RESERVED = new Set(["admin", "api", "next", "_next"]);
@@ -31,9 +31,10 @@ export const Pages: CollectionConfig = {
     preview: (data) => previewPath(data?.path),
   },
   access: {
-    create: authenticated,
-    read: authenticatedOrPublished,
-    update: authenticated,
+    create: staff,
+    read: publishedOrStaff,
+    readVersions: staff,
+    update: staff,
     delete: humanEditors,
   },
   defaultPopulate: { title: true, path: true },

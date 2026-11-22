@@ -1,6 +1,6 @@
 import type { CollectionBeforeValidateHook, CollectionConfig, Field } from "payload";
 import { media, text } from "../fields";
-import { anyone, authenticated, humanEditors } from "../access";
+import { anyone, staff, humanEditors } from "../access";
 
 const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
@@ -54,7 +54,13 @@ export const People: CollectionConfig = {
     description:
       "Members of boards and committees. Each person exists only once: their portrait and biography update in every section where they appear.",
   },
-  access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
+  access: {
+    create: staff,
+    read: anyone,
+    readVersions: staff,
+    update: staff,
+    delete: humanEditors,
+  },
   defaultSort: "name",
   hooks: { beforeValidate: [slugFrom("name")] },
   fields: [

@@ -1,5 +1,5 @@
 import type { GlobalConfig } from "payload";
-import { anyone, authenticated } from "../access";
+import { anyone, staff } from "../access";
 import { array, link, media, text } from "../fields";
 
 /**
@@ -14,7 +14,7 @@ export const SiteSettings: GlobalConfig = {
     description:
       "Information that appears in several places on the site. Changing it here updates it everywhere.",
   },
-  access: { read: anyone, update: authenticated },
+  access: { read: anyone, readVersions: staff, update: staff },
   versions: { max: 25 },
   fields: [
     {

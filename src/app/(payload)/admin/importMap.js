@@ -19,6 +19,8 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { HeadingFeatureClient as HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { LLMInstructionsCell as LLMInstructionsCell_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { NavRowLabel as NavRowLabel_ac3ef7bd000622750ee0b814ebc2bba4 } from '../../../payload/globals/components/NavRowLabel'
+import { BrandIcon as BrandIcon_bc4648ee163eb5680ff8be52dce01e55 } from '../../../payload/admin/BrandIcon'
+import { BrandLogo as BrandLogo_be6aeeb30907ca0f9545f56e9934f03f } from '../../../payload/admin/BrandLogo'
 import { MCPAuthorizeView as MCPAuthorizeView_a5859e694d23fd11a46e2dcf78fce1a2 } from '@payloadcms/plugin-mcp/rsc'
 import { WelcomeWidget as WelcomeWidget_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
 import { CollectionCards as CollectionCards_ab83ff7e88da8d3530831f296ec4756a } from '@payloadcms/ui/rsc'
@@ -53,6 +55,8 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#HeadingFeatureClient": HeadingFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/ui/rsc#LLMInstructionsCell": LLMInstructionsCell_ab83ff7e88da8d3530831f296ec4756a,
   "/payload/globals/components/NavRowLabel#NavRowLabel": NavRowLabel_ac3ef7bd000622750ee0b814ebc2bba4,
+  "/payload/admin/BrandIcon#BrandIcon": BrandIcon_bc4648ee163eb5680ff8be52dce01e55,
+  "/payload/admin/BrandLogo#BrandLogo": BrandLogo_be6aeeb30907ca0f9545f56e9934f03f,
   "@payloadcms/plugin-mcp/rsc#MCPAuthorizeView": MCPAuthorizeView_a5859e694d23fd11a46e2dcf78fce1a2,
   "@payloadcms/ui/rsc#WelcomeWidget": WelcomeWidget_ab83ff7e88da8d3530831f296ec4756a,
   "@payloadcms/ui/rsc#CollectionCards": CollectionCards_ab83ff7e88da8d3530831f296ec4756a,

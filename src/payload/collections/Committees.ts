@@ -1,6 +1,6 @@
 import type { CollectionConfig, Field } from "payload";
 import { array, text } from "../fields";
-import { anyone, authenticated, humanEditors } from "../access";
+import { anyone, staff, humanEditors } from "../access";
 import { slugField, slugFrom } from "./People";
 
 const personField = (description: string): Field => ({
@@ -27,7 +27,13 @@ export const Committees: CollectionConfig = {
     description:
       "Working committees, shown in the order set. Each identifier is the link anchor (#identifier).",
   },
-  access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
+  access: {
+    create: staff,
+    read: anyone,
+    readVersions: staff,
+    update: staff,
+    delete: humanEditors,
+  },
   defaultSort: "order",
   hooks: { beforeValidate: [slugFrom("name")] },
   fields: [

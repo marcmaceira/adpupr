@@ -71,6 +71,8 @@ docs/block-contract.md         how blocks, fields, sections and seed data fit to
 ### Collections and globals
 
 - Collections: `pages`, `people`, `committees`, `documents` (resource library files), `document-categories`, `media` (images, alt text required), `users` (roles: admin, editor, ai).
+- Access (`src/payload/access.ts`): visitors only read published content; `staff` (any account with a role) creates and edits content and reads drafts and versions; only admins and editors delete; only admins manage users, unlock accounts and set API keys (the `apiKey` field override in `Users.ts`). The AI role can't sign in to the admin or change any user. Every collection and global sets `readVersions: staff`, since versions include unpublished drafts. Logins lock after 5 failures. Uploads are PDFs and raster images only (`src/payload/upload.ts`); GraphQL is disabled; `csrf` and `cors` allow only `NEXT_PUBLIC_SERVER_URL`.
+- The admin is branded **ADPUPR CMS**: `admin.meta`, `admin.components.graphics` (`src/payload/admin/`), styles in `src/app/(payload)/custom.css`. `poweredByHeader: false` in `next.config.ts` drops the X-Powered-By header.
 - Globals: `header`, `footer`, `site-settings` (organization, emails, postal address, social profiles, ATH Móvil link, SEO defaults, 404 copy). Facts shown in more than one place live in `site-settings`.
 
 ### Environment

@@ -1471,7 +1471,7 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * People with access to the admin panel. The "AI assistant" role is for MCP clients: it can read and edit content, but cannot delete anything or manage users.
+ * People with access to the admin panel. Only admins create, delete or change other users. The "AI assistant" role is for MCP clients: it can read and edit content, but cannot delete anything or change any user.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
