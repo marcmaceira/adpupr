@@ -139,19 +139,6 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "LexicalNodes_ABC6E12E".
- */
-export type LexicalNodes_ABC6E12E =
-  | SerializedTextNode
-  | SerializedTabNode
-  | SerializedLineBreakNode
-  | SerializedParagraphNode<LexicalNodes_ABC6E12E>
-  | SerializedListNode<LexicalNodes_ABC6E12E>
-  | SerializedListItemNode<LexicalNodes_ABC6E12E>
-  | SerializedAutoLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>
-  | SerializedLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>;
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
  */
 export type LexicalNodes_3DE324E4 =
@@ -170,8 +157,8 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
-    documents: Document;
-    'document-categories': DocumentCategory;
+    people: Person;
+    committees: Committee;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -183,8 +170,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
-    documents: DocumentsSelect<false> | DocumentsSelect<true>;
-    'document-categories': DocumentCategoriesSelect<false> | DocumentCategoriesSelect<true>;
+    people: PeopleSelect<false> | PeopleSelect<true>;
+    committees: CommitteesSelect<false> | CommitteesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -251,7 +238,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: (HeroBlock | MembershipEnrollmentBlock | ContactSectionBlock | ResourceLibraryBlock)[] | null;
+  layout?: (HeroBlock | PeopleGridBlock | CommitteesBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -340,8 +327,6 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
- * Normalmente un formulario externo que se abre en una pestaña nueva.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
  */
@@ -361,145 +346,60 @@ export interface CmsLink {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MembershipEnrollmentBlock".
+ * via the `definition` "PeopleGridBlock".
  */
-export interface MembershipEnrollmentBlock {
-  benefits: {
-    eyebrow?: string | null;
-    /**
-     * Cada salto de línea se muestra como un salto de línea.
-     */
-    heading: string;
-    items?:
-      | {
-          text: string;
-          id?: string | null;
-        }[]
-      | null;
-  };
-  form: {
-    eyebrow?: string | null;
-    /**
-     * Cada salto de línea se muestra como un salto de línea.
-     */
-    heading: string;
-    text?: string | null;
-    link?: CmsLink;
-    callout?: {
-      title?: string | null;
-      text?: string | null;
-    };
-  };
-  payment: {
-    eyebrow?: string | null;
-    /**
-     * Cada salto de línea se muestra como un salto de línea.
-     */
-    heading: string;
-    /**
-     * El enlace de pago se edita en Configuración del sitio → Pagos.
-     */
-    athMovil: {
-      title: string;
-      text?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
-      buttonLabel: string;
-    };
-    paypal: {
-      title: string;
-      plans?:
-        | {
-            name: string;
-            price: string;
-            url: string;
-            id?: string | null;
-          }[]
-        | null;
-    };
-    /**
-     * La dirección postal se edita en Configuración del sitio → Contacto.
-     */
-    check: {
-      title: string;
-      text?: string | null;
-    };
-  };
-  settings?: {
-    /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
-     */
-    anchorId?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'membershipEnrollment';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactSectionBlock".
- */
-export interface ContactSectionBlock {
+export interface PeopleGridBlock {
+  /**
+   * Tarjetas con biografía: encabezado a dos columnas; en pantallas grandes 4 tarjetas por fila y la última fila centrada. Retratos: encabezado apilado; 2, 3 o 4 retratos por fila.
+   */
+  variant: 'bioOverlay' | 'portrait';
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
    */
   heading: string;
-  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  intro?: string | null;
   /**
-   * El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.
+   * En el orden en que se muestran. El cargo es propio de esta sección.
    */
-  form: {
-    eyebrow?: string | null;
-    heading: string;
-    nameLabel: string;
-    namePlaceholder?: string | null;
-    contactLabel: string;
-    contactPlaceholder?: string | null;
-    messageLabel: string;
-    messagePlaceholder?: string | null;
-    privacyNote?: string | null;
-    submitLabel: string;
-    email: {
-      /**
-       * Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.
-       */
-      recipient?: string | null;
-      /**
-       * Escribe {nombre} donde debe ir el nombre de la persona.
-       */
-      subjectTemplate: string;
-      /**
-       * Por ejemplo «Nombre:». Le sigue el nombre escrito.
-       */
-      nameLine: string;
-      /**
-       * Se omite si la persona no escribe su contacto.
-       */
-      contactLine: string;
-      /**
-       * Va en su propia línea, antes del mensaje.
-       */
-      messageLine: string;
-    };
-  };
-  /**
-   * Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.
-   */
-  channels: {
-    eyebrow?: string | null;
-    ariaLabel: string;
-    emailHeading?: string | null;
-    postalHeading?: string | null;
-    socialHeading?: string | null;
+  members: {
+    person: number | Person;
+    role: string;
     /**
-     * En el orden en que aparecen. Solo se muestran redes configuradas.
+     * Déjalo vacío para usar el nombre de la persona.
      */
-    networks?:
-      | {
-          network: 'facebook' | 'instagram' | 'linkedin' | 'youtube';
-          id?: string | null;
-        }[]
-      | null;
+    displayName?: string | null;
+    id?: string | null;
+  }[];
+  /**
+   * Textos de botones y lectores de pantalla. {nombre} se reemplaza por el nombre de cada persona.
+   */
+  labels: {
+    /**
+     * Por ejemplo: Retrato de {nombre}
+     */
+    portraitAlt: string;
+    /**
+     * Por ejemplo: Ver biografía
+     */
+    open?: string | null;
+    /**
+     * Por ejemplo: Ver biografía de {nombre}
+     */
+    openAria?: string | null;
+    /**
+     * Por ejemplo: Biografía de {nombre}
+     */
+    bioAria?: string | null;
+    /**
+     * Por ejemplo: Cerrar biografía de {nombre}
+     */
+    closeAria?: string | null;
   };
+  /**
+   * Desactivado: solo retrato, cargo y nombre (como la Junta Fundadora actual).
+   */
+  showBios?: boolean | null;
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -508,49 +408,42 @@ export interface ContactSectionBlock {
   };
   id?: string | null;
   blockName?: string | null;
-  blockType: 'contactSection';
+  blockType: 'peopleGrid';
 }
 /**
+ * Integrantes de juntas y comités. Cada persona existe una sola vez: su retrato y biografía se actualizan en todas las secciones donde aparece.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ResourceLibraryBlock".
+ * via the `definition` "people".
  */
-export interface ResourceLibraryBlock {
-  eyebrow?: string | null;
+export interface Person {
+  id: number;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Como se muestra normalmente, con títulos o grados si aplican. Cada sección puede mostrar otra forma del nombre.
    */
-  heading: string;
-  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  name: string;
   /**
-   * Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.
+   * Foto vertical (proporción 4:5 o 3:4). El texto alternativo se edita en el archivo de Medios.
    */
-  library: {
-    filterLegend: string;
-    allLabel: string;
-    searchLabel: string;
-    searchPlaceholder?: string | null;
-    /**
-     * Los lectores de pantalla lo leen seguido del título del documento.
-     */
-    downloadLabel: string;
-    emptyArchive?: {
-      title?: string | null;
-      text?: string | null;
-    };
-    noResults?: {
-      title?: string | null;
-      text?: string | null;
-    };
-  };
-  settings?: {
-    /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
-     */
-    anchorId?: string | null;
-  };
-  id?: string | null;
-  blockName?: string | null;
-  blockType: 'resourceLibrary';
+  portrait?: (number | null) | Media;
+  /**
+   * Se muestra al abrir la tarjeta en la Junta Directiva y en el perfil de coordinación de un comité.
+   */
+  bio?: string | null;
+  /**
+   * Se completa automáticamente a partir del nombre. Minúsculas, números y guiones.
+   */
+  slug?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -654,81 +547,143 @@ export interface User {
   collection: 'users';
 }
 /**
- * Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.
- *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents".
+ * via the `definition` "CommitteesBlock".
  */
-export interface Document {
-  id: number;
+export interface CommitteesBlock {
+  eyebrow?: string | null;
   /**
-   * Así aparece en la lista y en el botón de descarga.
+   * Cada salto de línea se muestra como un salto de línea.
    */
-  title: string;
-  category: number | DocumentCategory;
+  heading: string;
+  intro?: string | null;
+  selection: 'all' | 'selected';
   /**
-   * La lista muestra primero los documentos más recientes.
+   * Se muestran en el orden elegido aquí.
    */
-  publishedAt: string;
+  committees?: (number | Committee)[] | null;
   /**
-   * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
+   * {nombre} se reemplaza por el nombre del comité o de la persona.
    */
-  sortOrder?: number | null;
-  prefix?: string | null;
-  _objectKey?: string | null;
-  createdBy?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
-  updatedBy?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  _stored?: boolean | null;
-  _transforms?: UploadTransforms;
-  original?: {
-    filename?: string | null;
-    url?: string | null;
-    mimeType?: string | null;
-    filesize?: number | null;
-    width?: number | null;
-    height?: number | null;
-    prefix?: string | null;
-    _objectKey?: string | null;
-    _stored?: boolean | null;
+  labels: {
+    /**
+     * Por ejemplo: Comités de trabajo
+     */
+    navAria: string;
+    /**
+     * Por ejemplo: Comité de trabajo
+     */
+    committeeEyebrow: string;
+    /**
+     * Por ejemplo: Comité de {nombre}
+     */
+    committeeHeading: string;
+    /**
+     * Por ejemplo: Coordinación
+     */
+    coordinator: string;
+    /**
+     * Por ejemplo: Retrato de {nombre}
+     */
+    portraitAlt: string;
+    /**
+     * Por ejemplo: Integrantes
+     */
+    members: string;
+    /**
+     * Por ejemplo: Responsabilidades
+     */
+    responsibilities: string;
   };
-  focalX?: number | null;
-  focalY?: number | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'committees';
 }
 /**
- * Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.
+ * Comités de trabajo. Se muestran en el orden indicado; su identificador es el ancla del enlace (#identificador).
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "document-categories".
+ * via the `definition` "committees".
  */
-export interface DocumentCategory {
+export interface Committee {
   id: number;
   /**
-   * Texto del botón de filtro y de la etiqueta sobre cada documento.
+   * Sin «Comité de». Por ejemplo: Asuntos Legislativos.
    */
-  label: string;
+  name: string;
+  description: string;
   /**
-   * Minúsculas, números y guiones. No se muestra a visitantes.
+   * Se muestra en un recuadro mostaza debajo de la descripción.
    */
-  slug: string;
+  focus?: string | null;
   /**
-   * Las categorías con número menor aparecen primero.
+   * Por ejemplo: Funciones principales.
+   */
+  functionsLabel: string;
+  functions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  coordinator: {
+    /**
+     * Su retrato y biografía se toman del registro de la persona.
+     */
+    person: number | Person;
+    /**
+     * Déjalo vacío para usar el nombre de la persona.
+     */
+    displayName?: string | null;
+    /**
+     * Reemplaza la etiqueta general de la sección (Coordinación).
+     */
+    roleLabel?: string | null;
+  };
+  /**
+   * Recuadro adicional con integrantes y responsabilidades. Déjalo vacío si no aplica.
+   */
+  editorialBoard?: {
+    /**
+     * Por ejemplo: Junta Editora.
+     */
+    title?: string | null;
+    summary?: string | null;
+    members?:
+      | {
+          /**
+           * Persona integrante.
+           */
+          person: number | Person;
+          role: string;
+          /**
+           * Déjalo vacío para usar el nombre de la persona.
+           */
+          displayName?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    responsibilities?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Los comités se muestran de menor a mayor.
    */
   order: number;
+  /**
+   * Se completa a partir del nombre. Es el ancla del enlace: /nosotros/estructura-organizacional#identificador.
+   */
+  slug?: string | null;
   createdBy?: {
     relationTo: 'users';
     value: number | User;
@@ -769,12 +724,12 @@ export interface PayloadLockedDocument {
         value: number | Page;
       } | null)
     | ({
-        relationTo: 'documents';
-        value: number | Document;
+        relationTo: 'people';
+        value: number | Person;
       } | null)
     | ({
-        relationTo: 'document-categories';
-        value: number | DocumentCategory;
+        relationTo: 'committees';
+        value: number | Committee;
       } | null)
     | ({
         relationTo: 'media';
@@ -859,9 +814,8 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
-        membershipEnrollment?: T | MembershipEnrollmentBlockSelect<T>;
-        contactSection?: T | ContactSectionBlockSelect<T>;
-        resourceLibrary?: T | ResourceLibraryBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
+        committees?: T | CommitteesBlockSelect<T>;
       };
   meta?:
     | T
@@ -943,121 +897,31 @@ export interface CmsLinkSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "MembershipEnrollmentBlock_select".
+ * via the `definition` "PeopleGridBlock_select".
  */
-export interface MembershipEnrollmentBlockSelect<T extends boolean = true> {
-  benefits?:
-    | T
-    | {
-        eyebrow?: T;
-        heading?: T;
-        items?:
-          | T
-          | {
-              text?: T;
-              id?: T;
-            };
-      };
-  form?:
-    | T
-    | {
-        eyebrow?: T;
-        heading?: T;
-        text?: T;
-        link?: T | CmsLinkSelect<T>;
-        callout?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-            };
-      };
-  payment?:
-    | T
-    | {
-        eyebrow?: T;
-        heading?: T;
-        athMovil?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-              buttonLabel?: T;
-            };
-        paypal?:
-          | T
-          | {
-              title?: T;
-              plans?:
-                | T
-                | {
-                    name?: T;
-                    price?: T;
-                    url?: T;
-                    id?: T;
-                  };
-            };
-        check?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-            };
-      };
-  settings?:
-    | T
-    | {
-        anchorId?: T;
-      };
-  id?: T;
-  blockName?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ContactSectionBlock_select".
- */
-export interface ContactSectionBlockSelect<T extends boolean = true> {
+export interface PeopleGridBlockSelect<T extends boolean = true> {
+  variant?: T;
   eyebrow?: T;
   heading?: T;
-  body?: T;
-  form?:
+  intro?: T;
+  members?:
     | T
     | {
-        eyebrow?: T;
-        heading?: T;
-        nameLabel?: T;
-        namePlaceholder?: T;
-        contactLabel?: T;
-        contactPlaceholder?: T;
-        messageLabel?: T;
-        messagePlaceholder?: T;
-        privacyNote?: T;
-        submitLabel?: T;
-        email?:
-          | T
-          | {
-              recipient?: T;
-              subjectTemplate?: T;
-              nameLine?: T;
-              contactLine?: T;
-              messageLine?: T;
-            };
+        person?: T;
+        role?: T;
+        displayName?: T;
+        id?: T;
       };
-  channels?:
+  labels?:
     | T
     | {
-        eyebrow?: T;
-        ariaLabel?: T;
-        emailHeading?: T;
-        postalHeading?: T;
-        socialHeading?: T;
-        networks?:
-          | T
-          | {
-              network?: T;
-              id?: T;
-            };
+        portraitAlt?: T;
+        open?: T;
+        openAria?: T;
+        bioAria?: T;
+        closeAria?: T;
       };
+  showBios?: T;
   settings?:
     | T
     | {
@@ -1068,32 +932,24 @@ export interface ContactSectionBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ResourceLibraryBlock_select".
+ * via the `definition` "CommitteesBlock_select".
  */
-export interface ResourceLibraryBlockSelect<T extends boolean = true> {
+export interface CommitteesBlockSelect<T extends boolean = true> {
   eyebrow?: T;
   heading?: T;
-  body?: T;
-  library?:
+  intro?: T;
+  selection?: T;
+  committees?: T;
+  labels?:
     | T
     | {
-        filterLegend?: T;
-        allLabel?: T;
-        searchLabel?: T;
-        searchPlaceholder?: T;
-        downloadLabel?: T;
-        emptyArchive?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-            };
-        noResults?:
-          | T
-          | {
-              title?: T;
-              text?: T;
-            };
+        navAria?: T;
+        committeeEyebrow?: T;
+        committeeHeading?: T;
+        coordinator?: T;
+        portraitAlt?: T;
+        members?: T;
+        responsibilities?: T;
       };
   settings?:
     | T
@@ -1105,52 +961,62 @@ export interface ResourceLibraryBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "documents_select".
+ * via the `definition` "people_select".
  */
-export interface DocumentsSelect<T extends boolean = true> {
-  title?: T;
-  category?: T;
-  publishedAt?: T;
-  sortOrder?: T;
-  prefix?: T;
-  _objectKey?: T;
+export interface PeopleSelect<T extends boolean = true> {
+  name?: T;
+  portrait?: T;
+  bio?: T;
+  slug?: T;
   createdBy?: T;
   updatedBy?: T;
   updatedAt?: T;
   createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  _stored?: T;
-  _transforms?: T;
-  original?:
-    | T
-    | {
-        filename?: T;
-        url?: T;
-        mimeType?: T;
-        filesize?: T;
-        width?: T;
-        height?: T;
-        prefix?: T;
-        _objectKey?: T;
-        _stored?: T;
-      };
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "document-categories_select".
+ * via the `definition` "committees_select".
  */
-export interface DocumentCategoriesSelect<T extends boolean = true> {
-  label?: T;
-  slug?: T;
+export interface CommitteesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  focus?: T;
+  functionsLabel?: T;
+  functions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  coordinator?:
+    | T
+    | {
+        person?: T;
+        displayName?: T;
+        roleLabel?: T;
+      };
+  editorialBoard?:
+    | T
+    | {
+        title?: T;
+        summary?: T;
+        members?:
+          | T
+          | {
+              person?: T;
+              role?: T;
+              displayName?: T;
+              id?: T;
+            };
+        responsibilities?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
   order?: T;
+  slug?: T;
   createdBy?: T;
   updatedBy?: T;
   updatedAt?: T;
@@ -1453,7 +1319,7 @@ export interface CollectionsWidget {
 export interface CollectionQueryWidget {
   data?: {
     title?: string | null;
-    relatedCollection: 'pages' | 'documents' | 'document-categories' | 'media' | 'users';
+    relatedCollection: 'pages' | 'people' | 'committees' | 'media' | 'users';
     where?:
       | {
           [k: string]: unknown;
@@ -1475,7 +1341,7 @@ export interface CollectionQueryWidget {
  */
 export interface ActivityWidget {
   data?: {
-    excludedCollections?: ('pages' | 'documents' | 'document-categories' | 'media' | 'users')[] | null;
+    excludedCollections?: ('pages' | 'people' | 'committees' | 'media' | 'users')[] | null;
   };
   width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1485,7 +1351,7 @@ export interface ActivityWidget {
  */
 export interface UploadDropzoneWidget {
   data?: {
-    excludedCollections?: ('documents' | 'media')[] | null;
+    excludedCollections?: 'media'[] | null;
   };
   width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1562,24 +1428,12 @@ export interface SerializedListItemNode<TChildren> extends SerializedLexicalElem
   value: number;
 }
 
-export interface LexicalLinkFields {
-  [k: string]: unknown;
-  doc?: {
-    relationTo: string;
-    value: Config['db']['defaultIDType'] | { [k: string]: unknown; id: Config['db']['defaultIDType'] };
-  } | null;
-  linkType: 'custom' | 'internal';
-  newTab: boolean;
-  url?: string;
-}
-export interface SerializedLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
-  type: 'link';
-  fields: TFields;
-  id?: string;
-}
-export interface SerializedAutoLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
-  type: 'autolink';
-  fields: TFields;
+export interface SerializedHeadingNode<
+  TChildren,
+  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+> extends SerializedLexicalElementBase<TChildren> {
+  type: 'heading';
+  tag: TTag;
 }
 
 /** Shape of a Lexical `richText` field. */
@@ -1593,14 +1447,6 @@ export interface LexicalRichText<TNode> {
     /** @deprecated Ignored when loading. Typed as required only to match Lexical's types: rich text sent through the API, CLI or MCP may not contain it. */
     version: number;
   };
-}
-
-export interface SerializedHeadingNode<
-  TChildren,
-  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
-> extends SerializedLexicalElementBase<TChildren> {
-  type: 'heading';
-  tag: TTag;
 }
 
 
