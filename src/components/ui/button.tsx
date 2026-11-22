@@ -68,6 +68,12 @@ export const TEXT_LINK_VARIANTS = {
   light:
     "inline-flex items-center gap-2 font-heading text-sm font-bold text-primary underline decoration-sky-200 decoration-2 underline-offset-4 transition-colors hover:text-primary-700",
   dark: "inline-flex items-center gap-2 font-heading text-sm font-bold text-white underline decoration-mustard decoration-2 underline-offset-4 transition-colors hover:text-mustard",
+  /** Card footer link on a light card (no color transition). */
+  cardLight:
+    "inline-flex items-center gap-2 font-heading text-sm font-bold underline decoration-2 underline-offset-4 text-primary decoration-sky-200 hover:text-primary-700",
+  /** Card footer link on a dark card (no color transition). */
+  cardDark:
+    "inline-flex items-center gap-2 font-heading text-sm font-bold underline decoration-2 underline-offset-4 text-white decoration-mustard hover:text-mustard",
 } as const;
 
 export type ButtonVariant = keyof typeof BUTTON_VARIANTS;

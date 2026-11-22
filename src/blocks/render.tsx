@@ -14,13 +14,15 @@ const registry = {
   ...peopleComponents,
 } satisfies BlockRegistry;
 
-type Renderer = ComponentType<{ readonly block: LayoutBlock }>;
+type AnyBlockComponent = ComponentType<{ readonly block: LayoutBlock }>;
 
 /**
- * The registry is keyed by slug, so the renderer found for `block.blockType` accepts that
- * block. TypeScript cannot correlate the two through an index, hence this guard.
+ * The registry pairs each slug with the renderer for that slug's block type, but TypeScript
+ * cannot correlate `registry[block.blockType]` with `block` across the union, so the lookup
+ * is widened to `unknown` and narrowed here (an `as` cast is an unsafe narrowing once the
+ * registry holds more than one block type).
  */
-function isRenderer(value: unknown): value is Renderer {
+function isBlockComponent(value: unknown): value is AnyBlockComponent {
   return typeof value === "function";
 }
 
@@ -34,8 +36,8 @@ export function RenderBlocks({
   return (
     <>
       {blocks.map((block, index) => {
-        const Component: unknown = Reflect.get(registry, block.blockType);
-        if (!isRenderer(Component)) return null;
+        const Component: unknown = registry[block.blockType];
+        if (!isBlockComponent(Component)) return null;
         return <Component key={block.id ?? `${block.blockType}-${index}`} block={block} />;
       })}
     </>
