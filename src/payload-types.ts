@@ -674,6 +674,8 @@ export interface Document {
    * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
    */
   sortOrder?: number | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   createdBy?: {
     relationTo: 'users';
     value: number | User;
@@ -1110,6 +1112,8 @@ export interface DocumentsSelect<T extends boolean = true> {
   category?: T;
   publishedAt?: T;
   sortOrder?: T;
+  prefix?: T;
+  _objectKey?: T;
   createdBy?: T;
   updatedBy?: T;
   updatedAt?: T;

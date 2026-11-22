@@ -55,6 +55,7 @@ export default buildConfig({
       enabled: process.env.USE_VERCEL_BLOB === "true",
       collections: {
         media: { prefix: "cms/media" },
+        documents: { prefix: "cms/documents" },
       },
       token: process.env.BLOB_READ_WRITE_TOKEN,
     }),
