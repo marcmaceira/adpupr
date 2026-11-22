@@ -1,6 +1,6 @@
 # ADPUPR website
 
-The site of the Asociación de Administración Pública de Puerto Rico ([adpupr.com](https://www.adpupr.com)). Next.js 16 with Payload CMS 4 (beta): every page, the menu, the footer and the shared site facts are edited in the admin panel, in Spanish, or through an AI assistant connected over MCP.
+The site of the Asociación de Administración Pública de Puerto Rico ([adpupr.com](https://www.adpupr.com)). Next.js 16 with Payload CMS 4 (beta): every page, the menu, the footer and the shared site facts are edited in the admin panel (in English; the site content is Spanish) or through an AI assistant connected over MCP.
 
 Architecture and conventions for developers: [`AGENTS.md`](AGENTS.md) and [`docs/block-contract.md`](docs/block-contract.md).
 
@@ -34,11 +34,11 @@ pnpm dev                # http://localhost:3000, admin at http://localhost:3000/
 
 Sign in at `/admin`.
 
-- **Páginas**: each page is a list of sections (blocks). Open a page, change text in the **Contenido** tab, and click **Publicar cambios**. The change is live on the next page load. Edits save as drafts automatically; **Previsualizar** shows the draft before publishing, and **Versiones** keeps the history.
-- **New page**: **Páginas → Crear**, give it a title and a path (for example `/eventos` or `/nosotros/aliados`), add sections with **Añadir Sección**, and publish. The page `/guia-de-componentes` shows every available section in every variant.
-- **Documentos** and **Categorías de documentos**: the files of the Recursos library. Upload, title, categorize or delete them here.
-- **Personas** and **Comités**: board members, founders and committees. A person exists once; their portrait and biography update everywhere.
-- **Encabezado**, **Pie de página** and **Configuración del sitio**: menu, footer, emails, postal address, social profiles, the ATH Móvil link and SEO defaults.
+- **Pages**: each page is a list of sections (blocks). Open a page, change text in the **Content** tab, and click **Publish changes**. The change is live on the next page load. Edits save as drafts automatically; **Preview** shows the draft before publishing, and **Versions** keeps the history.
+- **New page**: **Pages → Create New**, give it a title and a path (for example `/eventos` or `/nosotros/aliados`), add sections with **Add Section**, and publish. The page `/guia-de-componentes` shows every available section in every variant.
+- **Documents** and **Document Categories**: the files of the Recursos library. Upload, title, categorize or delete them here.
+- **People** and **Committees**: board members, founders and committees. A person exists once; their portrait and biography update everywhere.
+- **Header**, **Footer** and **Site Settings**: menu, footer, emails, postal address, social profiles, the ATH Móvil link and SEO defaults.
 
 ## Connect Claude Desktop (MCP)
 
@@ -46,10 +46,10 @@ The site exposes Payload's official MCP endpoint at `/api/mcp` (Streamable HTTP)
 
 ### 1. Create a scoped API key
 
-Use a dedicated user with the **Asistente IA (MCP)** role. It can read and edit content, but cannot delete anything, manage users, or sign in to the admin panel.
+Use a dedicated user with the **AI assistant (MCP)** role. It can read and edit content, but cannot delete anything, manage users, or sign in to the admin panel.
 
-1. In the admin, open **Usuarios → Crear** (or the user created by `pnpm seed` from `SEED_MCP_EMAIL`).
-2. Set **Rol** to **Asistente IA (MCP)** and save.
+1. In the admin, open **Users → Create New** (or the user created by `pnpm seed` from `SEED_MCP_EMAIL`).
+2. Set **Role** to **AI assistant (MCP)** and save.
 3. Enable the **API key** option on that user, generate a key, copy it and save.
 
 The client authenticates with the header `Authorization: users API-Key <KEY>`.

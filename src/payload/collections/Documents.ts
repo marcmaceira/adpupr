@@ -11,16 +11,16 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
  */
 export const Documents: CollectionConfig = {
   slug: "documents",
-  labels: { singular: "Documento", plural: "Documentos" },
+  labels: { singular: "Document", plural: "Documents" },
   versions: false,
   // Same order as the library on the site.
   defaultSort: ["-publishedAt", "sortOrder"],
   admin: {
-    group: "Contenido",
+    group: "Content",
     useAsTitle: "title",
     defaultColumns: ["title", "category", "publishedAt", "filename"],
     description:
-      "Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.",
+      "Files downloaded from the Resources library. Upload the file, enter the title and choose the category.",
   },
   access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
   upload: {
@@ -38,37 +38,37 @@ export const Documents: CollectionConfig = {
     {
       name: "title",
       type: "text",
-      label: "Título",
+      label: "Title",
       required: true,
-      admin: { description: "Así aparece en la lista y en el botón de descarga." },
+      admin: { description: "How it appears in the list and on the download button." },
     },
     {
       name: "category",
       type: "relationship",
       relationTo: "document-categories",
-      label: "Categoría",
+      label: "Category",
       required: true,
     },
     {
       name: "publishedAt",
       type: "date",
-      label: "Fecha de publicación",
+      label: "Publication date",
       required: true,
       defaultValue: () => new Date().toISOString(),
       admin: {
         position: "sidebar",
         date: { pickerAppearance: "dayAndTime" },
-        description: "La lista muestra primero los documentos más recientes.",
+        description: "The list shows the most recent documents first.",
       },
     },
     {
       name: "sortOrder",
       type: "number",
-      label: "Orden en la misma fecha",
+      label: "Order within the same date",
       admin: {
         position: "sidebar",
         description:
-          "Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.",
+          "Optional. If two documents have the same date, the one with the lower number appears first.",
       },
     },
   ],

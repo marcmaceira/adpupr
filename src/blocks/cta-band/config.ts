@@ -12,16 +12,16 @@ import {
 } from "../../payload/fields";
 
 export const CTA_BAND_VARIANTS = [
-  { value: "primary", label: "Azul con anillos (información del evento y dos botones)" },
-  { value: "mustard", label: "Mostaza (un botón)" },
-  { value: "mustardIcon", label: "Mostaza con ícono circular (convocatoria)" },
-  { value: "navy", label: "Azul oscuro (un botón mostaza)" },
+  { value: "primary", label: "Blue with rings (event details and two buttons)" },
+  { value: "mustard", label: "Mustard (one button)" },
+  { value: "mustardIcon", label: "Mustard with circular icon (call for papers)" },
+  { value: "navy", label: "Dark blue (one mustard button)" },
 ] as const;
 
 type CtaBandVariant = (typeof CTA_BAND_VARIANTS)[number]["value"];
 const when = (...variants: CtaBandVariant[]) => variantIs(...variants);
 
-const [headingField, highlightField] = headline("heading", "Título", { highlight: true });
+const [headingField, highlightField] = headline("heading", "Heading", { highlight: true });
 
 /**
  * Call-to-action band: a full-width strip with a short message and one or two buttons.
@@ -31,33 +31,34 @@ const [headingField, highlightField] = headline("heading", "Título", { highligh
 export const CtaBandBlock: Block = {
   slug: "ctaBand",
   interfaceName: "CtaBandBlock",
-  labels: { singular: "Banda con botones", plural: "Bandas con botones" },
-  admin: { group: "Encabezados y bandas" },
+  labels: { singular: "Button band", plural: "Button bands" },
+  admin: { group: "Headers and bands" },
   fields: [
     variant(CTA_BAND_VARIANTS, {
-      description: "Cada variante reproduce una banda existente del sitio, con su color y diseño.",
+      description:
+        "Each variant reproduces an existing band on the site, with its color and design.",
     }),
-    showWhen({ ...icon("icon", "Ícono del círculo"), defaultValue: "send" }, when("mustardIcon")),
-    text("eyebrow", "Antetítulo", {
-      description: "Texto corto en mayúsculas que aparece sobre el título. Opcional.",
+    showWhen({ ...icon("icon", "Circle icon"), defaultValue: "send" }, when("mustardIcon")),
+    text("eyebrow", "Eyebrow", {
+      description: "Short uppercase text shown above the heading. Optional.",
     }),
     ...(headingField ? [headingField] : []),
     ...(highlightField ? [showWhen(highlightField, when("primary"))] : []),
-    text("body", "Texto", { textarea: true }),
+    text("body", "Text", { textarea: true }),
     showWhen(
       array(
         "meta",
-        "Datos del evento",
-        "Dato",
+        "Event details",
+        "Detail",
         [
           {
             type: "row",
             fields: [
-              { ...icon("icon", "Ícono"), admin: { width: "40%" } },
+              { ...icon("icon", "Icon"), admin: { width: "40%" } },
               {
                 name: "text",
                 type: "text",
-                label: "Texto",
+                label: "Text",
                 required: true,
                 admin: { width: "60%" },
               },
@@ -67,14 +68,14 @@ export const CtaBandBlock: Block = {
         {
           maxRows: 4,
           description:
-            "Fila de datos bajo el texto (fecha, lugar, modalidad). Sin ícono se muestra un punto (·).",
+            "Row of details under the text (date, place, format). Without an icon, a dot (·) is shown.",
         },
       ),
       when("primary"),
     ),
-    link({ name: "primaryAction", label: "Botón principal", required: true }),
+    link({ name: "primaryAction", label: "Primary button", required: true }),
     showWhen(
-      link({ name: "secondaryAction", label: "Botón secundario (opcional)" }),
+      link({ name: "secondaryAction", label: "Secondary button (optional)" }),
       when("primary"),
     ),
     sectionSettings(),

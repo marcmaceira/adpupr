@@ -1,6 +1,6 @@
 /**
  * Links of type "email" ("Correo del sitio") point at the site's main address, which lives
- * once in Configuración del sitio. This fills their `url` with the mailto: link after a
+ * once in Site Settings. This fills their `url` with the mailto: link after a
  * document is read, so every block and global resolves them like any other URL.
  */
 export function mailtoHref(email: string, subject: string | null | undefined): string {

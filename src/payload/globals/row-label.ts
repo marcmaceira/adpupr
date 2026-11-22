@@ -1,6 +1,6 @@
 import type { ArrayField } from "payload";
 
-/** Shows each row's own label ("Inicio", "Nosotros (menú desplegable)") in the admin list. */
+/** Shows each row's own label ("Inicio", "Nosotros (dropdown)") in the admin list. */
 export const withRowLabel = (field: ArrayField): ArrayField => ({
   ...field,
   admin: {

@@ -6,88 +6,88 @@ const NAME_TOKEN = "{nombre}";
 /**
  * Contact section: intro, a form that opens the visitor's email app (mailto:), and an
  * aside with the direct channels. Emails, address and social profiles come from
- * Configuración del sitio.
+ * Site Settings.
  */
 export const ContactSectionBlock: Block = {
   slug: "contactSection",
   interfaceName: "ContactSectionBlock",
-  labels: { singular: "Sección de contacto", plural: "Secciones de contacto" },
-  admin: { group: "Membresía, contacto y recursos" },
+  labels: { singular: "Contact section", plural: "Contact sections" },
+  admin: { group: "Membership, contact and resources" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    richText("body", "Texto"),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    richText("body", "Text"),
     {
       name: "form",
       type: "group",
-      label: "Formulario",
+      label: "Form",
       admin: {
         description:
-          "El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.",
+          "The form opens the visitor's email app with the message ready to send. It does not store any data.",
       },
       fields: [
-        text("eyebrow", "Antetítulo"),
-        text("heading", "Título", { required: true }),
+        text("eyebrow", "Eyebrow"),
+        text("heading", "Heading", { required: true }),
         {
           type: "row",
           fields: [
-            text("nameLabel", "Etiqueta: nombre", { required: true }),
-            text("namePlaceholder", "Texto de ejemplo: nombre"),
+            text("nameLabel", "Label: name", { required: true }),
+            text("namePlaceholder", "Placeholder: name"),
           ],
         },
         {
           type: "row",
           fields: [
-            text("contactLabel", "Etiqueta: contacto", { required: true }),
-            text("contactPlaceholder", "Texto de ejemplo: contacto"),
+            text("contactLabel", "Label: contact", { required: true }),
+            text("contactPlaceholder", "Placeholder: contact"),
           ],
         },
         {
           type: "row",
           fields: [
-            text("messageLabel", "Etiqueta: mensaje", { required: true }),
-            text("messagePlaceholder", "Texto de ejemplo: mensaje"),
+            text("messageLabel", "Label: message", { required: true }),
+            text("messagePlaceholder", "Placeholder: message"),
           ],
         },
-        text("privacyNote", "Nota de privacidad"),
-        text("submitLabel", "Texto del botón", { required: true }),
+        text("privacyNote", "Privacy note"),
+        text("submitLabel", "Button label", { required: true }),
         {
           name: "email",
           type: "group",
-          label: "Correo que se genera",
+          label: "Generated email",
           fields: [
             {
               name: "recipient",
               type: "email",
-              label: "Destinatario",
+              label: "Recipient",
               admin: {
                 description:
-                  "Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.",
+                  "Optional. If left empty, the first email in Site Settings → Contact is used.",
               },
             },
             {
               name: "subjectTemplate",
               type: "text",
-              label: "Asunto",
+              label: "Subject",
               required: true,
               admin: {
-                description: `Escribe ${NAME_TOKEN} donde debe ir el nombre de la persona.`,
+                description: `Type ${NAME_TOKEN} where the person's name should go.`,
               },
             },
             {
               type: "row",
               fields: [
-                text("nameLine", "Línea del nombre", {
+                text("nameLine", "Name line", {
                   required: true,
-                  description: "Por ejemplo «Nombre:». Le sigue el nombre escrito.",
+                  description: "For example «Nombre:». Followed by the name the visitor typed.",
                 }),
-                text("contactLine", "Línea del contacto", {
+                text("contactLine", "Contact line", {
                   required: true,
-                  description: "Se omite si la persona no escribe su contacto.",
+                  description: "Left out if the visitor does not enter their contact details.",
                 }),
-                text("messageLine", "Encabezado del mensaje", {
+                text("messageLine", "Message heading", {
                   required: true,
-                  description: "Va en su propia línea, antes del mensaje.",
+                  description: "Goes on its own line, before the message.",
                 }),
               ],
             },
@@ -98,31 +98,30 @@ export const ContactSectionBlock: Block = {
     {
       name: "channels",
       type: "group",
-      label: "Canales directos",
+      label: "Direct channels",
       admin: {
-        description:
-          "Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.",
+        description: "Emails, the address and social links are edited in Site Settings.",
       },
       fields: [
-        text("eyebrow", "Antetítulo"),
-        text("ariaLabel", "Nombre del bloque para lectores de pantalla", { required: true }),
+        text("eyebrow", "Eyebrow"),
+        text("ariaLabel", "Section name for screen readers", { required: true }),
         {
           type: "row",
           fields: [
-            text("emailHeading", "Título: correos"),
-            text("postalHeading", "Título: dirección"),
-            text("socialHeading", "Título: redes"),
+            text("emailHeading", "Heading: emails"),
+            text("postalHeading", "Heading: address"),
+            text("socialHeading", "Heading: social"),
           ],
         },
         array(
           "networks",
-          "Redes que se muestran",
-          "Red",
+          "Social networks shown",
+          "Network",
           [
             {
               name: "network",
               type: "select",
-              label: "Red",
+              label: "Network",
               required: true,
               options: [
                 { label: "Facebook", value: "facebook" },
@@ -132,7 +131,7 @@ export const ContactSectionBlock: Block = {
               ],
             },
           ],
-          { description: "En el orden en que aparecen. Solo se muestran redes configuradas." },
+          { description: "In display order. Only networks set up in Site Settings are shown." },
         ),
       ],
     },

@@ -3,7 +3,7 @@ import { ICON_OPTIONS } from "../../lib/icons";
 
 /**
  * Shared field builders: the block contract's building blocks.
- * See docs/block-contract.md. Every label, description and message here is Spanish.
+ * See docs/block-contract.md. Every label, description and message here is English (the admin is in English; site content is Spanish).
  */
 
 const ANCHOR_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
@@ -58,7 +58,7 @@ export const richText = (
  */
 export const headline = (
   name = "heading",
-  label = "Título",
+  label = "Heading",
   opts: { required?: boolean; highlight?: boolean } = {},
 ): Field[] => {
   const fields: Field[] = [
@@ -67,24 +67,24 @@ export const headline = (
       type: "textarea",
       label,
       required: opts.required ?? true,
-      admin: { rows: 2, description: "Cada salto de línea se muestra como un salto de línea." },
+      admin: { rows: 2, description: "Each line break is shown as a line break." },
     },
   ];
   if (opts.highlight) {
     fields.push({
       name: `${name}Highlight`,
       type: "text",
-      label: "Texto resaltado",
+      label: "Highlighted text",
       admin: {
         description:
-          "Opcional. Escribe exactamente una parte del título para mostrarla en color de acento.",
+          "Optional. Type part of the heading exactly as written to show it in the accent color.",
       },
       validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) => {
         if (!value) return true;
         const title = siblingData[name];
         return typeof title === "string" && typeof value === "string" && title.includes(value)
           ? true
-          : "El texto resaltado debe aparecer tal cual dentro del título.";
+          : "The highlighted text must appear exactly as written in the heading.";
       },
     });
   }
@@ -96,12 +96,12 @@ export const headline = (
 export const sectionHeader = (
   opts: { eyebrow?: boolean; intro?: boolean; requiredHeading?: boolean; highlight?: boolean } = {},
 ): Field[] => [
-  ...(opts.eyebrow === false ? [] : [text("eyebrow", "Antetítulo")]),
-  ...headline("heading", "Título", {
+  ...(opts.eyebrow === false ? [] : [text("eyebrow", "Eyebrow")]),
+  ...headline("heading", "Heading", {
     required: opts.requiredHeading ?? true,
     highlight: opts.highlight,
   }),
-  ...(opts.intro ? [text("intro", "Introducción", { textarea: true })] : []),
+  ...(opts.intro ? [text("intro", "Intro", { textarea: true })] : []),
 ];
 
 /* ───────────── Variant ───────────── */
@@ -113,7 +113,7 @@ export const variant = (
 ): SelectField => ({
   name: opts.name ?? "variant",
   type: "select",
-  label: opts.label ?? "Variante",
+  label: opts.label ?? "Variant",
   required: true,
   defaultValue: opts.defaultValue ?? options[0]?.value,
   options: options.map((o) => ({ label: o.label, value: o.value })),
@@ -123,13 +123,13 @@ export const variant = (
 /* ───────────── Section settings ───────────── */
 
 export const TONE_OPTIONS = [
-  { value: "bg", label: "Gris claro (fondo)" },
-  { value: "surface", label: "Blanco" },
-  { value: "surface2", label: "Gris" },
-  { value: "sky50", label: "Celeste" },
-  { value: "primary", label: "Azul institucional" },
-  { value: "primary900", label: "Azul oscuro" },
-  { value: "mustard", label: "Mostaza" },
+  { value: "bg", label: "Light gray (page background)" },
+  { value: "surface", label: "White" },
+  { value: "surface2", label: "Gray" },
+  { value: "sky50", label: "Light blue" },
+  { value: "primary", label: "Navy" },
+  { value: "primary900", label: "Dark navy" },
+  { value: "mustard", label: "Mustard" },
 ] as const;
 
 export type Tone = (typeof TONE_OPTIONS)[number]["value"];
@@ -146,22 +146,22 @@ export const sectionSettings = (
     {
       name: "anchorId",
       type: "text",
-      label: "Ancla (id)",
+      label: "Anchor ID",
       admin: {
         description:
-          "Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.",
+          "Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.",
       },
       validate: (value: unknown) =>
         !value || (typeof value === "string" && ANCHOR_PATTERN.test(value))
           ? true
-          : "Usa solo minúsculas, números y guiones (por ejemplo: comites).",
+          : "Use only lowercase letters, numbers and hyphens (for example: comites).",
     },
   ];
   if (tones.length > 1) {
     fields.push({
       name: "tone",
       type: "select",
-      label: "Fondo",
+      label: "Background",
       required: true,
       defaultValue: opts.defaultTone ?? tones[0],
       options: TONE_OPTIONS.filter((t) => tones.includes(t.value)).map((t) => ({
@@ -173,7 +173,7 @@ export const sectionSettings = (
   return {
     name: "settings",
     type: "group",
-    label: "Ajustes de la sección",
+    label: "Section settings",
     admin: { hideGutter: true },
     fields,
   };
@@ -190,7 +190,7 @@ export const link = (
 ): GroupField => ({
   name: opts.name ?? "link",
   type: "group",
-  label: opts.label ?? "Enlace",
+  label: opts.label ?? "Link",
   interfaceName: "CmsLink",
   admin: opts.description ? { description: opts.description } : undefined,
   fields: [
@@ -200,24 +200,24 @@ export const link = (
         {
           name: "label",
           type: "text",
-          label: "Texto",
+          label: "Label",
           admin: { width: "50%" },
           validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) => {
             const hasTarget = Boolean(siblingData.page || siblingData.url);
-            if (opts.required && !value) return "Escribe el texto del enlace.";
-            if (hasTarget && !value) return "Escribe el texto del enlace.";
+            if (opts.required && !value) return "Enter the link label.";
+            if (hasTarget && !value) return "Enter the link label.";
             return true;
           },
         },
         {
           name: "type",
           type: "radio",
-          label: "Destino",
+          label: "Link type",
           defaultValue: "internal",
           options: [
-            { label: "Página del sitio", value: "internal" },
+            { label: "Site page", value: "internal" },
             { label: "URL", value: "custom" },
-            { label: "Correo del sitio", value: "email" },
+            { label: "Site email", value: "email" },
           ],
           admin: { layout: "horizontal", width: "50%" },
         },
@@ -230,7 +230,7 @@ export const link = (
           name: "page",
           type: "relationship",
           relationTo: "pages",
-          label: "Página",
+          label: "Page",
           admin: {
             width: "50%",
             condition: (_: unknown, sibling: Record<string, unknown>) =>
@@ -242,22 +242,22 @@ export const link = (
             value ||
             (!opts.required && !siblingData.label)
               ? true
-              : "Elige la página de destino.",
+              : "Choose the page to link to.",
         },
         {
           name: "anchor",
           type: "text",
-          label: "Ancla en la página",
+          label: "Anchor on the page",
           admin: {
             width: "50%",
-            description: "Opcional, sin #. Por ejemplo: comites",
+            description: "Optional, without #. For example: comites",
             condition: (_: unknown, sibling: Record<string, unknown>) =>
               sibling?.type !== "custom" && sibling?.type !== "email",
           },
           validate: (value: unknown) =>
             !value || (typeof value === "string" && ANCHOR_PATTERN.test(value))
               ? true
-              : "Usa solo minúsculas, números y guiones, sin #.",
+              : "Use only lowercase letters, numbers and hyphens, without #.",
         },
       ],
     },
@@ -266,31 +266,30 @@ export const link = (
       type: "text",
       label: "URL",
       admin: {
-        description: "https://…, mailto:…, tel:…, una ruta /… o un ancla #…",
+        description: "https://…, mailto:…, tel:…, a path /… or an anchor #…",
         condition: (_: unknown, sibling: Record<string, unknown>) => sibling?.type === "custom",
       },
       validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) => {
         if (siblingData.type !== "custom") return true;
-        if (!value) return opts.required || siblingData.label ? "Escribe la URL." : true;
+        if (!value) return opts.required || siblingData.label ? "Enter the URL." : true;
         return typeof value === "string" && URL_PATTERN.test(value)
           ? true
-          : "La URL debe empezar con https://, mailto:, tel:, / o # y no puede tener espacios.";
+          : "The URL must start with https://, mailto:, tel:, / or # and cannot contain spaces.";
       },
     },
     {
       name: "emailSubject",
       type: "text",
-      label: "Asunto del correo",
+      label: "Email subject",
       admin: {
-        description:
-          "Opcional. El enlace abre un correo dirigido al correo principal de Configuración del sitio.",
+        description: "Optional. The link opens an email to the main address in Site Settings.",
         condition: (_: unknown, sibling: Record<string, unknown>) => sibling?.type === "email",
       },
     },
     {
       name: "newTab",
       type: "checkbox",
-      label: "Abrir en una pestaña nueva",
+      label: "Open in a new tab",
     },
   ],
 });
@@ -308,7 +307,7 @@ export const media = (
   label,
   required: opts.required ?? false,
   admin: {
-    description: opts.description ?? "El texto alternativo se edita en el archivo de Medios.",
+    description: opts.description ?? "Alt text is edited on the file in Media.",
   },
 });
 
@@ -316,7 +315,7 @@ export const media = (
 
 export const icon = (
   name = "icon",
-  label = "Ícono",
+  label = "Icon",
   opts: { required?: boolean } = {},
 ): SelectField => ({
   name,

@@ -7,62 +7,62 @@ const personField = (description: string): Field => ({
   name: "person",
   type: "relationship",
   relationTo: "people",
-  label: "Persona",
+  label: "Person",
   required: true,
   admin: { description },
 });
 
-const displayNameField: Field = text("displayName", "Nombre a mostrar (opcional)", {
-  description: "Déjalo vacío para usar el nombre de la persona.",
+const displayNameField: Field = text("displayName", "Display name (optional)", {
+  description: "Leave empty to use the person's name.",
 });
 
-/** Working committees shown in the "Comités" section of Estructura organizacional. */
+/** Working committees shown in the committees section of /nosotros/estructura-organizacional. */
 export const Committees: CollectionConfig = {
   slug: "committees",
-  labels: { singular: "Comité", plural: "Comités" },
+  labels: { singular: "Committee", plural: "Committees" },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "order", "updatedAt"],
-    group: "Organización",
+    group: "Organization",
     description:
-      "Comités de trabajo. Se muestran en el orden indicado; su identificador es el ancla del enlace (#identificador).",
+      "Working committees, shown in the order set. Each identifier is the link anchor (#identifier).",
   },
   access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
   defaultSort: "order",
   hooks: { beforeValidate: [slugFrom("name")] },
   fields: [
-    text("name", "Nombre", {
+    text("name", "Name", {
       required: true,
-      description: "Sin «Comité de». Por ejemplo: Asuntos Legislativos.",
+      description: 'Without "Comité de". For example: Asuntos Legislativos.',
     }),
-    text("description", "Descripción", { required: true, textarea: true }),
-    text("focus", "Enfoque destacado (opcional)", {
+    text("description", "Description", { required: true, textarea: true }),
+    text("focus", "Highlighted focus (optional)", {
       textarea: true,
-      description: "Se muestra en un recuadro mostaza debajo de la descripción.",
+      description: "Shown in a mustard box below the description.",
     }),
-    text("functionsLabel", "Título de la lista de funciones", {
+    text("functionsLabel", "Functions list heading", {
       required: true,
-      description: "Por ejemplo: Funciones principales.",
+      description: "For example: Funciones principales.",
     }),
     array(
       "functions",
-      "Funciones",
-      "Función",
-      [text("text", "Función", { required: true, textarea: true })],
+      "Functions",
+      "Function",
+      [text("text", "Function", { required: true, textarea: true })],
       { minRows: 1 },
     ),
     {
       name: "coordinator",
       type: "group",
-      label: "Coordinación",
+      label: "Coordination",
       fields: [
-        personField("Su retrato y biografía se toman del registro de la persona."),
+        personField("Their portrait and biography come from the person's record."),
         {
           type: "row",
           fields: [
             displayNameField,
-            text("roleLabel", "Etiqueta (opcional)", {
-              description: "Reemplaza la etiqueta general de la sección (Coordinación).",
+            text("roleLabel", "Label (optional)", {
+              description: "Replaces the section's general label (for example, Coordinación).",
             }),
           ],
         },
@@ -71,37 +71,37 @@ export const Committees: CollectionConfig = {
     {
       name: "editorialBoard",
       type: "group",
-      label: "Junta Editora (opcional)",
+      label: "Editorial board (optional)",
       admin: {
         description:
-          "Recuadro adicional con integrantes y responsabilidades. Déjalo vacío si no aplica.",
+          "Extra box with members and responsibilities. Leave empty if it does not apply.",
       },
       fields: [
-        text("title", "Título", { description: "Por ejemplo: Junta Editora." }),
-        text("summary", "Resumen", { textarea: true }),
-        array("members", "Integrantes", "Integrante", [
-          personField("Persona integrante."),
+        text("title", "Heading", { description: "For example: Junta Editora." }),
+        text("summary", "Summary", { textarea: true }),
+        array("members", "Members", "Member", [
+          personField("The board member."),
           {
             type: "row",
-            fields: [text("role", "Rol en la junta", { required: true }), displayNameField],
+            fields: [text("role", "Role on the board", { required: true }), displayNameField],
           },
         ]),
-        array("responsibilities", "Responsabilidades", "Responsabilidad", [
-          text("text", "Responsabilidad", { required: true, textarea: true }),
+        array("responsibilities", "Responsibilities", "Responsibility", [
+          text("text", "Responsibility", { required: true, textarea: true }),
         ]),
       ],
     },
     {
       name: "order",
       type: "number",
-      label: "Orden",
+      label: "Order",
       required: true,
       defaultValue: 1,
-      admin: { position: "sidebar", description: "Los comités se muestran de menor a mayor." },
+      admin: { position: "sidebar", description: "Committees are shown from lowest to highest." },
     },
     slugField(
-      "Identificador (ancla)",
-      "Se completa a partir del nombre. Es el ancla del enlace: /nosotros/estructura-organizacional#identificador.",
+      "Identifier (anchor)",
+      "Filled in from the name. It is the link anchor: /nosotros/estructura-organizacional#identifier.",
       "asuntos-legislativos",
     ),
   ],

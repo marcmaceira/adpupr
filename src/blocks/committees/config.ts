@@ -5,24 +5,24 @@ const isSelected: Condition = (_, siblingData) => siblingData?.selection === "se
 
 /**
  * Committees: split section header, a jump card per committee and each committee's full
- * detail (functions, editorial board, coordinator). Records come from the Comités collection.
+ * detail (functions, editorial board, coordinator). Records come from the Committees collection.
  */
 export const CommitteesBlock: Block = {
   slug: "committees",
   interfaceName: "CommitteesBlock",
-  labels: { singular: "Comités de trabajo", plural: "Comités de trabajo" },
-  admin: { group: "Personas y comités" },
+  labels: { singular: "Working committees", plural: "Working committees" },
+  admin: { group: "People and committees" },
   fields: [
     ...sectionHeader({ intro: true }),
     {
       name: "selection",
       type: "radio",
-      label: "Comités a mostrar",
+      label: "Committees to show",
       required: true,
       defaultValue: "all",
       options: [
-        { label: "Todos, en el orden de la colección", value: "all" },
-        { label: "Elegir comités", value: "selected" },
+        { label: "All, in collection order", value: "all" },
+        { label: "Choose committees", value: "selected" },
       ],
       admin: { layout: "horizontal" },
     },
@@ -32,61 +32,61 @@ export const CommitteesBlock: Block = {
         type: "relationship",
         relationTo: "committees",
         hasMany: true,
-        label: "Comités",
-        admin: { description: "Se muestran en el orden elegido aquí." },
+        label: "Committees",
+        admin: { description: "Shown in the order chosen here." },
         validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) =>
           siblingData.selection !== "selected" || (Array.isArray(value) && value.length > 0)
             ? true
-            : "Elige al menos un comité.",
+            : "Choose at least one committee.",
       },
       isSelected,
     ),
     {
       name: "labels",
       type: "group",
-      label: "Textos de la interfaz",
-      admin: { description: "{nombre} se reemplaza por el nombre del comité o de la persona." },
+      label: "Interface text",
+      admin: { description: "{nombre} is replaced with the committee's or the person's name." },
       fields: [
-        text("navAria", "Índice de comités (lector de pantalla)", {
+        text("navAria", "Committee index (screen reader)", {
           required: true,
-          description: "Por ejemplo: Comités de trabajo",
+          description: "For example: Comités de trabajo",
         }),
         {
           type: "row",
           fields: [
-            text("committeeEyebrow", "Antetítulo de cada comité", {
+            text("committeeEyebrow", "Eyebrow for each committee", {
               required: true,
-              description: "Por ejemplo: Comité de trabajo",
+              description: "For example: Comité de trabajo",
             }),
-            text("committeeHeading", "Título de cada comité", {
+            text("committeeHeading", "Heading for each committee", {
               required: true,
-              description: "Por ejemplo: Comité de {nombre}",
-            }),
-          ],
-        },
-        {
-          type: "row",
-          fields: [
-            text("coordinator", "Etiqueta de coordinación", {
-              required: true,
-              description: "Por ejemplo: Coordinación",
-            }),
-            text("portraitAlt", "Texto alternativo del retrato", {
-              required: true,
-              description: "Por ejemplo: Retrato de {nombre}",
+              description: "For example: Comité de {nombre}",
             }),
           ],
         },
         {
           type: "row",
           fields: [
-            text("members", "Título de integrantes", {
+            text("coordinator", "Coordinator label", {
               required: true,
-              description: "Por ejemplo: Integrantes",
+              description: "For example: Coordinación",
             }),
-            text("responsibilities", "Título de responsabilidades", {
+            text("portraitAlt", "Portrait alt text", {
               required: true,
-              description: "Por ejemplo: Responsabilidades",
+              description: "For example: Retrato de {nombre}",
+            }),
+          ],
+        },
+        {
+          type: "row",
+          fields: [
+            text("members", "Members heading", {
+              required: true,
+              description: "For example: Integrantes",
+            }),
+            text("responsibilities", "Responsibilities heading", {
+              required: true,
+              description: "For example: Responsabilidades",
             }),
           ],
         },

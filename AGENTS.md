@@ -38,7 +38,7 @@ Use Conventional Commits for every commit message (for example, `feat: add membe
 
 **Stack**: Next.js 16 (App Router), React 19, Tailwind CSS 4 (`@theme inline`), TypeScript 7, Payload CMS 4.0.0-beta.11 (every `payload`/`@payloadcms/*` package pinned to the same exact version), pnpm.
 
-**Content lives in Payload, not in code.** Every page, the header, the footer and the site settings are edited in the admin (`/admin`, in Spanish) or through MCP. `src/components` and `src/app` contain no visitor-facing copy: no Spanish phrases, no HTML entities, no `\u00XX` escapes. Seed data (`src/seed/`) and admin labels (`src/payload/`, `src/blocks/*/config.ts`) are plain UTF-8 with correct Spanish diacritics.
+**Content lives in Payload, not in code.** Every page, the header, the footer and the site settings are edited in the admin (`/admin`, in English) or through MCP. `src/components` and `src/app` contain no visitor-facing copy: no Spanish phrases, no HTML entities, no `\u00XX` escapes. Seed data (`src/seed/`) is Spanish, plain UTF-8 with correct diacritics. Admin labels, descriptions and validation messages (`src/payload/`, `src/blocks/*/config.ts`) are English; Spanish appears there only in examples of what an editor types.
 
 ### Layout
 
@@ -99,6 +99,6 @@ Always use theme tokens (`bg-bg`, `border-primary/10`) instead of hardcoded valu
 ### Gotchas
 
 - **`@theme inline` must use direct hex values**, never `var()` references: it creates circular custom property definitions that resolve to empty strings.
-- **Payload 4 is not Payload 3.** Check `node_modules/payload/dist/index.bundled.d.ts` and the v4 docs. Local API calls run access control by default (pass `overrideAccess: true` in scripts); storage adapters go in `storage: []`; Spanish comes from `payload/i18n/es`.
+- **Payload 4 is not Payload 3.** Check `node_modules/payload/dist/index.bundled.d.ts` and the v4 docs. Local API calls run access control by default (pass `overrideAccess: true` in scripts); storage adapters go in `storage: []`; admin translations come from `payload/i18n/<lang>` (the admin uses `en`).
 - **The `payload` CLI needs `"type": "module"`** in `package.json` (present).
 - **MCP edits to pages**: always pass `draft: true`, then publish in a separate update with `data: { _status: "published" }`. An update without `draft` on a page with a pending draft unpublishes it (payloadcms/payload#19670).

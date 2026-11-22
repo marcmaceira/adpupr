@@ -8,12 +8,12 @@ import { headline, richText, sectionSettings, text } from "../../payload/fields"
 export const RichTextBlockBlock: Block = {
   slug: "richTextBlock",
   interfaceName: "RichTextBlock",
-  labels: { singular: "Texto libre", plural: "Textos libres" },
-  admin: { group: "Contenido" },
+  labels: { singular: "Free text", plural: "Free text" },
+  admin: { group: "Content" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título", { required: false }),
-    richText("body", "Texto", { required: true }),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading", { required: false }),
+    richText("body", "Text", { required: true }),
     sectionSettings({ tones: ["bg", "surface"], defaultTone: "bg" }),
   ],
 };

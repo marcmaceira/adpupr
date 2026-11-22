@@ -3,65 +3,65 @@ import { array, headline, link, richText, sectionSettings, text } from "../../pa
 
 /**
  * Membership enrollment: benefits list, then step 1 (form) and step 2 (payment methods).
- * The ATH Móvil link and the postal address come from Configuración del sitio.
+ * The ATH Móvil link and the postal address come from Site Settings.
  */
 export const MembershipEnrollmentBlock: Block = {
   slug: "membershipEnrollment",
   interfaceName: "MembershipEnrollmentBlock",
-  labels: { singular: "Inscripción de membresía", plural: "Inscripciones de membresía" },
-  admin: { group: "Membresía, contacto y recursos" },
+  labels: { singular: "Membership enrollment", plural: "Membership enrollments" },
+  admin: { group: "Membership, contact and resources" },
   fields: [
     {
       name: "benefits",
       type: "group",
-      label: "Beneficios",
+      label: "Benefits",
       fields: [
-        text("eyebrow", "Antetítulo"),
-        ...headline("heading", "Título"),
-        array("items", "Beneficios", "Beneficio", [
-          text("text", "Beneficio", { required: true, textarea: true }),
+        text("eyebrow", "Eyebrow"),
+        ...headline("heading", "Heading"),
+        array("items", "Benefits", "Benefit", [
+          text("text", "Benefit", { required: true, textarea: true }),
         ]),
       ],
     },
     {
       name: "form",
       type: "group",
-      label: "Paso 1: formulario",
+      label: "Step 1: form",
       fields: [
-        text("eyebrow", "Antetítulo"),
-        ...headline("heading", "Título"),
-        text("text", "Texto", { textarea: true }),
+        text("eyebrow", "Eyebrow"),
+        ...headline("heading", "Heading"),
+        text("text", "Text", { textarea: true }),
         link({
-          label: "Botón del formulario",
+          label: "Form button",
           required: true,
-          description: "Normalmente un formulario externo que se abre en una pestaña nueva.",
+          description: "Usually an external form that opens in a new tab.",
         }),
         {
           name: "callout",
           type: "group",
-          label: "Recuadro destacado",
-          fields: [text("title", "Título"), text("text", "Texto", { textarea: true })],
+          label: "Callout box",
+          fields: [text("title", "Heading"), text("text", "Text", { textarea: true })],
         },
       ],
     },
     {
       name: "payment",
       type: "group",
-      label: "Paso 2: pago",
+      label: "Step 2: payment",
       fields: [
-        text("eyebrow", "Antetítulo"),
-        ...headline("heading", "Título"),
+        text("eyebrow", "Eyebrow"),
+        ...headline("heading", "Heading"),
         {
           name: "athMovil",
           type: "group",
           label: "ATH Móvil",
           admin: {
-            description: "El enlace de pago se edita en Configuración del sitio → Pagos.",
+            description: "The payment link is edited in Site Settings → Payments.",
           },
           fields: [
-            text("title", "Título", { required: true }),
-            richText("text", "Texto"),
-            text("buttonLabel", "Texto del botón", { required: true }),
+            text("title", "Heading", { required: true }),
+            richText("text", "Text"),
+            text("buttonLabel", "Button label", { required: true }),
           ],
         },
         {
@@ -69,28 +69,28 @@ export const MembershipEnrollmentBlock: Block = {
           type: "group",
           label: "PayPal",
           fields: [
-            text("title", "Título", { required: true }),
+            text("title", "Heading", { required: true }),
             array(
               "plans",
-              "Opciones de pago",
-              "Opción",
+              "Payment options",
+              "Option",
               [
                 {
                   type: "row",
                   fields: [
-                    text("name", "Nombre", { required: true }),
-                    text("price", "Precio", { required: true }),
+                    text("name", "Name", { required: true }),
+                    text("price", "Price", { required: true }),
                   ],
                 },
                 {
                   name: "url",
                   type: "text",
-                  label: "Enlace de pago",
+                  label: "Payment link",
                   required: true,
                   validate: (value: unknown) =>
                     typeof value === "string" && value.startsWith("https://")
                       ? true
-                      : "El enlace debe empezar con https://.",
+                      : "The link must start with https://.",
                 },
               ],
               { maxRows: 4 },
@@ -100,13 +100,13 @@ export const MembershipEnrollmentBlock: Block = {
         {
           name: "check",
           type: "group",
-          label: "Cheque o giro",
+          label: "Check or money order",
           admin: {
-            description: "La dirección postal se edita en Configuración del sitio → Contacto.",
+            description: "The postal address is edited in Site Settings → Contact.",
           },
           fields: [
-            text("title", "Título", { required: true }),
-            text("text", "Texto", { textarea: true }),
+            text("title", "Heading", { required: true }),
+            text("text", "Text", { textarea: true }),
           ],
         },
       ],

@@ -4,7 +4,7 @@ import { mcpPlugin } from "@payloadcms/plugin-mcp";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 import { buildConfig } from "payload";
-import { es } from "payload/i18n/es";
+import { en } from "payload/i18n/en";
 import { collections } from "./payload/collections";
 import { databaseAdapter } from "./payload/db";
 import { siteEditor } from "./payload/editor";
@@ -20,10 +20,10 @@ function stringField(doc: unknown, key: string): string {
 }
 
 const PAGES_MCP_INSTRUCTIONS =
-  "Páginas del sitio de ADPUPR. Localiza una página por su campo `path` (por ejemplo `/` o `/membresia`). " +
-  "El contenido visible está en `layout`, una lista de secciones (bloques). " +
-  'Para editar: usa updateDocument con `draft: true` y revisa el resultado; para publicar, envía después un updateDocument separado con `data: { _status: "published" }`. ' +
-  "Nunca envíes una actualización sin `draft: true` a una página que tiene un borrador pendiente.";
+  "Pages of the ADPUPR website. Find a page by its `path` field (for example `/` or `/membresia`). " +
+  "Visible content is in `layout`, a list of sections (blocks). Site content is written in Spanish. " +
+  'To edit: call updateDocument with `draft: true` and check the result; to publish, send a separate updateDocument with `data: { _status: "published" }`. ' +
+  "Never send an update without `draft: true` to a page that has a pending draft.";
 
 export default buildConfig({
   serverURL,
@@ -35,13 +35,13 @@ export default buildConfig({
     livePreview: {
       collections: ["pages"],
       breakpoints: [
-        { label: "Móvil", name: "mobile", width: 390, height: 844 },
-        { label: "Tableta", name: "tablet", width: 768, height: 1024 },
-        { label: "Escritorio", name: "desktop", width: 1440, height: 900 },
+        { label: "Mobile", name: "mobile", width: 390, height: 844 },
+        { label: "Tablet", name: "tablet", width: 768, height: 1024 },
+        { label: "Desktop", name: "desktop", width: 1440, height: 900 },
       ],
     },
   },
-  i18n: { supportedLanguages: { es }, fallbackLanguage: "es" },
+  i18n: { supportedLanguages: { en }, fallbackLanguage: "en" },
   collections,
   globals,
   editor: siteEditor,

@@ -20,14 +20,13 @@ export function previewPath(path: unknown): string | null {
 
 export const Pages: CollectionConfig = {
   slug: "pages",
-  labels: { singular: "Página", plural: "Páginas" },
+  labels: { singular: "Page", plural: "Pages" },
   admin: {
     useAsTitle: "title",
     defaultColumns: ["title", "path", "_status", "updatedAt"],
     pagination: { defaultLimit: 50 },
-    group: "Contenido",
-    description:
-      "Cada página del sitio. Se compone de secciones (bloques) en la pestaña Contenido.",
+    group: "Content",
+    description: "Every page of the site. It is built from sections (blocks) in the Content tab.",
     livePreview: { url: ({ data }) => previewPath(data?.path) },
     preview: (data) => previewPath(data?.path),
   },
@@ -46,31 +45,31 @@ export const Pages: CollectionConfig = {
     {
       name: "title",
       type: "text",
-      label: "Título de la página",
+      label: "Page title",
       required: true,
-      admin: { description: "Se usa en el título de la pestaña del navegador y en buscadores." },
+      admin: { description: "Used in the browser tab title and in search engines." },
     },
     {
       name: "path",
       type: "text",
-      label: "Ruta (URL)",
+      label: "Path (URL)",
       required: true,
       unique: true,
       index: true,
       admin: {
         position: "sidebar",
-        description: "Ejemplos: / · /membresia · /nosotros/quienes-somos",
+        description: "Examples: / · /membresia · /nosotros/quienes-somos",
       },
       validate: async (
         value: unknown,
         { req, id }: { req: PayloadRequest; id?: number | string },
       ) => {
-        if (typeof value !== "string" || !value) return "Escribe la ruta de la página.";
+        if (typeof value !== "string" || !value) return "Enter the page path.";
         if (!PATH_PATTERN.test(value)) {
-          return "La ruta debe empezar con / y usar solo minúsculas, números y guiones (por ejemplo: /nosotros/historia).";
+          return "The path must start with / and use only lowercase letters, numbers and hyphens (for example: /nosotros/historia).";
         }
         const first = value.split("/")[1];
-        if (first && RESERVED.has(first)) return `La ruta no puede empezar con /${first}.`;
+        if (first && RESERVED.has(first)) return `The path cannot start with /${first}.`;
         const taken = await req.payload.find({
           collection: "pages",
           where: id
@@ -82,20 +81,22 @@ export const Pages: CollectionConfig = {
           req,
         });
         const other = taken.docs[0];
-        return other ? `La ruta ${value} ya la usa la página «${other.title}». Elige otra.` : true;
+        return other
+          ? `The path ${value} is already used by the page "${other.title}". Choose another one.`
+          : true;
       },
     },
     {
       type: "tabs",
       tabs: [
         {
-          label: "Contenido",
+          label: "Content",
           fields: [
             {
               name: "layout",
               type: "blocks",
-              label: "Secciones",
-              labels: { singular: "Sección", plural: "Secciones" },
+              label: "Sections",
+              labels: { singular: "Section", plural: "Sections" },
               blocks,
               admin: { initCollapsed: true },
             },
@@ -114,8 +115,7 @@ export const Pages: CollectionConfig = {
               hasGenerateFn: true,
               overrides: {
                 admin: {
-                  description:
-                    "Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.",
+                  description: 'Shown as "Title | ADPUPR". Leave empty to use the page title.',
                 },
               },
             }),
@@ -123,9 +123,9 @@ export const Pages: CollectionConfig = {
             {
               name: "ogDescription",
               type: "textarea",
-              label: "Descripción para redes sociales",
+              label: "Social media description",
               admin: {
-                description: "Opcional. Si está vacía se usa la descripción de arriba.",
+                description: "Optional. If empty, the description above is used.",
               },
             },
             MetaImageField({ relationTo: "media" }),
@@ -141,20 +141,20 @@ export const Pages: CollectionConfig = {
     {
       name: "noindex",
       type: "checkbox",
-      label: "Ocultar de buscadores (noindex)",
+      label: "Hide from search engines (noindex)",
       admin: { position: "sidebar" },
     },
     {
       name: "sitemap",
       type: "group",
-      label: "Mapa del sitio",
+      label: "Sitemap",
       admin: { position: "sidebar" },
       fields: [
-        { name: "include", type: "checkbox", label: "Incluir en sitemap.xml", defaultValue: true },
+        { name: "include", type: "checkbox", label: "Include in sitemap.xml", defaultValue: true },
         {
           name: "priority",
           type: "select",
-          label: "Prioridad",
+          label: "Priority",
           defaultValue: "0.7",
           options: ["1", "0.9", "0.8", "0.7", "0.6", "0.5", "0.4", "0.3", "0.2", "0.1"].map(
             (v) => ({ label: v, value: v }),
@@ -163,16 +163,16 @@ export const Pages: CollectionConfig = {
         {
           name: "changeFrequency",
           type: "select",
-          label: "Frecuencia de cambio",
+          label: "Change frequency",
           defaultValue: "monthly",
           options: [
-            { label: "Siempre", value: "always" },
-            { label: "Cada hora", value: "hourly" },
-            { label: "Diaria", value: "daily" },
-            { label: "Semanal", value: "weekly" },
-            { label: "Mensual", value: "monthly" },
-            { label: "Anual", value: "yearly" },
-            { label: "Nunca", value: "never" },
+            { label: "Always", value: "always" },
+            { label: "Hourly", value: "hourly" },
+            { label: "Daily", value: "daily" },
+            { label: "Weekly", value: "weekly" },
+            { label: "Monthly", value: "monthly" },
+            { label: "Yearly", value: "yearly" },
+            { label: "Never", value: "never" },
           ],
         },
       ],

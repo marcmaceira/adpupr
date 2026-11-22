@@ -12,7 +12,7 @@ function text(value: unknown): string {
 
 /**
  * Row titles for the header and footer arrays, so editors see "Inicio" or
- * "Nosotros (menú desplegable)" instead of "Elemento 01".
+ * "Nosotros (dropdown)" instead of "Item 01".
  */
 export function NavRowLabel() {
   const { data, rowNumber } = useRowLabel<unknown>();
@@ -23,9 +23,9 @@ export function NavRowLabel() {
 
   if (read(data, "type") === "dropdown") {
     const label = text(read(data, "label"));
-    return <span>{label ? `${label} (menú desplegable)` : `Menú desplegable ${number}`}</span>;
+    return <span>{label ? `${label} (dropdown)` : `Dropdown ${number}`}</span>;
   }
 
   const linkLabel = text(read(read(data, "link"), "label"));
-  return <span>{linkLabel || `Enlace ${number}`}</span>;
+  return <span>{linkLabel || `Link ${number}`}</span>;
 }

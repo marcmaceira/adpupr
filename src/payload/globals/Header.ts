@@ -9,11 +9,10 @@ const isDropdown: Condition = (_, siblingData) => siblingData?.type === "dropdow
 /** Site header: logo, main navigation (links and dropdowns), call to action and aria labels. */
 export const Header: GlobalConfig = {
   slug: "header",
-  label: "Encabezado",
+  label: "Header",
   admin: {
-    group: "Configuración",
-    description:
-      "Logotipo, menú de navegación y botón principal que aparecen arriba en todas las páginas.",
+    group: "Settings",
+    description: "Logo, navigation menu and main button shown at the top of every page.",
   },
   access: { read: anyone, update: authenticated },
   versions: { max: 25 },
@@ -22,82 +21,74 @@ export const Header: GlobalConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "Navegación",
+          label: "Navigation",
           fields: [
-            media("logo", "Logotipo", {
+            media("logo", "Logo", {
               required: true,
-              description:
-                "Se muestra a 40 px de alto. El texto alternativo se edita en el archivo de Medios.",
+              description: "Shown 40 px tall. Alt text is edited on the file in Media.",
             }),
-            text("homeAriaLabel", "Descripción del enlace del logotipo", {
+            text("homeAriaLabel", "Logo link description", {
               required: true,
               description:
-                "Lo anuncian los lectores de pantalla al enfocar el logotipo, que lleva a Inicio.",
+                "Screen readers announce it when the logo, which links to the home page, gets focus.",
             }),
             withRowLabel(
               array(
                 "navItems",
-                "Menú de navegación",
-                "Elemento",
+                "Navigation menu",
+                "Item",
                 [
                   {
                     name: "type",
                     type: "radio",
-                    label: "Tipo",
+                    label: "Type",
                     defaultValue: "link",
                     options: [
-                      { label: "Enlace", value: "link" },
-                      { label: "Menú desplegable", value: "dropdown" },
+                      { label: "Link", value: "link" },
+                      { label: "Dropdown", value: "dropdown" },
                     ],
                     admin: { layout: "horizontal" },
                   },
                   showWhen(link({ required: true }), isLink),
                   showWhen(
-                    text("label", "Texto del menú", {
+                    text("label", "Menu label", {
                       required: true,
-                      description: "El botón que abre el menú desplegable, por ejemplo «Nosotros».",
+                      description: 'The button that opens the dropdown, for example "Nosotros".',
                     }),
                     isDropdown,
                   ),
                   showWhen(
                     withRowLabel(
-                      array(
-                        "children",
-                        "Enlaces del menú desplegable",
-                        "Enlace",
-                        [link({ required: true })],
-                        {
-                          minRows: 1,
-                          description:
-                            "El elemento se marca como activo cuando la página actual está dentro de alguna de estas rutas.",
-                        },
-                      ),
+                      array("children", "Dropdown links", "Link", [link({ required: true })], {
+                        minRows: 1,
+                        description:
+                          "The item is marked as active when the current page is within any of these paths.",
+                      }),
                     ),
                     isDropdown,
                   ),
                 ],
                 {
                   minRows: 1,
-                  description:
-                    "En el orden en que aparecen. Arrastra los elementos para cambiar el orden.",
+                  description: "In the order they appear. Drag items to reorder them.",
                 },
               ),
             ),
-            link({ name: "cta", label: "Botón principal", required: true }),
+            link({ name: "cta", label: "Main button", required: true }),
           ],
         },
         {
           name: "a11y",
-          label: "Accesibilidad",
-          description: "Textos que solo anuncian los lectores de pantalla.",
+          label: "Accessibility",
+          description: "Text that only screen readers announce.",
           fields: [
-            text("navLabel", "Nombre del menú principal", { required: true }),
-            text("mobileNavLabel", "Nombre del menú móvil", { required: true }),
+            text("navLabel", "Main menu name", { required: true }),
+            text("mobileNavLabel", "Mobile menu name", { required: true }),
             {
               type: "row",
               fields: [
-                text("openMenuLabel", "Botón para abrir el menú móvil", { required: true }),
-                text("closeMenuLabel", "Botón para cerrar el menú móvil", { required: true }),
+                text("openMenuLabel", "Open mobile menu button", { required: true }),
+                text("closeMenuLabel", "Close mobile menu button", { required: true }),
               ],
             },
           ],

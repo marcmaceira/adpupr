@@ -8,53 +8,53 @@ import { array, headline, icon, richText, sectionSettings, text } from "../../pa
 export const EventBenefitsBlock: Block = {
   slug: "eventBenefits",
   interfaceName: "EventBenefitsBlock",
-  labels: { singular: "Beneficios del evento", plural: "Beneficios del evento" },
-  admin: { group: "Conferencia" },
+  labels: { singular: "Event benefits", plural: "Event benefits" },
+  admin: { group: "Conference" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
     {
       name: "callout",
       type: "group",
-      label: "Cifra destacada",
+      label: "Highlighted figure",
       fields: [
-        text("label", "Etiqueta (por ejemplo: Educación continua)"),
+        text("label", "Label (for example: Educación continua)"),
         {
           type: "row",
           fields: [
             {
               name: "srPrefix",
               type: "text",
-              label: "Prefijo para lectores de pantalla",
+              label: "Screen reader prefix",
               admin: {
                 width: "40%",
-                description: "No se ve; se lee antes de la cifra. Por ejemplo: Hasta",
+                description: "Not visible; read before the figure. For example: Hasta",
               },
             },
             {
               name: "value",
               type: "text",
-              label: "Cifra",
-              admin: { width: "60%", description: "Por ejemplo: 8.5 h" },
+              label: "Figure",
+              admin: { width: "60%", description: "For example: 8.5 h" },
             },
           ],
         },
-        text("note", "Nota", { textarea: true }),
+        text("note", "Note", { textarea: true }),
       ],
     },
     array(
       "benefits",
-      "Beneficios",
-      "Beneficio",
+      "Benefits",
+      "Benefit",
       [
-        icon("icon", "Ícono", { required: true }),
-        text("title", "Beneficio", { required: true }),
-        text("detail", "Detalle", { textarea: true }),
+        icon("icon", "Icon", { required: true }),
+        text("title", "Benefit", { required: true }),
+        text("detail", "Detail", { textarea: true }),
       ],
       { minRows: 1 },
     ),
-    richText("footnote", "Nota al pie", {
-      description: "El texto en negrita se muestra en mostaza.",
+    richText("footnote", "Footnote", {
+      description: "Bold text is shown in mustard.",
     }),
     sectionSettings(),
   ],

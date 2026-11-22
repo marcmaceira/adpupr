@@ -14,9 +14,9 @@ import {
 export const FEATURE_CARDS_LAYOUTS = [
   {
     value: "separate",
-    label: "Tarjetas separadas (con encabezado, ícono y enlace)",
+    label: "Separate cards (with header, icon and link)",
   },
-  { value: "joined", label: "Paneles unidos (sin encabezado)" },
+  { value: "joined", label: "Joined panels (no header)" },
 ] as const;
 
 /** Item fields that only the separate-card layout shows. */
@@ -30,38 +30,38 @@ const isSeparate: Condition = (_, __, { blockData }) =>
 export const FeatureCardsBlock: Block = {
   slug: "featureCards",
   interfaceName: "FeatureCardsBlock",
-  labels: { singular: "Tarjetas destacadas", plural: "Tarjetas destacadas" },
-  admin: { group: "Contenido" },
+  labels: { singular: "Feature cards", plural: "Feature cards" },
+  admin: { group: "Content" },
   fields: [
     variant(FEATURE_CARDS_LAYOUTS, {
-      label: "Diseño",
-      description: "Los paneles unidos muestran el título de cada panel en tamaño grande.",
+      label: "Layout",
+      description: "Joined panels show each panel's heading in a large size.",
     }),
-    showWhen(text("eyebrow", "Antetítulo"), variantIs("separate")),
-    ...headline("heading", "Título", { required: false }).map((field) =>
+    showWhen(text("eyebrow", "Eyebrow"), variantIs("separate")),
+    ...headline("heading", "Heading", { required: false }).map((field) =>
       showWhen(field, variantIs("separate")),
     ),
     array(
       "items",
-      "Tarjetas",
-      "Tarjeta",
+      "Cards",
+      "Card",
       [
         {
           name: "tone",
           type: "select",
-          label: "Color de la tarjeta",
+          label: "Card color",
           required: true,
           defaultValue: "light",
           options: [
-            { label: "Clara", value: "light" },
-            { label: "Oscura (azul)", value: "dark" },
+            { label: "Light", value: "light" },
+            { label: "Dark (blue)", value: "dark" },
           ],
         },
-        showWhen(icon("icon", "Ícono"), isSeparate),
-        text("eyebrow", "Antetítulo"),
-        text("title", "Título", { required: true }),
-        text("text", "Texto", { required: true, textarea: true }),
-        showWhen(link({ label: "Enlace" }), isSeparate),
+        showWhen(icon("icon", "Icon"), isSeparate),
+        text("eyebrow", "Eyebrow"),
+        text("title", "Heading", { required: true }),
+        text("text", "Text", { required: true, textarea: true }),
+        showWhen(link({ label: "Link" }), isSeparate),
       ],
       { minRows: 1, maxRows: 4, required: true },
     ),

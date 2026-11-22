@@ -12,11 +12,11 @@ import {
 export const PEOPLE_GRID_VARIANTS = [
   {
     value: "bioOverlay",
-    label: "Tarjetas con biografía (Junta Directiva: fondo gris claro, se abren al pulsar)",
+    label: "Cards with biography (Board of Directors: light gray background, open on click)",
   },
   {
     value: "portrait",
-    label: "Retratos (Junta Fundadora: fondo gris, nombre sobre la foto)",
+    label: "Portraits (Founding Board: gray background, name over the photo)",
   },
 ] as const;
 
@@ -29,42 +29,42 @@ const when = (...variants: PeopleGridVariant[]) => variantIs(...variants);
  */
 const blockIsBioOverlay: Condition = (_, __, { blockData }) => blockData?.variant === "bioOverlay";
 
-const NAME_TOKEN_HELP = "{nombre} se reemplaza por el nombre de cada persona.";
+const NAME_TOKEN_HELP = "{nombre} is replaced with each person's name.";
 
 /**
  * People grid: a section header plus an ordered list of people with a role per placement.
- * People come from the Personas collection, so a portrait or biography is edited once.
+ * People come from the People collection, so a portrait or biography is edited once.
  */
 export const PeopleGridBlock: Block = {
   slug: "peopleGrid",
   interfaceName: "PeopleGridBlock",
-  labels: { singular: "Grupo de personas", plural: "Grupos de personas" },
-  admin: { group: "Personas y comités" },
+  labels: { singular: "People group", plural: "People groups" },
+  admin: { group: "People and committees" },
   fields: [
     variant(PEOPLE_GRID_VARIANTS, {
       description:
-        "Tarjetas con biografía: encabezado a dos columnas; en pantallas grandes 4 tarjetas por fila y la última fila centrada. Retratos: encabezado apilado; 2, 3 o 4 retratos por fila.",
+        "Cards with biography: two-column header; on large screens 4 cards per row with the last row centered. Portraits: stacked header; 2, 3 or 4 portraits per row.",
     }),
     ...sectionHeader({ intro: true }),
     array(
       "members",
-      "Personas",
-      "Persona",
+      "People",
+      "Person",
       [
         {
           name: "person",
           type: "relationship",
           relationTo: "people",
-          label: "Persona",
+          label: "Person",
           required: true,
         },
         {
           type: "row",
           fields: [
-            text("role", "Cargo en esta sección", { required: true }),
-            text("displayName", "Nombre a mostrar (opcional)", {
+            text("role", "Role in this section", { required: true }),
+            text("displayName", "Display name (optional)", {
               description:
-                "Déjalo vacío para usar el nombre de Personas. Si lo llenas, reemplaza el nombre solo en esta sección (cambiarlo en Personas no lo actualiza aquí).",
+                "Leave empty to use the name from People. If filled in, it replaces the name in this section only (changing it in People does not update it here).",
             }),
           ],
         },
@@ -72,46 +72,46 @@ export const PeopleGridBlock: Block = {
       {
         minRows: 1,
         required: true,
-        description: "En el orden en que se muestran. El cargo es propio de esta sección.",
+        description: "In display order. The role applies to this section only.",
       },
     ),
     {
       name: "labels",
       type: "group",
-      label: "Textos de la interfaz",
+      label: "Interface text",
       admin: {
-        description: "Textos de botones y lectores de pantalla. " + NAME_TOKEN_HELP,
+        description: "Button and screen reader text. " + NAME_TOKEN_HELP,
       },
       fields: [
-        text("portraitAlt", "Texto alternativo del retrato", {
+        text("portraitAlt", "Portrait alt text", {
           required: true,
-          description: "Por ejemplo: Retrato de {nombre}",
+          description: "For example: Retrato de {nombre}",
         }),
         showWhen(
-          text("open", "Texto del pie de la tarjeta", {
+          text("open", "Card footer text", {
             required: true,
-            description: "Por ejemplo: Ver biografía",
+            description: "For example: Ver biografía",
           }),
           blockIsBioOverlay,
         ),
         showWhen(
-          text("openAria", "Botón para abrir (lector de pantalla)", {
+          text("openAria", "Open button (screen reader)", {
             required: true,
-            description: "Por ejemplo: Ver biografía de {nombre}",
+            description: "For example: Ver biografía de {nombre}",
           }),
           blockIsBioOverlay,
         ),
         showWhen(
-          text("bioAria", "Panel de biografía (lector de pantalla)", {
+          text("bioAria", "Biography panel (screen reader)", {
             required: true,
-            description: "Por ejemplo: Biografía de {nombre}",
+            description: "For example: Biografía de {nombre}",
           }),
           blockIsBioOverlay,
         ),
         showWhen(
-          text("closeAria", "Botón para cerrar (lector de pantalla)", {
+          text("closeAria", "Close button (screen reader)", {
             required: true,
-            description: "Por ejemplo: Cerrar biografía de {nombre}",
+            description: "For example: Cerrar biografía de {nombre}",
           }),
           blockIsBioOverlay,
         ),
@@ -121,11 +121,10 @@ export const PeopleGridBlock: Block = {
       {
         name: "showBios",
         type: "checkbox",
-        label: "Mostrar biografías al pasar el cursor o pulsar el nombre",
+        label: "Show biographies on hover or when the name is clicked",
         defaultValue: false,
         admin: {
-          description:
-            "Desactivado: solo retrato, cargo y nombre (como la Junta Fundadora actual).",
+          description: "Off: portrait, role and name only (like the current Founding Board).",
         },
       },
       when("portrait"),

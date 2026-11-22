@@ -5,21 +5,21 @@ const PAYMENT_URL = /^https?:\/\//;
 
 /**
  * Pricing table: registration rates with PayPal buttons, the ATH Móvil banner (its link
- * comes from Ajustes del sitio → Pagos) and a closing note.
+ * comes from Site Settings → Payments) and a closing note.
  */
 export const PricingTableBlock: Block = {
   slug: "pricingTable",
   interfaceName: "PricingTableBlock",
-  labels: { singular: "Tabla de tarifas y pago", plural: "Tablas de tarifas y pago" },
-  admin: { group: "Conferencia" },
+  labels: { singular: "Rates and payment table", plural: "Rates and payment tables" },
+  admin: { group: "Conference" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    text("intro", "Introducción", { textarea: true }),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    text("intro", "Intro", { textarea: true }),
     array(
       "prices",
-      "Tarifas",
-      "Tarifa",
+      "Rates",
+      "Rate",
       [
         {
           type: "row",
@@ -27,56 +27,56 @@ export const PricingTableBlock: Block = {
             {
               name: "name",
               type: "text",
-              label: "Nombre",
+              label: "Name",
               required: true,
               admin: { width: "60%" },
             },
             {
               name: "price",
               type: "text",
-              label: "Precio (por ejemplo: $100)",
+              label: "Price (for example: $100)",
               required: true,
               admin: { width: "40%" },
             },
           ],
         },
-        text("note", "Nota (con marca de verificación)"),
+        text("note", "Note (with check mark)"),
         {
           type: "row",
           fields: [
             {
               name: "buttonLabel",
               type: "text",
-              label: "Texto del botón",
+              label: "Button label",
               required: true,
               admin: { width: "40%" },
             },
             {
               name: "paymentUrl",
               type: "text",
-              label: "Enlace de pago (PayPal)",
+              label: "Payment link (PayPal)",
               required: true,
               admin: {
                 width: "60%",
-                description: "Se abre en una pestaña nueva.",
+                description: "Opens in a new tab.",
               },
               validate: (value: unknown) =>
                 typeof value === "string" && PAYMENT_URL.test(value)
                   ? true
-                  : "Escribe un enlace que empiece con https://.",
+                  : "Enter a link that starts with https://.",
             },
           ],
         },
         {
           name: "featured",
           type: "checkbox",
-          label: "Destacada",
-          admin: { description: "Borde azul, botón sólido y la insignia de arriba." },
+          label: "Featured",
+          admin: { description: "Blue border, solid button and the badge on top." },
         },
         {
           name: "badge",
           type: "text",
-          label: "Insignia (por ejemplo: Miembros)",
+          label: "Badge (for example: Miembros)",
           admin: {
             condition: (_: unknown, sibling: Record<string, unknown>) => Boolean(sibling?.featured),
           },
@@ -87,18 +87,18 @@ export const PricingTableBlock: Block = {
     {
       name: "athMovil",
       type: "group",
-      label: "Pago con ATH Móvil",
+      label: "ATH Móvil payment",
       admin: {
         description:
-          "El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.",
+          "The payment link is edited in Site Settings → Payments. Without a link, the button is hidden.",
       },
       fields: [
-        text("title", "Título"),
-        text("text", "Texto", { textarea: true }),
-        text("buttonLabel", "Texto del botón"),
+        text("title", "Heading"),
+        text("text", "Text", { textarea: true }),
+        text("buttonLabel", "Button label"),
       ],
     },
-    text("footnote", "Nota final", { textarea: true }),
+    text("footnote", "Closing note", { textarea: true }),
     sectionSettings(),
   ],
 };

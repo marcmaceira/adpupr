@@ -2,8 +2,8 @@ import type { Block, Condition } from "payload";
 import { array, sectionSettings, showWhen, text, variant, variantIs } from "../../payload/fields";
 
 export const STATS_VARIANTS = [
-  { value: "band", label: "Banda celeste (cifras grandes, sin título)" },
-  { value: "tiles", label: "Mosaico oscuro con título (hitos)" },
+  { value: "band", label: "Light blue band (large figures, no heading)" },
+  { value: "tiles", label: "Dark tiles with heading (milestones)" },
 ] as const;
 
 type StatsVariant = (typeof STATS_VARIANTS)[number]["value"];
@@ -22,32 +22,32 @@ const blockIs =
 export const StatsBlock: Block = {
   slug: "stats",
   interfaceName: "StatsBlock",
-  labels: { singular: "Cifras destacadas", plural: "Cifras destacadas" },
-  admin: { group: "Encabezados y bandas" },
+  labels: { singular: "Key figures", plural: "Key figures" },
+  admin: { group: "Headers and bands" },
   fields: [
     variant(STATS_VARIANTS, {
-      description: "Cada variante reproduce una sección de cifras existente del sitio.",
+      description: "Each variant reproduces an existing figures section on the site.",
     }),
     showWhen(
-      text("eyebrow", "Antetítulo", {
-        description: "Texto corto en mayúsculas que aparece sobre el título.",
+      text("eyebrow", "Eyebrow", {
+        description: "Short uppercase text shown above the heading.",
       }),
       when("tiles"),
     ),
     {
       name: "heading",
       type: "text",
-      label: "Título",
+      label: "Heading",
       admin: { condition: when("tiles") },
       validate: (value: unknown, { siblingData }: { siblingData: Record<string, unknown> }) =>
         siblingData.variant !== "tiles" || (typeof value === "string" && value.trim() !== "")
           ? true
-          : "Escribe el título de la sección.",
+          : "Enter the section heading.",
     },
     array(
       "items",
-      "Cifras",
-      "Cifra",
+      "Figures",
+      "Figure",
       [
         {
           type: "row",
@@ -55,24 +55,24 @@ export const StatsBlock: Block = {
             {
               name: "value",
               type: "text",
-              label: "Cifra",
+              label: "Figure",
               required: true,
-              admin: { width: "30%", description: "Por ejemplo: 50 o 2023" },
+              admin: { width: "30%", description: "For example: 50 or 2023" },
             },
             {
               name: "suffix",
               type: "text",
-              label: "Sufijo",
+              label: "Suffix",
               admin: {
                 width: "20%",
-                description: "Opcional, por ejemplo: +",
+                description: "Optional, for example: +",
                 condition: blockIs("band"),
               },
             },
             {
               name: "label",
               type: "text",
-              label: "Descripción",
+              label: "Description",
               required: true,
               admin: { width: "50%" },
             },
@@ -83,7 +83,7 @@ export const StatsBlock: Block = {
         minRows: 1,
         maxRows: 4,
         required: true,
-        description: "La banda celeste muestra dos cifras por fila; el mosaico, hasta cuatro.",
+        description: "The light blue band shows two figures per row; the tiles, up to four.",
       },
     ),
     sectionSettings(),

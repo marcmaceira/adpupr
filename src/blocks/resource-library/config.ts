@@ -3,60 +3,60 @@ import { headline, richText, sectionSettings, text } from "../../payload/fields"
 
 /**
  * Resource library: intro, then category filters, search and the list of downloadable
- * documents. Documents and categories are edited in Contenido → Documentos and
- * Categorías de documentos.
+ * documents. Documents and categories are edited in Content → Documents and
+ * Document Categories.
  */
 export const ResourceLibraryBlock: Block = {
   slug: "resourceLibrary",
   interfaceName: "ResourceLibraryBlock",
-  labels: { singular: "Biblioteca de documentos", plural: "Bibliotecas de documentos" },
-  admin: { group: "Membresía, contacto y recursos" },
+  labels: { singular: "Document library", plural: "Document libraries" },
+  admin: { group: "Membership, contact and resources" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    richText("body", "Texto"),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    richText("body", "Text"),
     {
       name: "library",
       type: "group",
-      label: "Textos de la biblioteca",
+      label: "Library text",
       admin: {
         description:
-          "Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.",
+          "Documents are uploaded in Content → Documents; categories, in Document Categories.",
       },
       fields: [
         {
           type: "row",
           fields: [
-            text("filterLegend", "Descripción de los filtros (lectores de pantalla)", {
+            text("filterLegend", "Filter description (screen readers)", {
               required: true,
             }),
-            text("allLabel", "Botón «todas las categorías»", { required: true }),
+            text("allLabel", "“All categories” button", { required: true }),
           ],
         },
         {
           type: "row",
           fields: [
-            text("searchLabel", "Descripción de la búsqueda (lectores de pantalla)", {
+            text("searchLabel", "Search description (screen readers)", {
               required: true,
             }),
-            text("searchPlaceholder", "Texto de ejemplo de la búsqueda"),
+            text("searchPlaceholder", "Search placeholder"),
           ],
         },
-        text("downloadLabel", "Texto del botón de descarga", {
+        text("downloadLabel", "Download button label", {
           required: true,
-          description: "Los lectores de pantalla lo leen seguido del título del documento.",
+          description: "Screen readers read it followed by the document title.",
         }),
         {
           name: "emptyArchive",
           type: "group",
-          label: "Mensaje cuando no hay documentos",
-          fields: [text("title", "Título"), text("text", "Texto", { textarea: true })],
+          label: "Message when there are no documents",
+          fields: [text("title", "Heading"), text("text", "Text", { textarea: true })],
         },
         {
           name: "noResults",
           type: "group",
-          label: "Mensaje cuando la búsqueda no encuentra nada",
-          fields: [text("title", "Título"), text("text", "Texto", { textarea: true })],
+          label: "Message when a search finds nothing",
+          fields: [text("title", "Heading"), text("text", "Text", { textarea: true })],
         },
       ],
     },

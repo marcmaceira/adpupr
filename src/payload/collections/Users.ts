@@ -3,15 +3,15 @@ import { adminFieldOnly, adminsOnly, isAdmin, roleOf } from "../access";
 
 export const Users: CollectionConfig = {
   slug: "users",
-  labels: { singular: "Usuario", plural: "Usuarios" },
+  labels: { singular: "User", plural: "Users" },
   auth: { useAPIKey: true },
   versions: false,
   admin: {
     useAsTitle: "email",
     defaultColumns: ["name", "email", "role"],
-    group: "Administración",
+    group: "Administration",
     description:
-      "Personas con acceso al panel. El rol «Asistente IA» es para clientes MCP: puede leer y editar contenido, pero no borrar ni administrar usuarios.",
+      'People with access to the admin panel. The "AI assistant" role is for MCP clients: it can read and edit content, but cannot delete anything or manage users.',
   },
   access: {
     // The AI assistant works through MCP only; it cannot sign in to the admin panel.
@@ -22,19 +22,19 @@ export const Users: CollectionConfig = {
     update: ({ req }) => (isAdmin(req) ? true : req.user ? { id: { equals: req.user.id } } : false),
   },
   fields: [
-    { name: "name", type: "text", label: "Nombre" },
+    { name: "name", type: "text", label: "Name" },
     {
       name: "role",
       type: "select",
-      label: "Rol",
+      label: "Role",
       required: true,
       defaultValue: "editor",
       saveToJWT: true,
       access: { create: adminFieldOnly, update: adminFieldOnly },
       options: [
-        { label: "Administrador", value: "admin" },
+        { label: "Admin", value: "admin" },
         { label: "Editor", value: "editor" },
-        { label: "Asistente IA (MCP)", value: "ai" },
+        { label: "AI assistant (MCP)", value: "ai" },
       ],
     },
   ],

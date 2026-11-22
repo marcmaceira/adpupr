@@ -8,22 +8,22 @@ import { array, headline, icon, sectionSettings, text } from "../../payload/fiel
 export const IconColumnsBlock: Block = {
   slug: "iconColumns",
   interfaceName: "IconColumnsBlock",
-  labels: { singular: "Columnas con ícono", plural: "Columnas con ícono" },
-  admin: { group: "Contenido" },
+  labels: { singular: "Icon columns", plural: "Icon columns" },
+  admin: { group: "Content" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    text("intro", "Introducción", { textarea: true }),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    text("intro", "Intro", { textarea: true }),
     array(
       "columns",
-      "Columnas",
-      "Columna",
+      "Columns",
+      "Column",
       [
-        icon("icon", "Ícono"),
-        text("title", "Título", { required: true }),
-        text("text", "Texto", { textarea: true }),
-        text("status", "Etiqueta de estado", {
-          description: "Por ejemplo: Archivo en preparación.",
+        icon("icon", "Icon"),
+        text("title", "Heading", { required: true }),
+        text("text", "Text", { textarea: true }),
+        text("status", "Status label", {
+          description: "For example: Archivo en preparación.",
         }),
       ],
       { minRows: 1, maxRows: 2, required: true },
@@ -31,8 +31,8 @@ export const IconColumnsBlock: Block = {
     {
       name: "note",
       type: "group",
-      label: "Nota al pie",
-      fields: [icon("icon", "Ícono"), text("text", "Texto", { textarea: true })],
+      label: "Footnote",
+      fields: [icon("icon", "Icon"), text("text", "Text", { textarea: true })],
     },
     sectionSettings(),
   ],

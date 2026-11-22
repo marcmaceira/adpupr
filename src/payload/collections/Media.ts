@@ -7,12 +7,11 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const Media: CollectionConfig = {
   slug: "media",
-  labels: { singular: "Imagen", plural: "Medios" },
+  labels: { singular: "Image", plural: "Media" },
   versions: false,
   admin: {
-    group: "Contenido",
-    description:
-      "Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.",
+    group: "Content",
+    description: "Site images: logos, portraits and photos. Every image requires alt text.",
   },
   access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
   upload: {
@@ -25,10 +24,10 @@ export const Media: CollectionConfig = {
     {
       name: "alt",
       type: "text",
-      label: "Texto alternativo",
+      label: "Alt text",
       required: true,
       admin: {
-        description: "Describe la imagen para personas que usan lectores de pantalla.",
+        description: "Describe the image for people who use screen readers.",
       },
     },
   ],

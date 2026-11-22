@@ -9,57 +9,57 @@ import { array, headline, icon, link, sectionSettings, text } from "../../payloa
 export const EventOverviewBlock: Block = {
   slug: "eventOverview",
   interfaceName: "EventOverviewBlock",
-  labels: { singular: "Resumen del evento y agenda", plural: "Resúmenes del evento y agenda" },
-  admin: { group: "Conferencia" },
+  labels: { singular: "Event overview and agenda", plural: "Event overviews and agendas" },
+  admin: { group: "Conference" },
   fields: [
     array(
       "details",
-      "Datos del evento",
-      "Dato",
+      "Event details",
+      "Detail",
       [
         {
           type: "row",
           fields: [
-            { ...icon("icon", "Ícono", { required: true }), admin: { width: "30%" } },
+            { ...icon("icon", "Icon", { required: true }), admin: { width: "30%" } },
             {
               name: "label",
               type: "text",
-              label: "Etiqueta (por ejemplo: Fecha)",
+              label: "Label (for example: Fecha)",
               required: true,
               admin: { width: "70%" },
             },
           ],
         },
-        text("value", "Valor", { required: true, textarea: true }),
+        text("value", "Value", { required: true, textarea: true }),
       ],
       {
         maxRows: 3,
-        description: "La franja con fecha, horario y lugar. Se muestran en una fila de tres.",
+        description: "The strip with date, time and place. Shown in a row of three.",
       },
     ),
     {
       name: "intro",
       type: "group",
-      label: "Introducción",
+      label: "Intro",
       fields: [
-        text("eyebrow", "Antetítulo"),
-        ...headline("heading", "Título"),
+        text("eyebrow", "Eyebrow"),
+        ...headline("heading", "Heading"),
         array(
           "rows",
-          "Filas con ícono",
-          "Fila",
+          "Icon rows",
+          "Row",
           [
-            icon("icon", "Ícono", { required: true }),
-            text("heading", "Subtítulo", { description: "Opcional." }),
-            text("text", "Texto", { required: true, textarea: true }),
+            icon("icon", "Icon", { required: true }),
+            text("heading", "Subheading", { description: "Optional." }),
+            text("text", "Text", { required: true, textarea: true }),
             {
               name: "emphasis",
               type: "checkbox",
-              label: "Destacar el texto",
-              admin: { description: "Muestra el texto en azul y en negrita." },
+              label: "Emphasize the text",
+              admin: { description: "Shows the text in bold blue." },
             },
           ],
-          { description: "Se muestran a la derecha del título." },
+          { description: "Shown to the right of the heading." },
         ),
       ],
     },
@@ -69,55 +69,55 @@ export const EventOverviewBlock: Block = {
       label: "Agenda",
       admin: {
         description:
-          "La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.",
+          "The agenda starts collapsed; the visitor opens it with the button. Activities with a description (and not muted) can be expanded.",
       },
       fields: [
-        text("heading", "Título de la agenda", { required: true }),
+        text("heading", "Agenda heading", { required: true }),
         {
           type: "row",
           fields: [
             {
               name: "expandLabel",
               type: "text",
-              label: "Botón para abrir",
+              label: "Open button",
               required: true,
               admin: { width: "50%" },
             },
             {
               name: "collapseLabel",
               type: "text",
-              label: "Botón para cerrar",
+              label: "Close button",
               required: true,
               admin: {
                 width: "50%",
-                description: "Se usa arriba (con la agenda abierta) y al final de la agenda.",
+                description: "Used at the top (with the agenda open) and at the end of the agenda.",
               },
             },
           ],
         },
-        array("periods", "Bloques del día", "Bloque", [
+        array("periods", "Parts of the day", "Part of the day", [
           {
             type: "row",
             fields: [
               {
                 name: "title",
                 type: "text",
-                label: "Nombre (por ejemplo: Mañana)",
+                label: "Name (for example: Mañana)",
                 required: true,
                 admin: { width: "40%" },
               },
               {
                 name: "summary",
                 type: "text",
-                label: "Resumen",
+                label: "Summary",
                 admin: { width: "60%" },
               },
             ],
           },
           array(
             "entries",
-            "Actividades",
-            "Actividad",
+            "Activities",
+            "Activity",
             [
               {
                 type: "row",
@@ -125,41 +125,41 @@ export const EventOverviewBlock: Block = {
                   {
                     name: "start",
                     type: "text",
-                    label: "Inicio (por ejemplo: 7:30 a.m.)",
+                    label: "Start (for example: 7:30 a.m.)",
                     required: true,
                     admin: { width: "50%" },
                   },
                   {
                     name: "end",
                     type: "text",
-                    label: "Fin",
+                    label: "End",
                     required: true,
                     admin: { width: "50%" },
                   },
                 ],
               },
-              text("title", "Actividad", { required: true }),
-              text("description", "Descripción", {
+              text("title", "Activity", { required: true }),
+              text("description", "Description", {
                 textarea: true,
-                description: "Opcional. El visitante la despliega con el botón +.",
+                description: "Optional. The visitor expands it with the + button.",
               }),
               {
                 name: "quiet",
                 type: "checkbox",
-                label: "Atenuada (recesos, registro, mensajes)",
+                label: "Muted (breaks, registration, remarks)",
                 admin: {
-                  description: "Se muestra en gris y nunca despliega la descripción.",
+                  description: "Shown in gray and never expands the description.",
                 },
               },
             ],
             { minRows: 1 },
           ),
         ]),
-        text("note", "Nota al final", { description: "Por ejemplo: Programa sujeto a ajustes." }),
+        text("note", "Closing note", { description: "For example: Programa sujeto a ajustes." }),
         link({
           name: "registrationLink",
-          label: "Enlace al final de la agenda",
-          description: "Por ejemplo, a la sección de tarifas (URL #inscripcion).",
+          label: "Link at the end of the agenda",
+          description: "For example, to the rates section (URL #inscripcion).",
         }),
       ],
     },

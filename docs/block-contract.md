@@ -14,7 +14,7 @@ How the site is built from Payload blocks. Read this before adding or changing a
 
 ## Adding a block
 
-1. `src/blocks/<slug>/config.ts` exporting `XBlock: Block` with `slug`, `interfaceName: "<Pascal>Block"`, Spanish `labels`, and `admin.group`.
+1. `src/blocks/<slug>/config.ts` exporting `XBlock: Block` with `slug`, `interfaceName: "<Pascal>Block"`, English `labels`, and `admin.group`.
 2. Register it in **your group file** `src/blocks/groups/<group>.ts` (never in `src/blocks/index.ts`).
 3. `pnpm generate:types` to get the `<Pascal>Block` interface in `src/payload-types.ts`.
 4. `src/components/sections/<name>.tsx`: `export type XProps = Omit<XBlock, "blockType" | "blockName" | "id"> & { ...fetched data }`.
@@ -34,7 +34,7 @@ Always build fields with these helpers so blocks stay consistent:
 - `array(name, label, singular, fields, opts)`: **use this for every array.** It normalizes missing nested arrays to `[]`, working around payloadcms/payload#19798 (rows saved under the wrong parent in 4.0.0-beta.11).
 - `showWhen(field, variantIs("a", "b"))`: hide fields irrelevant to a variant.
 
-All labels, descriptions, option labels and validation messages are Spanish, with correct diacritics, written as plain UTF-8.
+All labels, descriptions, option labels and validation messages are English (the admin panel is in English). Examples of what an editor types stay Spanish, since the site content is Spanish.
 
 ## Section components
 

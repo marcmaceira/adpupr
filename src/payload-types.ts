@@ -244,7 +244,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Cada página del sitio. Se compone de secciones (bloques) en la pestaña Contenido.
+ * Every page of the site. It is built from sections (blocks) in the Content tab.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -252,11 +252,11 @@ export interface UserAuthOperations {
 export interface Page {
   id: number;
   /**
-   * Se usa en el título de la pestaña del navegador y en buscadores.
+   * Used in the browser tab title and in search engines.
    */
   title: string;
   /**
-   * Ejemplos: / · /membresia · /nosotros/quienes-somos
+   * Examples: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
   layout?:
@@ -283,12 +283,12 @@ export interface Page {
     | null;
   meta?: {
     /**
-     * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
+     * Shown as "Title | ADPUPR". Leave empty to use the page title.
      */
     title?: string | null;
     description?: string | null;
     /**
-     * Opcional. Si está vacía se usa la descripción de arriba.
+     * Optional. If empty, the description above is used.
      */
     ogDescription?: string | null;
     /**
@@ -320,45 +320,45 @@ export interface Page {
  */
 export interface HeroBlock {
   /**
-   * Cada variante reproduce un encabezado existente del sitio, con su tamaño de título, espaciado y adornos.
+   * Each variant reproduces an existing page header on the site, with its heading size, spacing and ornaments.
    */
   variant: 'home' | 'subhead' | 'event' | 'resources' | 'structure' | 'history' | 'brief';
   /**
-   * Texto corto en mayúsculas que aparece sobre el título.
+   * Short uppercase text shown above the heading.
    */
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   /**
-   * Opcional. Escribe exactamente una parte del título para mostrarla en color de acento.
+   * Optional. Type part of the heading exactly as written to show it in the accent color.
    */
   headingHighlight?: string | null;
   lede?: string | null;
   /**
-   * Recuadro con borde mostaza debajo del título.
+   * Box with a mustard border below the heading.
    */
   themeBox?: {
     /**
-     * Por ejemplo: Tema central
+     * For example: Tema central
      */
     label?: string | null;
     text?: string | null;
   };
   /**
-   * Panel a la derecha del título con el día en grande.
+   * Panel to the right of the heading with the day in large type.
    */
   eventDate?: {
     day?: string | null;
     /**
-     * Cada línea se muestra en su propia línea.
+     * Each line is shown on its own line.
      */
     monthYear?: string | null;
     caption?: string | null;
   };
   /**
-   * Hasta dos botones. En la portada de inicio se muestran grandes; en la variante institucional, medianos.
+   * Up to two buttons. Large on the home page variant; medium on the institutional variant.
    */
   actions?:
     | {
@@ -368,7 +368,7 @@ export interface HeroBlock {
       }[]
     | null;
   /**
-   * Enlaces a las secciones de la página, mostrados como lista a la derecha.
+   * Links to the page's sections, shown as a list on the right.
    */
   sectionLinks?:
     | {
@@ -377,12 +377,12 @@ export interface HeroBlock {
       }[]
     | null;
   /**
-   * No se ve en pantalla. Lo anuncian los lectores de pantalla, por ejemplo: Secciones de recursos.
+   * Not visible on screen. Announced by screen readers, for example: Secciones de recursos.
    */
   navLabel?: string | null;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -391,7 +391,7 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
- * Normalmente un formulario externo que se abre en una pestaña nueva.
+ * Usually an external form that opens in a new tab.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
@@ -401,15 +401,15 @@ export interface CmsLink {
   type?: ('internal' | 'custom' | 'email') | null;
   page?: (number | null) | Page;
   /**
-   * Opcional, sin #. Por ejemplo: comites
+   * Optional, without #. For example: comites
    */
   anchor?: string | null;
   /**
-   * https://…, mailto:…, tel:…, una ruta /… o un ancla #…
+   * https://…, mailto:…, tel:…, a path /… or an anchor #…
    */
   url?: string | null;
   /**
-   * Opcional. El enlace abre un correo dirigido al correo principal de Configuración del sitio.
+   * Optional. The link opens an email to the main address in Site Settings.
    */
   emailSubject?: string | null;
   newTab?: boolean | null;
@@ -420,7 +420,7 @@ export interface CmsLink {
  */
 export interface CtaBandBlock {
   /**
-   * Cada variante reproduce una banda existente del sitio, con su color y diseño.
+   * Each variant reproduces an existing band on the site, with its color and design.
    */
   variant: 'primary' | 'mustard' | 'mustardIcon' | 'navy';
   icon?:
@@ -455,20 +455,20 @@ export interface CtaBandBlock {
       )
     | null;
   /**
-   * Texto corto en mayúsculas que aparece sobre el título. Opcional.
+   * Short uppercase text shown above the heading. Optional.
    */
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   /**
-   * Opcional. Escribe exactamente una parte del título para mostrarla en color de acento.
+   * Optional. Type part of the heading exactly as written to show it in the accent color.
    */
   headingHighlight?: string | null;
   body?: string | null;
   /**
-   * Fila de datos bajo el texto (fecha, lugar, modalidad). Sin ícono se muestra un punto (·).
+   * Row of details under the text (date, place, format). Without an icon, a dot (·) is shown.
    */
   meta?:
     | {
@@ -511,7 +511,7 @@ export interface CtaBandBlock {
   secondaryAction?: CmsLink;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -525,24 +525,24 @@ export interface CtaBandBlock {
  */
 export interface StatsBlock {
   /**
-   * Cada variante reproduce una sección de cifras existente del sitio.
+   * Each variant reproduces an existing figures section on the site.
    */
   variant: 'band' | 'tiles';
   /**
-   * Texto corto en mayúsculas que aparece sobre el título.
+   * Short uppercase text shown above the heading.
    */
   eyebrow?: string | null;
   heading?: string | null;
   /**
-   * La banda celeste muestra dos cifras por fila; el mosaico, hasta cuatro.
+   * The light blue band shows two figures per row; the tiles, up to four.
    */
   items: {
     /**
-     * Por ejemplo: 50 o 2023
+     * For example: 50 or 2023
      */
     value: string;
     /**
-     * Opcional, por ejemplo: +
+     * Optional, for example: +
      */
     suffix?: string | null;
     label: string;
@@ -550,7 +550,7 @@ export interface StatsBlock {
   }[];
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -564,21 +564,21 @@ export interface StatsBlock {
  */
 export interface TextSplitBlock {
   /**
-   * También ajusta el tamaño del texto y el espaciado de la sección.
+   * Also adjusts the text size and the section spacing.
    */
   ratio: 'wideLeft' | 'fixedLeft' | 'narrowLeft';
   accent: 'rightRule' | 'goldBar' | 'bottomRule' | 'none';
   headingSize: 'section' | 'compact';
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   body: LexicalRichText<LexicalNodes_ABC6E12E>;
   link?: CmsLink;
   settings: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
     tone: 'bg' | 'surface';
@@ -593,12 +593,12 @@ export interface TextSplitBlock {
  */
 export interface FeatureCardsBlock {
   /**
-   * Los paneles unidos muestran el título de cada panel en tamaño grande.
+   * Joined panels show each panel's heading in a large size.
    */
   variant: 'separate' | 'joined';
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading?: string | null;
   items: {
@@ -642,7 +642,7 @@ export interface FeatureCardsBlock {
   }[];
   settings: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
     tone: 'bg' | 'surface2';
@@ -657,12 +657,12 @@ export interface FeatureCardsBlock {
  */
 export interface NumberedListBlock {
   /**
-   * La numeración (01, 02, 03…) se genera sola según el orden.
+   * Numbering (01, 02, 03…) is generated automatically from the order.
    */
   variant: 'stacked' | 'sidebar';
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   items: {
@@ -671,7 +671,7 @@ export interface NumberedListBlock {
   }[];
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -686,7 +686,7 @@ export interface NumberedListBlock {
 export interface IconColumnsBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   intro?: string | null;
@@ -725,7 +725,7 @@ export interface IconColumnsBlock {
     title: string;
     text?: string | null;
     /**
-     * Por ejemplo: Archivo en preparación.
+     * For example: Archivo en preparación.
      */
     status?: string | null;
     id?: string | null;
@@ -766,7 +766,7 @@ export interface IconColumnsBlock {
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -781,22 +781,22 @@ export interface IconColumnsBlock {
 export interface VideoFeatureBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   intro?: string | null;
   channelLink?: CmsLink;
   /**
-   * Los 11 caracteres después de «v=» o de «youtu.be/» en el enlace del video. Por ejemplo: jhXQO0PB0PY
+   * The 11 characters after «v=» or «youtu.be/» in the video link. For example: jhXQO0PB0PY
    */
   youtubeId: string;
   /**
-   * Lo anuncian los lectores de pantalla. Describe el video brevemente.
+   * Announced by screen readers. Describe the video briefly.
    */
   videoTitle: string;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -811,13 +811,13 @@ export interface VideoFeatureBlock {
 export interface RichTextBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading?: string | null;
   body: LexicalRichText<LexicalNodes_ABC6E12E>;
   settings: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
     tone: 'bg' | 'surface';
@@ -832,7 +832,7 @@ export interface RichTextBlock {
  */
 export interface EventOverviewBlock {
   /**
-   * La franja con fecha, horario y lugar. Se muestran en una fila de tres.
+   * The strip with date, time and place. Shown in a row of three.
    */
   details?:
     | {
@@ -872,11 +872,11 @@ export interface EventOverviewBlock {
   intro: {
     eyebrow?: string | null;
     /**
-     * Cada salto de línea se muestra como un salto de línea.
+     * Each line break is shown as a line break.
      */
     heading: string;
     /**
-     * Se muestran a la derecha del título.
+     * Shown to the right of the heading.
      */
     rows?:
       | {
@@ -909,12 +909,12 @@ export interface EventOverviewBlock {
             | 'users'
             | 'utensils';
           /**
-           * Opcional.
+           * Optional.
            */
           heading?: string | null;
           text: string;
           /**
-           * Muestra el texto en azul y en negrita.
+           * Shows the text in bold blue.
            */
           emphasis?: boolean | null;
           id?: string | null;
@@ -922,13 +922,13 @@ export interface EventOverviewBlock {
       | null;
   };
   /**
-   * La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.
+   * The agenda starts collapsed; the visitor opens it with the button. Activities with a description (and not muted) can be expanded.
    */
   agenda: {
     heading: string;
     expandLabel: string;
     /**
-     * Se usa arriba (con la agenda abierta) y al final de la agenda.
+     * Used at the top (with the agenda open) and at the end of the agenda.
      */
     collapseLabel: string;
     periods?:
@@ -941,11 +941,11 @@ export interface EventOverviewBlock {
                 end: string;
                 title: string;
                 /**
-                 * Opcional. El visitante la despliega con el botón +.
+                 * Optional. The visitor expands it with the + button.
                  */
                 description?: string | null;
                 /**
-                 * Se muestra en gris y nunca despliega la descripción.
+                 * Shown in gray and never expands the description.
                  */
                 quiet?: boolean | null;
                 id?: string | null;
@@ -955,14 +955,14 @@ export interface EventOverviewBlock {
         }[]
       | null;
     /**
-     * Por ejemplo: Programa sujeto a ajustes.
+     * For example: Programa sujeto a ajustes.
      */
     note?: string | null;
     registrationLink?: CmsLink;
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -977,17 +977,17 @@ export interface EventOverviewBlock {
 export interface EventBenefitsBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   callout?: {
     label?: string | null;
     /**
-     * No se ve; se lee antes de la cifra. Por ejemplo: Hasta
+     * Not visible; read before the figure. For example: Hasta
      */
     srPrefix?: string | null;
     /**
-     * Por ejemplo: 8.5 h
+     * For example: 8.5 h
      */
     value?: string | null;
     note?: string | null;
@@ -1028,12 +1028,12 @@ export interface EventBenefitsBlock {
       }[]
     | null;
   /**
-   * El texto en negrita se muestra en mostaza.
+   * Bold text is shown in mustard.
    */
   footnote?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1048,7 +1048,7 @@ export interface EventBenefitsBlock {
 export interface PricingTableBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   intro?: string | null;
@@ -1059,11 +1059,11 @@ export interface PricingTableBlock {
         note?: string | null;
         buttonLabel: string;
         /**
-         * Se abre en una pestaña nueva.
+         * Opens in a new tab.
          */
         paymentUrl: string;
         /**
-         * Borde azul, botón sólido y la insignia de arriba.
+         * Blue border, solid button and the badge on top.
          */
         featured?: boolean | null;
         badge?: string | null;
@@ -1071,7 +1071,7 @@ export interface PricingTableBlock {
       }[]
     | null;
   /**
-   * El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.
+   * The payment link is edited in Site Settings → Payments. Without a link, the button is hidden.
    */
   athMovil?: {
     title?: string | null;
@@ -1081,7 +1081,7 @@ export interface PricingTableBlock {
   footnote?: string | null;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1096,19 +1096,19 @@ export interface PricingTableBlock {
 export interface NumberedGridBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   /**
-   * Se muestra a la derecha del título.
+   * Shown to the right of the heading.
    */
   intro?: string | null;
   /**
-   * Por ejemplo: EJE (se muestra «EJE 01»).
+   * For example: EJE (shown as «EJE 01»).
    */
   numberPrefix?: string | null;
   /**
-   * Va antes de cada descripción. Por ejemplo: Enfoque:
+   * Goes before each description. For example: Enfoque:
    */
   leadIn?: string | null;
   items?:
@@ -1121,7 +1121,7 @@ export interface NumberedGridBlock {
     | null;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1137,7 +1137,7 @@ export interface MembershipEnrollmentBlock {
   benefits: {
     eyebrow?: string | null;
     /**
-     * Cada salto de línea se muestra como un salto de línea.
+     * Each line break is shown as a line break.
      */
     heading: string;
     items?:
@@ -1150,7 +1150,7 @@ export interface MembershipEnrollmentBlock {
   form: {
     eyebrow?: string | null;
     /**
-     * Cada salto de línea se muestra como un salto de línea.
+     * Each line break is shown as a line break.
      */
     heading: string;
     text?: string | null;
@@ -1163,11 +1163,11 @@ export interface MembershipEnrollmentBlock {
   payment: {
     eyebrow?: string | null;
     /**
-     * Cada salto de línea se muestra como un salto de línea.
+     * Each line break is shown as a line break.
      */
     heading: string;
     /**
-     * El enlace de pago se edita en Configuración del sitio → Pagos.
+     * The payment link is edited in Site Settings → Payments.
      */
     athMovil: {
       title: string;
@@ -1186,7 +1186,7 @@ export interface MembershipEnrollmentBlock {
         | null;
     };
     /**
-     * La dirección postal se edita en Configuración del sitio → Contacto.
+     * The postal address is edited in Site Settings → Contact.
      */
     check: {
       title: string;
@@ -1195,7 +1195,7 @@ export interface MembershipEnrollmentBlock {
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1210,12 +1210,12 @@ export interface MembershipEnrollmentBlock {
 export interface ContactSectionBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
   /**
-   * El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.
+   * The form opens the visitor's email app with the message ready to send. It does not store any data.
    */
   form: {
     eyebrow?: string | null;
@@ -1230,29 +1230,29 @@ export interface ContactSectionBlock {
     submitLabel: string;
     email: {
       /**
-       * Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.
+       * Optional. If left empty, the first email in Site Settings → Contact is used.
        */
       recipient?: string | null;
       /**
-       * Escribe {nombre} donde debe ir el nombre de la persona.
+       * Type {nombre} where the person's name should go.
        */
       subjectTemplate: string;
       /**
-       * Por ejemplo «Nombre:». Le sigue el nombre escrito.
+       * For example «Nombre:». Followed by the name the visitor typed.
        */
       nameLine: string;
       /**
-       * Se omite si la persona no escribe su contacto.
+       * Left out if the visitor does not enter their contact details.
        */
       contactLine: string;
       /**
-       * Va en su propia línea, antes del mensaje.
+       * Goes on its own line, before the message.
        */
       messageLine: string;
     };
   };
   /**
-   * Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.
+   * Emails, the address and social links are edited in Site Settings.
    */
   channels: {
     eyebrow?: string | null;
@@ -1261,7 +1261,7 @@ export interface ContactSectionBlock {
     postalHeading?: string | null;
     socialHeading?: string | null;
     /**
-     * En el orden en que aparecen. Solo se muestran redes configuradas.
+     * In display order. Only networks set up in Site Settings are shown.
      */
     networks?:
       | {
@@ -1272,7 +1272,7 @@ export interface ContactSectionBlock {
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1287,12 +1287,12 @@ export interface ContactSectionBlock {
 export interface ResourceLibraryBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
   /**
-   * Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.
+   * Documents are uploaded in Content → Documents; categories, in Document Categories.
    */
   library: {
     filterLegend: string;
@@ -1300,7 +1300,7 @@ export interface ResourceLibraryBlock {
     searchLabel: string;
     searchPlaceholder?: string | null;
     /**
-     * Los lectores de pantalla lo leen seguido del título del documento.
+     * Screen readers read it followed by the document title.
      */
     downloadLabel: string;
     emptyArchive?: {
@@ -1314,7 +1314,7 @@ export interface ResourceLibraryBlock {
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1328,59 +1328,59 @@ export interface ResourceLibraryBlock {
  */
 export interface PeopleGridBlock {
   /**
-   * Tarjetas con biografía: encabezado a dos columnas; en pantallas grandes 4 tarjetas por fila y la última fila centrada. Retratos: encabezado apilado; 2, 3 o 4 retratos por fila.
+   * Cards with biography: two-column header; on large screens 4 cards per row with the last row centered. Portraits: stacked header; 2, 3 or 4 portraits per row.
    */
   variant: 'bioOverlay' | 'portrait';
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   intro?: string | null;
   /**
-   * En el orden en que se muestran. El cargo es propio de esta sección.
+   * In display order. The role applies to this section only.
    */
   members: {
     person: number | Person;
     role: string;
     /**
-     * Déjalo vacío para usar el nombre de Personas. Si lo llenas, reemplaza el nombre solo en esta sección (cambiarlo en Personas no lo actualiza aquí).
+     * Leave empty to use the name from People. If filled in, it replaces the name in this section only (changing it in People does not update it here).
      */
     displayName?: string | null;
     id?: string | null;
   }[];
   /**
-   * Textos de botones y lectores de pantalla. {nombre} se reemplaza por el nombre de cada persona.
+   * Button and screen reader text. {nombre} is replaced with each person's name.
    */
   labels: {
     /**
-     * Por ejemplo: Retrato de {nombre}
+     * For example: Retrato de {nombre}
      */
     portraitAlt: string;
     /**
-     * Por ejemplo: Ver biografía
+     * For example: Ver biografía
      */
     open?: string | null;
     /**
-     * Por ejemplo: Ver biografía de {nombre}
+     * For example: Ver biografía de {nombre}
      */
     openAria?: string | null;
     /**
-     * Por ejemplo: Biografía de {nombre}
+     * For example: Biografía de {nombre}
      */
     bioAria?: string | null;
     /**
-     * Por ejemplo: Cerrar biografía de {nombre}
+     * For example: Cerrar biografía de {nombre}
      */
     closeAria?: string | null;
   };
   /**
-   * Desactivado: solo retrato, cargo y nombre (como la Junta Fundadora actual).
+   * Off: portrait, role and name only (like the current Founding Board).
    */
   showBios?: boolean | null;
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1389,7 +1389,7 @@ export interface PeopleGridBlock {
   blockType: 'peopleGrid';
 }
 /**
- * Integrantes de juntas y comités. Cada persona existe una sola vez: su retrato y biografía se actualizan en todas las secciones donde aparece.
+ * Members of boards and committees. Each person exists only once: their portrait and biography update in every section where they appear.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "people".
@@ -1397,19 +1397,19 @@ export interface PeopleGridBlock {
 export interface Person {
   id: number;
   /**
-   * Como se muestra normalmente, con títulos o grados si aplican. Cada sección puede mostrar otra forma del nombre.
+   * As usually shown, with titles or degrees if any. Each section can show a different form of the name.
    */
   name: string;
   /**
-   * Foto vertical (proporción 4:5 o 3:4). El texto alternativo se edita en el archivo de Medios.
+   * Portrait-orientation photo (4:5 or 3:4 ratio). Alt text is edited on the file in Media.
    */
   portrait?: (number | null) | Media;
   /**
-   * Se muestra al abrir la tarjeta en la Junta Directiva y en el perfil de coordinación de un comité.
+   * Shown when the card is opened in the Board of Directors and in a committee's coordinator profile.
    */
   bio?: string | null;
   /**
-   * Se completa automáticamente a partir del nombre. Minúsculas, números y guiones.
+   * Filled in automatically from the name. Lowercase letters, numbers and hyphens.
    */
   slug?: string | null;
   createdBy?: {
@@ -1424,7 +1424,7 @@ export interface Person {
   createdAt: string;
 }
 /**
- * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
+ * Site images: logos, portraits and photos. Every image requires alt text.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -1432,7 +1432,7 @@ export interface Person {
 export interface Media {
   id: number;
   /**
-   * Describe la imagen para personas que usan lectores de pantalla.
+   * Describe the image for people who use screen readers.
    */
   alt: string;
   prefix?: string | null;
@@ -1471,7 +1471,7 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * Personas con acceso al panel. El rol «Asistente IA» es para clientes MCP: puede leer y editar contenido, pero no borrar ni administrar usuarios.
+ * People with access to the admin panel. The "AI assistant" role is for MCP clients: it can read and edit content, but cannot delete anything or manage users.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
@@ -1531,51 +1531,51 @@ export interface User {
 export interface CommitteesBlock {
   eyebrow?: string | null;
   /**
-   * Cada salto de línea se muestra como un salto de línea.
+   * Each line break is shown as a line break.
    */
   heading: string;
   intro?: string | null;
   selection: 'all' | 'selected';
   /**
-   * Se muestran en el orden elegido aquí.
+   * Shown in the order chosen here.
    */
   committees?: (number | Committee)[] | null;
   /**
-   * {nombre} se reemplaza por el nombre del comité o de la persona.
+   * {nombre} is replaced with the committee's or the person's name.
    */
   labels: {
     /**
-     * Por ejemplo: Comités de trabajo
+     * For example: Comités de trabajo
      */
     navAria: string;
     /**
-     * Por ejemplo: Comité de trabajo
+     * For example: Comité de trabajo
      */
     committeeEyebrow: string;
     /**
-     * Por ejemplo: Comité de {nombre}
+     * For example: Comité de {nombre}
      */
     committeeHeading: string;
     /**
-     * Por ejemplo: Coordinación
+     * For example: Coordinación
      */
     coordinator: string;
     /**
-     * Por ejemplo: Retrato de {nombre}
+     * For example: Retrato de {nombre}
      */
     portraitAlt: string;
     /**
-     * Por ejemplo: Integrantes
+     * For example: Integrantes
      */
     members: string;
     /**
-     * Por ejemplo: Responsabilidades
+     * For example: Responsabilidades
      */
     responsibilities: string;
   };
   settings?: {
     /**
-     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     * Optional. Lets you link to this section with #anchor. Lowercase letters, numbers and hyphens.
      */
     anchorId?: string | null;
   };
@@ -1584,7 +1584,7 @@ export interface CommitteesBlock {
   blockType: 'committees';
 }
 /**
- * Comités de trabajo. Se muestran en el orden indicado; su identificador es el ancla del enlace (#identificador).
+ * Working committees, shown in the order set. Each identifier is the link anchor (#identifier).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "committees".
@@ -1592,16 +1592,16 @@ export interface CommitteesBlock {
 export interface Committee {
   id: number;
   /**
-   * Sin «Comité de». Por ejemplo: Asuntos Legislativos.
+   * Without "Comité de". For example: Asuntos Legislativos.
    */
   name: string;
   description: string;
   /**
-   * Se muestra en un recuadro mostaza debajo de la descripción.
+   * Shown in a mustard box below the description.
    */
   focus?: string | null;
   /**
-   * Por ejemplo: Funciones principales.
+   * For example: Funciones principales.
    */
   functionsLabel: string;
   functions?:
@@ -1612,36 +1612,36 @@ export interface Committee {
     | null;
   coordinator: {
     /**
-     * Su retrato y biografía se toman del registro de la persona.
+     * Their portrait and biography come from the person's record.
      */
     person: number | Person;
     /**
-     * Déjalo vacío para usar el nombre de la persona.
+     * Leave empty to use the person's name.
      */
     displayName?: string | null;
     /**
-     * Reemplaza la etiqueta general de la sección (Coordinación).
+     * Replaces the section's general label (for example, Coordinación).
      */
     roleLabel?: string | null;
   };
   /**
-   * Recuadro adicional con integrantes y responsabilidades. Déjalo vacío si no aplica.
+   * Extra box with members and responsibilities. Leave empty if it does not apply.
    */
   editorialBoard?: {
     /**
-     * Por ejemplo: Junta Editora.
+     * For example: Junta Editora.
      */
     title?: string | null;
     summary?: string | null;
     members?:
       | {
           /**
-           * Persona integrante.
+           * The board member.
            */
           person: number | Person;
           role: string;
           /**
-           * Déjalo vacío para usar el nombre de la persona.
+           * Leave empty to use the person's name.
            */
           displayName?: string | null;
           id?: string | null;
@@ -1655,11 +1655,11 @@ export interface Committee {
       | null;
   };
   /**
-   * Los comités se muestran de menor a mayor.
+   * Committees are shown from lowest to highest.
    */
   order: number;
   /**
-   * Se completa a partir del nombre. Es el ancla del enlace: /nosotros/estructura-organizacional#identificador.
+   * Filled in from the name. It is the link anchor: /nosotros/estructura-organizacional#identifier.
    */
   slug?: string | null;
   createdBy?: {
@@ -1674,7 +1674,7 @@ export interface Committee {
   createdAt: string;
 }
 /**
- * Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.
+ * Files downloaded from the Resources library. Upload the file, enter the title and choose the category.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "documents".
@@ -1682,16 +1682,16 @@ export interface Committee {
 export interface Document {
   id: number;
   /**
-   * Así aparece en la lista y en el botón de descarga.
+   * How it appears in the list and on the download button.
    */
   title: string;
   category: number | DocumentCategory;
   /**
-   * La lista muestra primero los documentos más recientes.
+   * The list shows the most recent documents first.
    */
   publishedAt: string;
   /**
-   * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
+   * Optional. If two documents have the same date, the one with the lower number appears first.
    */
   sortOrder?: number | null;
   prefix?: string | null;
@@ -1730,7 +1730,7 @@ export interface Document {
   focalY?: number | null;
 }
 /**
- * Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.
+ * Categories of the Resources library. Each one appears as a filter button, in the order set.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "document-categories".
@@ -1738,15 +1738,15 @@ export interface Document {
 export interface DocumentCategory {
   id: number;
   /**
-   * Texto del botón de filtro y de la etiqueta sobre cada documento.
+   * Text of the filter button and of the tag on each document.
    */
   label: string;
   /**
-   * Minúsculas, números y guiones. No se muestra a visitantes.
+   * Lowercase letters, numbers and hyphens. Not shown to visitors.
    */
   slug: string;
   /**
-   * Las categorías con número menor aparecen primero.
+   * Categories with a lower number appear first.
    */
   order: number;
   createdBy?: {
@@ -2802,7 +2802,7 @@ export interface PayloadLlmInstructionsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
- * Logotipo, menú de navegación y botón principal que aparecen arriba en todas las páginas.
+ * Logo, navigation menu and main button shown at the top of every page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
@@ -2810,26 +2810,26 @@ export interface PayloadLlmInstructionsSelect<T extends boolean = true> {
 export interface Header {
   id: number;
   /**
-   * Se muestra a 40 px de alto. El texto alternativo se edita en el archivo de Medios.
+   * Shown 40 px tall. Alt text is edited on the file in Media.
    */
   logo: number | Media;
   /**
-   * Lo anuncian los lectores de pantalla al enfocar el logotipo, que lleva a Inicio.
+   * Screen readers announce it when the logo, which links to the home page, gets focus.
    */
   homeAriaLabel: string;
   /**
-   * En el orden en que aparecen. Arrastra los elementos para cambiar el orden.
+   * In the order they appear. Drag items to reorder them.
    */
   navItems?:
     | {
         type?: ('link' | 'dropdown') | null;
         link?: CmsLink;
         /**
-         * El botón que abre el menú desplegable, por ejemplo «Nosotros».
+         * The button that opens the dropdown, for example "Nosotros".
          */
         label?: string | null;
         /**
-         * El elemento se marca como activo cuando la página actual está dentro de alguna de estas rutas.
+         * The item is marked as active when the current page is within any of these paths.
          */
         children?:
           | {
@@ -2859,7 +2859,7 @@ export interface Header {
   createdAt?: string | null;
 }
 /**
- * Contenido del pie de página. Las redes sociales, la dirección y los correos se editan en «Configuración del sitio».
+ * Footer content. Social profiles, the address and the emails are edited in "Site Settings".
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "footer".
@@ -2867,12 +2867,12 @@ export interface Header {
 export interface Footer {
   id: number;
   /**
-   * Versión clara para fondo oscuro, a 120 px de alto. El texto alternativo se edita en el archivo de Medios.
+   * Light version for a dark background, shown 120 px tall. Alt text is edited on the file in Media.
    */
   logo: number | Media;
   blurb: string;
   /**
-   * Hasta tres columnas, en el orden en que aparecen.
+   * Up to three columns, in the order they appear.
    */
   columns?:
     | {
@@ -2887,15 +2887,15 @@ export interface Footer {
       }[]
     | null;
   /**
-   * La dirección se toma de «Configuración del sitio».
+   * The address comes from "Site Settings".
    */
   addressLabel: string;
   /**
-   * Los correos se toman de «Configuración del sitio».
+   * The emails come from "Site Settings".
    */
   emailLabel: string;
   /**
-   * Escribe {year} donde debe aparecer el año actual.
+   * Type {year} where the current year should appear.
    */
   copyright: string;
   location: string;
@@ -2911,7 +2911,7 @@ export interface Footer {
   createdAt?: string | null;
 }
 /**
- * Datos que aparecen en varias partes del sitio. Cambiarlos aquí los actualiza en todas.
+ * Information that appears in several places on the site. Changing it here updates it everywhere.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
@@ -2924,7 +2924,7 @@ export interface SiteSetting {
   };
   contact: {
     /**
-     * El primero es el correo principal (formulario de contacto).
+     * The first one is the main email (contact form).
      */
     emails?:
       | {
@@ -2954,7 +2954,7 @@ export interface SiteSetting {
   };
   payments: {
     /**
-     * Se usa en Membresía y en la Conferencia.
+     * Used on the membership and conference pages.
      */
     athMovilUrl: string;
   };
@@ -2962,13 +2962,13 @@ export interface SiteSetting {
     siteName: string;
     defaultTitle: string;
     /**
-     * Se añade a cada título de página, por ejemplo « | ADPUPR».
+     * Added to every page title, for example " | ADPUPR".
      */
     titleSuffix: string;
     description: string;
     socialDescription?: string | null;
     /**
-     * El texto alternativo se edita en el archivo de Medios.
+     * Alt text is edited on the file in Media.
      */
     ogImage?: (number | null) | Media;
     locale: string;

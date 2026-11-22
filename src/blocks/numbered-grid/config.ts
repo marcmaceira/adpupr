@@ -8,14 +8,14 @@ import { array, headline, sectionSettings, text } from "../../payload/fields";
 export const NumberedGridBlock: Block = {
   slug: "numberedGrid",
   interfaceName: "NumberedGridBlock",
-  labels: { singular: "Cuadrícula numerada", plural: "Cuadrículas numeradas" },
-  admin: { group: "Conferencia" },
+  labels: { singular: "Numbered grid", plural: "Numbered grids" },
+  admin: { group: "Conference" },
   fields: [
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    text("intro", "Introducción", {
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    text("intro", "Intro", {
       textarea: true,
-      description: "Se muestra a la derecha del título.",
+      description: "Shown to the right of the heading.",
     }),
     {
       type: "row",
@@ -23,24 +23,24 @@ export const NumberedGridBlock: Block = {
         {
           name: "numberPrefix",
           type: "text",
-          label: "Prefijo del número",
-          admin: { width: "50%", description: "Por ejemplo: EJE (se muestra «EJE 01»)." },
+          label: "Number prefix",
+          admin: { width: "50%", description: "For example: EJE (shown as «EJE 01»)." },
         },
         {
           name: "leadIn",
           type: "text",
-          label: "Entrada en negrita",
+          label: "Bold lead-in",
           admin: {
             width: "50%",
-            description: "Va antes de cada descripción. Por ejemplo: Enfoque:",
+            description: "Goes before each description. For example: Enfoque:",
           },
         },
       ],
     },
     array(
       "items",
-      "Elementos",
-      "Elemento",
+      "Items",
+      "Item",
       [
         {
           type: "row",
@@ -48,20 +48,20 @@ export const NumberedGridBlock: Block = {
             {
               name: "number",
               type: "text",
-              label: "Número (por ejemplo: 01)",
+              label: "Number (for example: 01)",
               required: true,
               admin: { width: "30%" },
             },
             {
               name: "title",
               type: "text",
-              label: "Título",
+              label: "Heading",
               required: true,
               admin: { width: "70%" },
             },
           ],
         },
-        text("description", "Descripción", { textarea: true }),
+        text("description", "Description", { textarea: true }),
       ],
       { minRows: 1 },
     ),

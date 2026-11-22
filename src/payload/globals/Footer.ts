@@ -5,60 +5,58 @@ import { array, link, media, text } from "../fields";
 
 /**
  * Site footer. Social profiles, the postal address and the emails come from
- * Configuración del sitio, so they are edited in one place.
+ * Site Settings, so they are edited in one place.
  */
 export const Footer: GlobalConfig = {
   slug: "footer",
-  label: "Pie de página",
+  label: "Footer",
   admin: {
-    group: "Configuración",
+    group: "Settings",
     description:
-      "Contenido del pie de página. Las redes sociales, la dirección y los correos se editan en «Configuración del sitio».",
+      'Footer content. Social profiles, the address and the emails are edited in "Site Settings".',
   },
   access: { read: anyone, update: authenticated },
   versions: { max: 25 },
   fields: [
-    media("logo", "Logotipo", {
+    media("logo", "Logo", {
       required: true,
       description:
-        "Versión clara para fondo oscuro, a 120 px de alto. El texto alternativo se edita en el archivo de Medios.",
+        "Light version for a dark background, shown 120 px tall. Alt text is edited on the file in Media.",
     }),
-    text("blurb", "Descripción breve", { required: true, textarea: true }),
+    text("blurb", "Short description", { required: true, textarea: true }),
     withRowLabel(
       array(
         "columns",
-        "Columnas de enlaces",
-        "Columna",
+        "Link columns",
+        "Column",
         [
-          text("heading", "Título de la columna", { required: true }),
-          withRowLabel(
-            array("links", "Enlaces", "Enlace", [link({ required: true })], { minRows: 1 }),
-          ),
+          text("heading", "Column heading", { required: true }),
+          withRowLabel(array("links", "Links", "Link", [link({ required: true })], { minRows: 1 })),
         ],
-        { maxRows: 3, description: "Hasta tres columnas, en el orden en que aparecen." },
+        { maxRows: 3, description: "Up to three columns, in the order they appear." },
       ),
     ),
     {
       type: "row",
       fields: [
-        text("addressLabel", "Título de la dirección", {
+        text("addressLabel", "Address heading", {
           required: true,
-          description: "La dirección se toma de «Configuración del sitio».",
+          description: 'The address comes from "Site Settings".',
         }),
-        text("emailLabel", "Título de los correos", {
+        text("emailLabel", "Emails heading", {
           required: true,
-          description: "Los correos se toman de «Configuración del sitio».",
+          description: 'The emails come from "Site Settings".',
         }),
       ],
     },
     {
       type: "row",
       fields: [
-        text("copyright", "Derechos de autor", {
+        text("copyright", "Copyright", {
           required: true,
-          description: "Escribe {year} donde debe aparecer el año actual.",
+          description: "Type {year} where the current year should appear.",
         }),
-        text("location", "Ubicación", { required: true }),
+        text("location", "Location", { required: true }),
       ],
     },
   ],

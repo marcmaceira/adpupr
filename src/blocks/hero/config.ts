@@ -11,19 +11,19 @@ import {
 } from "../../payload/fields";
 
 export const HERO_VARIANTS = [
-  { value: "home", label: "Portada de inicio (título grande, dos botones)" },
-  { value: "subhead", label: "Encabezado simple (antetítulo, título, texto)" },
-  { value: "event", label: "Evento (tema central y fecha destacada)" },
-  { value: "resources", label: "Centro de recursos (con índice de secciones)" },
-  { value: "structure", label: "Institucional con botones" },
-  { value: "history", label: "Institucional con texto amplio" },
-  { value: "brief", label: "Institucional breve (solo título)" },
+  { value: "home", label: "Home page (large heading, two buttons)" },
+  { value: "subhead", label: "Simple header (eyebrow, heading, text)" },
+  { value: "event", label: "Event (theme and highlighted date)" },
+  { value: "resources", label: "Resource center (with section index)" },
+  { value: "structure", label: "Institutional with buttons" },
+  { value: "history", label: "Institutional with long text" },
+  { value: "brief", label: "Institutional brief (heading only)" },
 ] as const;
 
 type HeroVariant = (typeof HERO_VARIANTS)[number]["value"];
 const when = (...variants: HeroVariant[]) => variantIs(...variants);
 
-const [headingField, highlightField] = headline("heading", "Título", { highlight: true });
+const [headingField, highlightField] = headline("heading", "Heading", { highlight: true });
 
 /**
  * Hero: the dark band that opens every page. One block, seven named variants that
@@ -32,95 +32,95 @@ const [headingField, highlightField] = headline("heading", "Título", { highligh
 export const HeroBlock: Block = {
   slug: "hero",
   interfaceName: "HeroBlock",
-  labels: { singular: "Encabezado de página", plural: "Encabezados de página" },
-  admin: { group: "Encabezados y bandas" },
+  labels: { singular: "Page header", plural: "Page headers" },
+  admin: { group: "Headers and bands" },
   fields: [
     variant(HERO_VARIANTS, {
       description:
-        "Cada variante reproduce un encabezado existente del sitio, con su tamaño de título, espaciado y adornos.",
+        "Each variant reproduces an existing page header on the site, with its heading size, spacing and ornaments.",
     }),
-    text("eyebrow", "Antetítulo", {
-      description: "Texto corto en mayúsculas que aparece sobre el título.",
+    text("eyebrow", "Eyebrow", {
+      description: "Short uppercase text shown above the heading.",
     }),
     ...(headingField ? [headingField] : []),
     ...(highlightField ? [showWhen(highlightField, when("home"))] : []),
     showWhen(
-      text("lede", "Texto introductorio", { textarea: true }),
+      text("lede", "Intro text", { textarea: true }),
       when("home", "subhead", "resources", "structure", "history"),
     ),
     {
       name: "themeBox",
       type: "group",
-      label: "Tema central",
+      label: "Theme",
       admin: {
         condition: when("event"),
-        description: "Recuadro con borde mostaza debajo del título.",
+        description: "Box with a mustard border below the heading.",
       },
       fields: [
-        text("label", "Etiqueta", { description: "Por ejemplo: Tema central" }),
-        text("text", "Tema", { textarea: true }),
+        text("label", "Label", { description: "For example: Tema central" }),
+        text("text", "Theme", { textarea: true }),
       ],
     },
     {
       name: "eventDate",
       type: "group",
-      label: "Fecha destacada",
+      label: "Highlighted date",
       admin: {
         condition: when("event"),
-        description: "Panel a la derecha del título con el día en grande.",
+        description: "Panel to the right of the heading with the day in large type.",
       },
       fields: [
         {
           type: "row",
           fields: [
-            text("day", "Día (por ejemplo 02)"),
-            text("monthYear", "Mes y año", {
+            text("day", "Day (for example: 02)"),
+            text("monthYear", "Month and year", {
               textarea: true,
-              description: "Cada línea se muestra en su propia línea.",
+              description: "Each line is shown on its own line.",
             }),
           ],
         },
-        text("caption", "Detalle (día de la semana y lugar)"),
+        text("caption", "Detail (weekday and place)"),
       ],
     },
     showWhen(
       array(
         "actions",
-        "Botones",
-        "Botón",
+        "Buttons",
+        "Button",
         [
           link({ required: true }),
           {
             name: "style",
             type: "select",
-            label: "Estilo",
+            label: "Style",
             required: true,
             defaultValue: "primary",
             options: [
-              { label: "Principal (mostaza)", value: "primary" },
-              { label: "Secundario (contorno blanco)", value: "secondary" },
+              { label: "Primary (mustard)", value: "primary" },
+              { label: "Secondary (white outline)", value: "secondary" },
             ],
           },
         ],
         {
           maxRows: 2,
           description:
-            "Hasta dos botones. En la portada de inicio se muestran grandes; en la variante institucional, medianos.",
+            "Up to two buttons. Large on the home page variant; medium on the institutional variant.",
         },
       ),
       when("home", "structure"),
     ),
     showWhen(
-      array("sectionLinks", "Índice de secciones", "Enlace", [link({ required: true })], {
+      array("sectionLinks", "Section index", "Link", [link({ required: true })], {
         maxRows: 6,
-        description: "Enlaces a las secciones de la página, mostrados como lista a la derecha.",
+        description: "Links to the page's sections, shown as a list on the right.",
       }),
       when("resources"),
     ),
     showWhen(
-      text("navLabel", "Nombre del grupo de enlaces (lectores de pantalla)", {
+      text("navLabel", "Link group name (screen readers)", {
         description:
-          "No se ve en pantalla. Lo anuncian los lectores de pantalla, por ejemplo: Secciones de recursos.",
+          "Not visible on screen. Announced by screen readers, for example: Secciones de recursos.",
       }),
       when("resources", "structure"),
     ),

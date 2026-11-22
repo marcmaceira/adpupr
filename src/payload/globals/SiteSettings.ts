@@ -8,11 +8,11 @@ import { array, link, media, text } from "../fields";
  */
 export const SiteSettings: GlobalConfig = {
   slug: "site-settings",
-  label: "Configuración del sitio",
+  label: "Site Settings",
   admin: {
-    group: "Configuración",
+    group: "Settings",
     description:
-      "Datos que aparecen en varias partes del sitio. Cambiarlos aquí los actualiza en todas.",
+      "Information that appears in several places on the site. Changing it here updates it everywhere.",
   },
   access: { read: anyone, update: authenticated },
   versions: { max: 25 },
@@ -22,44 +22,44 @@ export const SiteSettings: GlobalConfig = {
       tabs: [
         {
           name: "organization",
-          label: "Organización",
+          label: "Organization",
           fields: [
-            text("name", "Nombre completo", { required: true }),
-            text("shortName", "Siglas", { required: true }),
+            text("name", "Full name", { required: true }),
+            text("shortName", "Acronym", { required: true }),
           ],
         },
         {
           name: "contact",
-          label: "Contacto",
+          label: "Contact",
           fields: [
             array(
               "emails",
-              "Correos electrónicos",
-              "Correo",
-              [{ name: "email", type: "email", label: "Correo", required: true }],
+              "Emails",
+              "Email",
+              [{ name: "email", type: "email", label: "Email", required: true }],
               {
                 minRows: 1,
-                description: "El primero es el correo principal (formulario de contacto).",
+                description: "The first one is the main email (contact form).",
               },
             ),
             {
               name: "postal",
               type: "group",
-              label: "Dirección postal",
+              label: "Postal address",
               fields: [
                 {
                   type: "row",
                   fields: [
-                    text("line1", "Línea 1", { required: true }),
-                    text("city", "Ciudad", { required: true }),
+                    text("line1", "Line 1", { required: true }),
+                    text("city", "City", { required: true }),
                   ],
                 },
                 {
                   type: "row",
                   fields: [
-                    text("region", "Estado o región", { required: true }),
-                    text("postalCode", "Código postal", { required: true }),
-                    text("country", "País (código ISO)", { required: true }),
+                    text("region", "State or region", { required: true }),
+                    text("postalCode", "Postal code", { required: true }),
+                    text("country", "Country (ISO code)", { required: true }),
                   ],
                 },
               ],
@@ -68,16 +68,16 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           name: "social",
-          label: "Redes sociales",
+          label: "Social media",
           fields: [
-            array("profiles", "Perfiles", "Perfil", [
+            array("profiles", "Profiles", "Profile", [
               {
                 type: "row",
                 fields: [
                   {
                     name: "network",
                     type: "select",
-                    label: "Red",
+                    label: "Network",
                     required: true,
                     options: [
                       { label: "Facebook", value: "facebook" },
@@ -86,15 +86,15 @@ export const SiteSettings: GlobalConfig = {
                       { label: "YouTube", value: "youtube" },
                     ],
                   },
-                  text("label", "Nombre visible", { required: true }),
-                  text("handle", "Usuario o identificador"),
+                  text("label", "Display name", { required: true }),
+                  text("handle", "Username or handle"),
                 ],
               },
               { name: "url", type: "text", label: "URL", required: true },
               {
                 name: "showInFooter",
                 type: "checkbox",
-                label: "Mostrar en el pie de página",
+                label: "Show in the footer",
                 defaultValue: true,
               },
             ]),
@@ -102,40 +102,41 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           name: "payments",
-          label: "Pagos",
+          label: "Payments",
           fields: [
-            text("athMovilUrl", "Enlace de pago ATH Móvil", {
+            text("athMovilUrl", "ATH Móvil payment link", {
               required: true,
-              description: "Se usa en Membresía y en la Conferencia.",
+              description: "Used on the membership and conference pages.",
             }),
           ],
         },
         {
           name: "seo",
-          label: "SEO predeterminado",
+          label: "SEO defaults",
           fields: [
-            text("siteName", "Nombre del sitio", { required: true }),
-            text("defaultTitle", "Título predeterminado", { required: true }),
-            text("titleSuffix", "Sufijo de títulos", {
+            text("siteName", "Site name", { required: true }),
+            text("defaultTitle", "Default title", { required: true }),
+            text("titleSuffix", "Title suffix", {
               required: true,
-              description: "Se añade a cada título de página, por ejemplo « | ADPUPR».",
+              description: 'Added to every page title, for example " | ADPUPR".',
             }),
-            text("description", "Descripción predeterminada", { required: true, textarea: true }),
-            text("socialDescription", "Descripción corta para X/Twitter", { textarea: true }),
-            media("ogImage", "Imagen para redes sociales (1200×630)"),
-            text("locale", "Configuración regional (Open Graph)", { required: true }),
-            text("skipLinkLabel", "Texto del enlace «saltar al contenido»", { required: true }),
+            text("description", "Default description", { required: true, textarea: true }),
+            text("socialDescription", "Short description for X/Twitter", { textarea: true }),
+            media("ogImage", "Social media image (1200×630)"),
+            text("locale", "Locale (Open Graph)", { required: true }),
+            text("skipLinkLabel", '"Skip to content" link text', { required: true }),
           ],
         },
         {
           name: "notFound",
-          label: "Página no encontrada",
-          description: "Lo que ve quien abre una dirección que no existe (error 404).",
+          label: "Page not found",
+          description:
+            "What visitors see when they open an address that does not exist (404 error).",
           fields: [
-            text("eyebrow", "Antetítulo"),
-            text("title", "Título", { required: true }),
-            text("text", "Texto", { required: true, textarea: true }),
-            link({ label: "Botón", required: true }),
+            text("eyebrow", "Eyebrow"),
+            text("title", "Heading", { required: true }),
+            text("text", "Text", { required: true, textarea: true }),
+            link({ label: "Button", required: true }),
           ],
         },
       ],

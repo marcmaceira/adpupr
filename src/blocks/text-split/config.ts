@@ -2,21 +2,21 @@ import type { Block } from "payload";
 import { headline, link, richText, sectionSettings, text, variant } from "../../payload/fields";
 
 export const TEXT_SPLIT_RATIOS = [
-  { value: "wideLeft", label: "Título amplio a la izquierda (portada)" },
-  { value: "fixedLeft", label: "Columna izquierda estrecha y fija" },
-  { value: "narrowLeft", label: "Columna izquierda estrecha, texto amplio" },
+  { value: "wideLeft", label: "Wide heading on the left (home page)" },
+  { value: "fixedLeft", label: "Narrow fixed left column" },
+  { value: "narrowLeft", label: "Narrow left column, wide text" },
 ] as const;
 
 export const TEXT_SPLIT_ACCENTS = [
-  { value: "rightRule", label: "Línea mostaza junto al texto" },
-  { value: "goldBar", label: "Barra mostaza bajo el título" },
-  { value: "bottomRule", label: "Línea divisoria al final" },
-  { value: "none", label: "Sin acento" },
+  { value: "rightRule", label: "Mustard line beside the text" },
+  { value: "goldBar", label: "Mustard bar under the heading" },
+  { value: "bottomRule", label: "Divider line at the end" },
+  { value: "none", label: "No accent" },
 ] as const;
 
 export const TEXT_SPLIT_HEADING_SIZES = [
-  { value: "section", label: "Grande (título de sección)" },
-  { value: "compact", label: "Compacto" },
+  { value: "section", label: "Large (section heading)" },
+  { value: "compact", label: "Compact" },
 ] as const;
 
 /**
@@ -26,22 +26,22 @@ export const TEXT_SPLIT_HEADING_SIZES = [
 export const TextSplitBlock: Block = {
   slug: "textSplit",
   interfaceName: "TextSplitBlock",
-  labels: { singular: "Texto en dos columnas", plural: "Textos en dos columnas" },
-  admin: { group: "Contenido" },
+  labels: { singular: "Two-column text", plural: "Two-column text" },
+  admin: { group: "Content" },
   fields: [
     variant(TEXT_SPLIT_RATIOS, {
       name: "ratio",
-      label: "Proporción de columnas",
-      description: "También ajusta el tamaño del texto y el espaciado de la sección.",
+      label: "Column ratio",
+      description: "Also adjusts the text size and the section spacing.",
     }),
-    variant(TEXT_SPLIT_ACCENTS, { name: "accent", label: "Acento" }),
-    variant(TEXT_SPLIT_HEADING_SIZES, { name: "headingSize", label: "Tamaño del título" }),
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título"),
-    richText("body", "Texto", { required: true }),
+    variant(TEXT_SPLIT_ACCENTS, { name: "accent", label: "Accent" }),
+    variant(TEXT_SPLIT_HEADING_SIZES, { name: "headingSize", label: "Heading size" }),
+    text("eyebrow", "Eyebrow"),
+    ...headline("heading", "Heading"),
+    richText("body", "Text", { required: true }),
     link({
-      label: "Enlace (opcional)",
-      description: "Se muestra subrayado, con una flecha, debajo del texto.",
+      label: "Link (optional)",
+      description: "Shown underlined, with an arrow, below the text.",
     }),
     sectionSettings({ tones: ["bg", "surface"], defaultTone: "bg" }),
   ],

@@ -37,44 +37,44 @@ export const slugField = (label: string, description: string, example: string): 
   validate: (value: unknown) =>
     !value || (typeof value === "string" && SLUG_PATTERN.test(value))
       ? true
-      : `Usa solo minúsculas, números y guiones (por ejemplo: ${example}).`,
+      : `Use only lowercase letters, numbers and hyphens (for example: ${example}).`,
 });
 
 /**
- * One record per real person. Every place that shows people (Junta Directiva, Junta
- * Fundadora, comités) points here, so a name, portrait or biography is edited once.
+ * One record per real person. Every place that shows people (Board of Directors, Founding
+ * Board, committees) points here, so a name, portrait or biography is edited once.
  */
 export const People: CollectionConfig = {
   slug: "people",
-  labels: { singular: "Persona", plural: "Personas" },
+  labels: { singular: "Person", plural: "People" },
   admin: {
     useAsTitle: "name",
     defaultColumns: ["name", "portrait", "updatedAt"],
-    group: "Organización",
+    group: "Organization",
     description:
-      "Integrantes de juntas y comités. Cada persona existe una sola vez: su retrato y biografía se actualizan en todas las secciones donde aparece.",
+      "Members of boards and committees. Each person exists only once: their portrait and biography update in every section where they appear.",
   },
   access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
   defaultSort: "name",
   hooks: { beforeValidate: [slugFrom("name")] },
   fields: [
-    text("name", "Nombre", {
+    text("name", "Name", {
       required: true,
       description:
-        "Como se muestra normalmente, con títulos o grados si aplican. Cada sección puede mostrar otra forma del nombre.",
+        "As usually shown, with titles or degrees if any. Each section can show a different form of the name.",
     }),
-    media("portrait", "Retrato", {
+    media("portrait", "Portrait", {
       description:
-        "Foto vertical (proporción 4:5 o 3:4). El texto alternativo se edita en el archivo de Medios.",
+        "Portrait-orientation photo (4:5 or 3:4 ratio). Alt text is edited on the file in Media.",
     }),
-    text("bio", "Biografía", {
+    text("bio", "Biography", {
       textarea: true,
       description:
-        "Se muestra al abrir la tarjeta en la Junta Directiva y en el perfil de coordinación de un comité.",
+        "Shown when the card is opened in the Board of Directors and in a committee's coordinator profile.",
     }),
     slugField(
-      "Identificador",
-      "Se completa automáticamente a partir del nombre. Minúsculas, números y guiones.",
+      "Identifier",
+      "Filled in automatically from the name. Lowercase letters, numbers and hyphens.",
       "maria-rivera",
     ),
   ],

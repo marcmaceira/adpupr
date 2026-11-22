@@ -6,50 +6,50 @@ const SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 /** Categories of the /recursos library. The filter buttons follow `order`. */
 export const DocumentCategories: CollectionConfig = {
   slug: "document-categories",
-  labels: { singular: "Categoría de documentos", plural: "Categorías de documentos" },
+  labels: { singular: "Document Category", plural: "Document Categories" },
   versions: false,
   defaultSort: "order",
   admin: {
-    group: "Contenido",
+    group: "Content",
     useAsTitle: "label",
     defaultColumns: ["label", "order", "slug"],
     description:
-      "Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.",
+      "Categories of the Resources library. Each one appears as a filter button, in the order set.",
   },
   access: { create: authenticated, read: anyone, update: authenticated, delete: humanEditors },
   fields: [
     {
       name: "label",
       type: "text",
-      label: "Nombre",
+      label: "Name",
       required: true,
-      admin: { description: "Texto del botón de filtro y de la etiqueta sobre cada documento." },
+      admin: { description: "Text of the filter button and of the tag on each document." },
     },
     {
       name: "slug",
       type: "text",
-      label: "Identificador",
+      label: "Identifier",
       required: true,
       unique: true,
       index: true,
       admin: {
         position: "sidebar",
-        description: "Minúsculas, números y guiones. No se muestra a visitantes.",
+        description: "Lowercase letters, numbers and hyphens. Not shown to visitors.",
       },
       validate: (value: unknown) =>
         typeof value === "string" && SLUG_PATTERN.test(value)
           ? true
-          : "Usa solo minúsculas, números y guiones (por ejemplo: boletines).",
+          : "Use only lowercase letters, numbers and hyphens (for example: boletines).",
     },
     {
       name: "order",
       type: "number",
-      label: "Orden",
+      label: "Order",
       required: true,
       defaultValue: 0,
       admin: {
         position: "sidebar",
-        description: "Las categorías con número menor aparecen primero.",
+        description: "Categories with a lower number appear first.",
       },
     },
   ],
