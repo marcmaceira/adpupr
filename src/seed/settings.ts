@@ -73,6 +73,18 @@ export async function seedSiteSettings(ctx: SeedContext) {
         locale: "es_PR",
         skipLinkLabel: "Saltar al contenido principal",
       },
+      notFound: {
+        eyebrow: "Error 404",
+        title: "Página no encontrada",
+        text: "La página que buscas no existe o cambió de dirección. Vuelve al inicio para seguir navegando el sitio de la ADPUPR.",
+        link: {
+          label: "Volver al inicio",
+          type: "internal",
+          page: ctx.pageId("/"),
+          anchor: null,
+          newTab: false,
+        },
+      },
     },
     ...writeOpts,
   });

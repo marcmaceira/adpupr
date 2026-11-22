@@ -185,9 +185,13 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    header: Header;
+    footer: Footer;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
+    header: HeaderSelect<false> | HeaderSelect<true>;
+    footer: FooterSelect<false> | FooterSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -1151,6 +1155,115 @@ export interface PayloadLlmInstructionsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Logotipo, menú de navegación y botón principal que aparecen arriba en todas las páginas.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header".
+ */
+export interface Header {
+  id: number;
+  /**
+   * Se muestra a 40 px de alto. El texto alternativo se edita en el archivo de Medios.
+   */
+  logo: number | Media;
+  /**
+   * Lo anuncian los lectores de pantalla al enfocar el logotipo, que lleva a Inicio.
+   */
+  homeAriaLabel: string;
+  /**
+   * En el orden en que aparecen. Arrastra los elementos para cambiar el orden.
+   */
+  navItems?:
+    | {
+        type?: ('link' | 'dropdown') | null;
+        link?: CmsLink;
+        /**
+         * El botón que abre el menú desplegable, por ejemplo «Nosotros».
+         */
+        label?: string | null;
+        /**
+         * El elemento se marca como activo cuando la página actual está dentro de alguna de estas rutas.
+         */
+        children?:
+          | {
+              link?: CmsLink;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  cta?: CmsLink;
+  a11y: {
+    navLabel: string;
+    mobileNavLabel: string;
+    openMenuLabel: string;
+    closeMenuLabel: string;
+  };
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Contenido del pie de página. Las redes sociales, la dirección y los correos se editan en «Configuración del sitio».
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer".
+ */
+export interface Footer {
+  id: number;
+  /**
+   * Versión clara para fondo oscuro, a 120 px de alto. El texto alternativo se edita en el archivo de Medios.
+   */
+  logo: number | Media;
+  blurb: string;
+  /**
+   * Hasta tres columnas, en el orden en que aparecen.
+   */
+  columns?:
+    | {
+        heading: string;
+        links?:
+          | {
+              link?: CmsLink;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * La dirección se toma de «Configuración del sitio».
+   */
+  addressLabel: string;
+  /**
+   * Los correos se toman de «Configuración del sitio».
+   */
+  emailLabel: string;
+  /**
+   * Escribe {year} donde debe aparecer el año actual.
+   */
+  copyright: string;
+  location: string;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Datos que aparecen en varias partes del sitio. Cambiarlos aquí los actualiza en todas.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1214,6 +1327,12 @@ export interface SiteSetting {
     locale: string;
     skipLinkLabel: string;
   };
+  notFound: {
+    eyebrow?: string | null;
+    title: string;
+    text: string;
+    link?: CmsLink;
+  };
   createdBy?: {
     relationTo: 'users';
     value: number | User;
@@ -1224,6 +1343,71 @@ export interface SiteSetting {
   } | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "header_select".
+ */
+export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
+  homeAriaLabel?: T;
+  navItems?:
+    | T
+    | {
+        type?: T;
+        link?: T | CmsLinkSelect<T>;
+        label?: T;
+        children?:
+          | T
+          | {
+              link?: T | CmsLinkSelect<T>;
+              id?: T;
+            };
+        id?: T;
+      };
+  cta?: T | CmsLinkSelect<T>;
+  a11y?:
+    | T
+    | {
+        navLabel?: T;
+        mobileNavLabel?: T;
+        openMenuLabel?: T;
+        closeMenuLabel?: T;
+      };
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "footer_select".
+ */
+export interface FooterSelect<T extends boolean = true> {
+  logo?: T;
+  blurb?: T;
+  columns?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              link?: T | CmsLinkSelect<T>;
+              id?: T;
+            };
+        id?: T;
+      };
+  addressLabel?: T;
+  emailLabel?: T;
+  copyright?: T;
+  location?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1285,6 +1469,14 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         ogImage?: T;
         locale?: T;
         skipLinkLabel?: T;
+      };
+  notFound?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
       };
   createdBy?: T;
   updatedBy?: T;
