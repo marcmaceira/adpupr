@@ -157,6 +157,8 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    people: Person;
+    committees: Committee;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -168,6 +170,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    people: PeopleSelect<false> | PeopleSelect<true>;
+    committees: CommitteesSelect<false> | CommitteesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -234,7 +238,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: HeroBlock[] | null;
+  layout?: (HeroBlock | PeopleGridBlock | CommitteesBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -341,6 +345,107 @@ export interface CmsLink {
   newTab?: boolean | null;
 }
 /**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PeopleGridBlock".
+ */
+export interface PeopleGridBlock {
+  /**
+   * Tarjetas con biografía: encabezado a dos columnas; en pantallas grandes 4 tarjetas por fila y la última fila centrada. Retratos: encabezado apilado; 2, 3 o 4 retratos por fila.
+   */
+  variant: 'bioOverlay' | 'portrait';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  /**
+   * En el orden en que se muestran. El cargo es propio de esta sección.
+   */
+  members: {
+    person: number | Person;
+    role: string;
+    /**
+     * Déjalo vacío para usar el nombre de la persona.
+     */
+    displayName?: string | null;
+    id?: string | null;
+  }[];
+  /**
+   * Textos de botones y lectores de pantalla. {nombre} se reemplaza por el nombre de cada persona.
+   */
+  labels: {
+    /**
+     * Por ejemplo: Retrato de {nombre}
+     */
+    portraitAlt: string;
+    /**
+     * Por ejemplo: Ver biografía
+     */
+    open?: string | null;
+    /**
+     * Por ejemplo: Ver biografía de {nombre}
+     */
+    openAria?: string | null;
+    /**
+     * Por ejemplo: Biografía de {nombre}
+     */
+    bioAria?: string | null;
+    /**
+     * Por ejemplo: Cerrar biografía de {nombre}
+     */
+    closeAria?: string | null;
+  };
+  /**
+   * Desactivado: solo retrato, cargo y nombre (como la Junta Fundadora actual).
+   */
+  showBios?: boolean | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'peopleGrid';
+}
+/**
+ * Integrantes de juntas y comités. Cada persona existe una sola vez: su retrato y biografía se actualizan en todas las secciones donde aparece.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people".
+ */
+export interface Person {
+  id: number;
+  /**
+   * Como se muestra normalmente, con títulos o grados si aplican. Cada sección puede mostrar otra forma del nombre.
+   */
+  name: string;
+  /**
+   * Foto vertical (proporción 4:5 o 3:4). El texto alternativo se edita en el archivo de Medios.
+   */
+  portrait?: (number | null) | Media;
+  /**
+   * Se muestra al abrir la tarjeta en la Junta Directiva y en el perfil de coordinación de un comité.
+   */
+  bio?: string | null;
+  /**
+   * Se completa automáticamente a partir del nombre. Minúsculas, números y guiones.
+   */
+  slug?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -443,6 +548,155 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommitteesBlock".
+ */
+export interface CommitteesBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  selection: 'all' | 'selected';
+  /**
+   * Se muestran en el orden elegido aquí.
+   */
+  committees?: (number | Committee)[] | null;
+  /**
+   * {nombre} se reemplaza por el nombre del comité o de la persona.
+   */
+  labels: {
+    /**
+     * Por ejemplo: Comités de trabajo
+     */
+    navAria: string;
+    /**
+     * Por ejemplo: Comité de trabajo
+     */
+    committeeEyebrow: string;
+    /**
+     * Por ejemplo: Comité de {nombre}
+     */
+    committeeHeading: string;
+    /**
+     * Por ejemplo: Coordinación
+     */
+    coordinator: string;
+    /**
+     * Por ejemplo: Retrato de {nombre}
+     */
+    portraitAlt: string;
+    /**
+     * Por ejemplo: Integrantes
+     */
+    members: string;
+    /**
+     * Por ejemplo: Responsabilidades
+     */
+    responsibilities: string;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'committees';
+}
+/**
+ * Comités de trabajo. Se muestran en el orden indicado; su identificador es el ancla del enlace (#identificador).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "committees".
+ */
+export interface Committee {
+  id: number;
+  /**
+   * Sin «Comité de». Por ejemplo: Asuntos Legislativos.
+   */
+  name: string;
+  description: string;
+  /**
+   * Se muestra en un recuadro mostaza debajo de la descripción.
+   */
+  focus?: string | null;
+  /**
+   * Por ejemplo: Funciones principales.
+   */
+  functionsLabel: string;
+  functions?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  coordinator: {
+    /**
+     * Su retrato y biografía se toman del registro de la persona.
+     */
+    person: number | Person;
+    /**
+     * Déjalo vacío para usar el nombre de la persona.
+     */
+    displayName?: string | null;
+    /**
+     * Reemplaza la etiqueta general de la sección (Coordinación).
+     */
+    roleLabel?: string | null;
+  };
+  /**
+   * Recuadro adicional con integrantes y responsabilidades. Déjalo vacío si no aplica.
+   */
+  editorialBoard?: {
+    /**
+     * Por ejemplo: Junta Editora.
+     */
+    title?: string | null;
+    summary?: string | null;
+    members?:
+      | {
+          /**
+           * Persona integrante.
+           */
+          person: number | Person;
+          role: string;
+          /**
+           * Déjalo vacío para usar el nombre de la persona.
+           */
+          displayName?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    responsibilities?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * Los comités se muestran de menor a mayor.
+   */
+  order: number;
+  /**
+   * Se completa a partir del nombre. Es el ancla del enlace: /nosotros/estructura-organizacional#identificador.
+   */
+  slug?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -468,6 +722,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'people';
+        value: number | Person;
+      } | null)
+    | ({
+        relationTo: 'committees';
+        value: number | Committee;
       } | null)
     | ({
         relationTo: 'media';
@@ -552,6 +814,8 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        peopleGrid?: T | PeopleGridBlockSelect<T>;
+        committees?: T | CommitteesBlockSelect<T>;
       };
   meta?:
     | T
@@ -630,6 +894,133 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PeopleGridBlock_select".
+ */
+export interface PeopleGridBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  members?:
+    | T
+    | {
+        person?: T;
+        role?: T;
+        displayName?: T;
+        id?: T;
+      };
+  labels?:
+    | T
+    | {
+        portraitAlt?: T;
+        open?: T;
+        openAria?: T;
+        bioAria?: T;
+        closeAria?: T;
+      };
+  showBios?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CommitteesBlock_select".
+ */
+export interface CommitteesBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  selection?: T;
+  committees?: T;
+  labels?:
+    | T
+    | {
+        navAria?: T;
+        committeeEyebrow?: T;
+        committeeHeading?: T;
+        coordinator?: T;
+        portraitAlt?: T;
+        members?: T;
+        responsibilities?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "people_select".
+ */
+export interface PeopleSelect<T extends boolean = true> {
+  name?: T;
+  portrait?: T;
+  bio?: T;
+  slug?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "committees_select".
+ */
+export interface CommitteesSelect<T extends boolean = true> {
+  name?: T;
+  description?: T;
+  focus?: T;
+  functionsLabel?: T;
+  functions?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  coordinator?:
+    | T
+    | {
+        person?: T;
+        displayName?: T;
+        roleLabel?: T;
+      };
+  editorialBoard?:
+    | T
+    | {
+        title?: T;
+        summary?: T;
+        members?:
+          | T
+          | {
+              person?: T;
+              role?: T;
+              displayName?: T;
+              id?: T;
+            };
+        responsibilities?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  order?: T;
+  slug?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -928,7 +1319,7 @@ export interface CollectionsWidget {
 export interface CollectionQueryWidget {
   data?: {
     title?: string | null;
-    relatedCollection: 'pages' | 'media' | 'users';
+    relatedCollection: 'pages' | 'people' | 'committees' | 'media' | 'users';
     where?:
       | {
           [k: string]: unknown;
@@ -950,7 +1341,7 @@ export interface CollectionQueryWidget {
  */
 export interface ActivityWidget {
   data?: {
-    excludedCollections?: ('pages' | 'media' | 'users')[] | null;
+    excludedCollections?: ('pages' | 'people' | 'committees' | 'media' | 'users')[] | null;
   };
   width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
