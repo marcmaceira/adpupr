@@ -41,9 +41,12 @@ export const writeOpts = {
 } as const;
 
 async function cacheRemote(url: string, filename: string) {
-  await mkdir(CACHE_DIR, { recursive: true });
+  // One folder per URL so the cached file keeps its exact name: Payload stores an upload
+  // under the basename of `filePath`, and `media()` finds it again by that filename.
   const hash = createHash("sha1").update(url).digest("hex").slice(0, 10);
-  const target = path.join(CACHE_DIR, `${hash}-${filename}`);
+  const dir = path.join(CACHE_DIR, hash);
+  await mkdir(dir, { recursive: true });
+  const target = path.join(dir, filename);
   if (!existsSync(target)) {
     const response = await fetch(url);
     if (!response.ok) throw new Error(`Download failed (${response.status}): ${url}`);
