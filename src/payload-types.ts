@@ -139,6 +139,19 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LexicalNodes_ABC6E12E".
+ */
+export type LexicalNodes_ABC6E12E =
+  | SerializedTextNode
+  | SerializedTabNode
+  | SerializedLineBreakNode
+  | SerializedParagraphNode<LexicalNodes_ABC6E12E>
+  | SerializedListNode<LexicalNodes_ABC6E12E>
+  | SerializedListItemNode<LexicalNodes_ABC6E12E>
+  | SerializedAutoLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>
+  | SerializedLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
  */
 export type LexicalNodes_3DE324E4 =
@@ -234,7 +247,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: HeroBlock[] | null;
+  layout?: (HeroBlock | EventOverviewBlock | EventBenefitsBlock | PricingTableBlock | NumberedGridBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -323,6 +336,8 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * Por ejemplo, a la sección de tarifas (URL #inscripcion).
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
  */
@@ -339,6 +354,309 @@ export interface CmsLink {
    */
   url?: string | null;
   newTab?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventOverviewBlock".
+ */
+export interface EventOverviewBlock {
+  /**
+   * La franja con fecha, horario y lugar. Se muestran en una fila de tres.
+   */
+  details?:
+    | {
+        icon:
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils';
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  intro: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    /**
+     * Se muestran a la derecha del título.
+     */
+    rows?:
+      | {
+          icon:
+            | 'arrow-down'
+            | 'arrow-right'
+            | 'arrow-up'
+            | 'arrow-up-right'
+            | 'badge-check'
+            | 'book-open'
+            | 'calendar'
+            | 'calendar-days'
+            | 'check'
+            | 'clock'
+            | 'coffee'
+            | 'download'
+            | 'external-link'
+            | 'file-chart-column'
+            | 'file-pen-line'
+            | 'file-text'
+            | 'heart-handshake'
+            | 'library'
+            | 'mail'
+            | 'map-pin'
+            | 'presentation'
+            | 'search'
+            | 'send'
+            | 'smartphone'
+            | 'store'
+            | 'users'
+            | 'utensils';
+          /**
+           * Opcional.
+           */
+          heading?: string | null;
+          text: string;
+          /**
+           * Muestra el texto en azul y en negrita.
+           */
+          emphasis?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.
+   */
+  agenda: {
+    heading: string;
+    expandLabel: string;
+    /**
+     * Se usa arriba (con la agenda abierta) y al final de la agenda.
+     */
+    collapseLabel: string;
+    periods?:
+      | {
+          title: string;
+          summary?: string | null;
+          entries?:
+            | {
+                start: string;
+                end: string;
+                title: string;
+                /**
+                 * Opcional. El visitante la despliega con el botón +.
+                 */
+                description?: string | null;
+                /**
+                 * Se muestra en gris y nunca despliega la descripción.
+                 */
+                quiet?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Por ejemplo: Programa sujeto a ajustes.
+     */
+    note?: string | null;
+    registrationLink?: CmsLink;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventBenefitsBlock".
+ */
+export interface EventBenefitsBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  callout?: {
+    label?: string | null;
+    /**
+     * No se ve; se lee antes de la cifra. Por ejemplo: Hasta
+     */
+    srPrefix?: string | null;
+    /**
+     * Por ejemplo: 8.5 h
+     */
+    value?: string | null;
+    note?: string | null;
+  };
+  benefits?:
+    | {
+        icon:
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils';
+        title: string;
+        detail?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El texto en negrita se muestra en mostaza.
+   */
+  footnote?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventBenefits';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingTableBlock".
+ */
+export interface PricingTableBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  prices?:
+    | {
+        name: string;
+        price: string;
+        note?: string | null;
+        buttonLabel: string;
+        /**
+         * Se abre en una pestaña nueva.
+         */
+        paymentUrl: string;
+        /**
+         * Borde azul, botón sólido y la insignia de arriba.
+         */
+        featured?: boolean | null;
+        badge?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.
+   */
+  athMovil?: {
+    title?: string | null;
+    text?: string | null;
+    buttonLabel?: string | null;
+  };
+  footnote?: string | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock".
+ */
+export interface NumberedGridBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  /**
+   * Se muestra a la derecha del título.
+   */
+  intro?: string | null;
+  /**
+   * Por ejemplo: EJE (se muestra «EJE 01»).
+   */
+  numberPrefix?: string | null;
+  /**
+   * Va antes de cada descripción. Por ejemplo: Enfoque:
+   */
+  leadIn?: string | null;
+  items?:
+    | {
+        number: string;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'numberedGrid';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -552,6 +870,10 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        eventOverview?: T | EventOverviewBlockSelect<T>;
+        eventBenefits?: T | EventBenefitsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        numberedGrid?: T | NumberedGridBlockSelect<T>;
       };
   meta?:
     | T
@@ -630,6 +952,162 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventOverviewBlock_select".
+ */
+export interface EventOverviewBlockSelect<T extends boolean = true> {
+  details?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  intro?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        rows?:
+          | T
+          | {
+              icon?: T;
+              heading?: T;
+              text?: T;
+              emphasis?: T;
+              id?: T;
+            };
+      };
+  agenda?:
+    | T
+    | {
+        heading?: T;
+        expandLabel?: T;
+        collapseLabel?: T;
+        periods?:
+          | T
+          | {
+              title?: T;
+              summary?: T;
+              entries?:
+                | T
+                | {
+                    start?: T;
+                    end?: T;
+                    title?: T;
+                    description?: T;
+                    quiet?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        note?: T;
+        registrationLink?: T | CmsLinkSelect<T>;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventBenefitsBlock_select".
+ */
+export interface EventBenefitsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  callout?:
+    | T
+    | {
+        label?: T;
+        srPrefix?: T;
+        value?: T;
+        note?: T;
+      };
+  benefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        detail?: T;
+        id?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingTableBlock_select".
+ */
+export interface PricingTableBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  prices?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        note?: T;
+        buttonLabel?: T;
+        paymentUrl?: T;
+        featured?: T;
+        badge?: T;
+        id?: T;
+      };
+  athMovil?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonLabel?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock_select".
+ */
+export interface NumberedGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  numberPrefix?: T;
+  leadIn?: T;
+  items?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1037,12 +1515,24 @@ export interface SerializedListItemNode<TChildren> extends SerializedLexicalElem
   value: number;
 }
 
-export interface SerializedHeadingNode<
-  TChildren,
-  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
-> extends SerializedLexicalElementBase<TChildren> {
-  type: 'heading';
-  tag: TTag;
+export interface LexicalLinkFields {
+  [k: string]: unknown;
+  doc?: {
+    relationTo: string;
+    value: Config['db']['defaultIDType'] | { [k: string]: unknown; id: Config['db']['defaultIDType'] };
+  } | null;
+  linkType: 'custom' | 'internal';
+  newTab: boolean;
+  url?: string;
+}
+export interface SerializedLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'link';
+  fields: TFields;
+  id?: string;
+}
+export interface SerializedAutoLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'autolink';
+  fields: TFields;
 }
 
 /** Shape of a Lexical `richText` field. */
@@ -1056,6 +1546,14 @@ export interface LexicalRichText<TNode> {
     /** @deprecated Ignored when loading. Typed as required only to match Lexical's types: rich text sent through the API, CLI or MCP may not contain it. */
     version: number;
   };
+}
+
+export interface SerializedHeadingNode<
+  TChildren,
+  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+> extends SerializedLexicalElementBase<TChildren> {
+  type: 'heading';
+  tag: TTag;
 }
 
 
