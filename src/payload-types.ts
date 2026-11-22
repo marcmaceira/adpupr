@@ -139,6 +139,19 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LexicalNodes_ABC6E12E".
+ */
+export type LexicalNodes_ABC6E12E =
+  | SerializedTextNode
+  | SerializedTabNode
+  | SerializedLineBreakNode
+  | SerializedParagraphNode<LexicalNodes_ABC6E12E>
+  | SerializedListNode<LexicalNodes_ABC6E12E>
+  | SerializedListItemNode<LexicalNodes_ABC6E12E>
+  | SerializedAutoLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>
+  | SerializedLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
  */
 export type LexicalNodes_3DE324E4 =
@@ -157,6 +170,8 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    documents: Document;
+    'document-categories': DocumentCategory;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -168,6 +183,8 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    'document-categories': DocumentCategoriesSelect<false> | DocumentCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -234,7 +251,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: HeroBlock[] | null;
+  layout?: (HeroBlock | MembershipEnrollmentBlock | ContactSectionBlock | ResourceLibraryBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -323,6 +340,8 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * Normalmente un formulario externo que se abre en una pestaña nueva.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
  */
@@ -339,6 +358,199 @@ export interface CmsLink {
    */
   url?: string | null;
   newTab?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembershipEnrollmentBlock".
+ */
+export interface MembershipEnrollmentBlock {
+  benefits: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    text?: string | null;
+    link?: CmsLink;
+    callout?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
+  payment: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    /**
+     * El enlace de pago se edita en Configuración del sitio → Pagos.
+     */
+    athMovil: {
+      title: string;
+      text?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+      buttonLabel: string;
+    };
+    paypal: {
+      title: string;
+      plans?:
+        | {
+            name: string;
+            price: string;
+            url: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    /**
+     * La dirección postal se edita en Configuración del sitio → Contacto.
+     */
+    check: {
+      title: string;
+      text?: string | null;
+    };
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'membershipEnrollment';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  /**
+   * El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.
+   */
+  form: {
+    eyebrow?: string | null;
+    heading: string;
+    nameLabel: string;
+    namePlaceholder?: string | null;
+    contactLabel: string;
+    contactPlaceholder?: string | null;
+    messageLabel: string;
+    messagePlaceholder?: string | null;
+    privacyNote?: string | null;
+    submitLabel: string;
+    email: {
+      /**
+       * Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.
+       */
+      recipient?: string | null;
+      /**
+       * Escribe {nombre} donde debe ir el nombre de la persona.
+       */
+      subjectTemplate: string;
+      /**
+       * Por ejemplo «Nombre:». Le sigue el nombre escrito.
+       */
+      nameLine: string;
+      /**
+       * Se omite si la persona no escribe su contacto.
+       */
+      contactLine: string;
+      /**
+       * Va en su propia línea, antes del mensaje.
+       */
+      messageLine: string;
+    };
+  };
+  /**
+   * Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.
+   */
+  channels: {
+    eyebrow?: string | null;
+    ariaLabel: string;
+    emailHeading?: string | null;
+    postalHeading?: string | null;
+    socialHeading?: string | null;
+    /**
+     * En el orden en que aparecen. Solo se muestran redes configuradas.
+     */
+    networks?:
+      | {
+          network: 'facebook' | 'instagram' | 'linkedin' | 'youtube';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceLibraryBlock".
+ */
+export interface ResourceLibraryBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  /**
+   * Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.
+   */
+  library: {
+    filterLegend: string;
+    allLabel: string;
+    searchLabel: string;
+    searchPlaceholder?: string | null;
+    /**
+     * Los lectores de pantalla lo leen seguido del título del documento.
+     */
+    downloadLabel: string;
+    emptyArchive?: {
+      title?: string | null;
+      text?: string | null;
+    };
+    noResults?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourceLibrary';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -442,6 +654,91 @@ export interface User {
   collection: 'users';
 }
 /**
+ * Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * Así aparece en la lista y en el botón de descarga.
+   */
+  title: string;
+  category: number | DocumentCategory;
+  /**
+   * La lista muestra primero los documentos más recientes.
+   */
+  publishedAt: string;
+  /**
+   * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
+   */
+  sortOrder?: number | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  _stored?: boolean | null;
+  _transforms?: UploadTransforms;
+  original?: {
+    filename?: string | null;
+    url?: string | null;
+    mimeType?: string | null;
+    filesize?: number | null;
+    width?: number | null;
+    height?: number | null;
+    prefix?: string | null;
+    _objectKey?: string | null;
+    _stored?: boolean | null;
+  };
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-categories".
+ */
+export interface DocumentCategory {
+  id: number;
+  /**
+   * Texto del botón de filtro y de la etiqueta sobre cada documento.
+   */
+  label: string;
+  /**
+   * Minúsculas, números y guiones. No se muestra a visitantes.
+   */
+  slug: string;
+  /**
+   * Las categorías con número menor aparecen primero.
+   */
+  order: number;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -468,6 +765,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'document-categories';
+        value: number | DocumentCategory;
       } | null)
     | ({
         relationTo: 'media';
@@ -552,6 +857,9 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        membershipEnrollment?: T | MembershipEnrollmentBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        resourceLibrary?: T | ResourceLibraryBlockSelect<T>;
       };
   meta?:
     | T
@@ -630,6 +938,219 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembershipEnrollmentBlock_select".
+ */
+export interface MembershipEnrollmentBlockSelect<T extends boolean = true> {
+  benefits?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
+        callout?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  payment?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        athMovil?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              buttonLabel?: T;
+            };
+        paypal?:
+          | T
+          | {
+              title?: T;
+              plans?:
+                | T
+                | {
+                    name?: T;
+                    price?: T;
+                    url?: T;
+                    id?: T;
+                  };
+            };
+        check?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock_select".
+ */
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        nameLabel?: T;
+        namePlaceholder?: T;
+        contactLabel?: T;
+        contactPlaceholder?: T;
+        messageLabel?: T;
+        messagePlaceholder?: T;
+        privacyNote?: T;
+        submitLabel?: T;
+        email?:
+          | T
+          | {
+              recipient?: T;
+              subjectTemplate?: T;
+              nameLine?: T;
+              contactLine?: T;
+              messageLine?: T;
+            };
+      };
+  channels?:
+    | T
+    | {
+        eyebrow?: T;
+        ariaLabel?: T;
+        emailHeading?: T;
+        postalHeading?: T;
+        socialHeading?: T;
+        networks?:
+          | T
+          | {
+              network?: T;
+              id?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceLibraryBlock_select".
+ */
+export interface ResourceLibraryBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  library?:
+    | T
+    | {
+        filterLegend?: T;
+        allLabel?: T;
+        searchLabel?: T;
+        searchPlaceholder?: T;
+        downloadLabel?: T;
+        emptyArchive?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+        noResults?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  publishedAt?: T;
+  sortOrder?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  _stored?: T;
+  _transforms?: T;
+  original?:
+    | T
+    | {
+        filename?: T;
+        url?: T;
+        mimeType?: T;
+        filesize?: T;
+        width?: T;
+        height?: T;
+        prefix?: T;
+        _objectKey?: T;
+        _stored?: T;
+      };
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-categories_select".
+ */
+export interface DocumentCategoriesSelect<T extends boolean = true> {
+  label?: T;
+  slug?: T;
+  order?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -928,7 +1449,7 @@ export interface CollectionsWidget {
 export interface CollectionQueryWidget {
   data?: {
     title?: string | null;
-    relatedCollection: 'pages' | 'media' | 'users';
+    relatedCollection: 'pages' | 'documents' | 'document-categories' | 'media' | 'users';
     where?:
       | {
           [k: string]: unknown;
@@ -950,7 +1471,7 @@ export interface CollectionQueryWidget {
  */
 export interface ActivityWidget {
   data?: {
-    excludedCollections?: ('pages' | 'media' | 'users')[] | null;
+    excludedCollections?: ('pages' | 'documents' | 'document-categories' | 'media' | 'users')[] | null;
   };
   width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -960,7 +1481,7 @@ export interface ActivityWidget {
  */
 export interface UploadDropzoneWidget {
   data?: {
-    excludedCollections?: 'media'[] | null;
+    excludedCollections?: ('documents' | 'media')[] | null;
   };
   width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1037,12 +1558,24 @@ export interface SerializedListItemNode<TChildren> extends SerializedLexicalElem
   value: number;
 }
 
-export interface SerializedHeadingNode<
-  TChildren,
-  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
-> extends SerializedLexicalElementBase<TChildren> {
-  type: 'heading';
-  tag: TTag;
+export interface LexicalLinkFields {
+  [k: string]: unknown;
+  doc?: {
+    relationTo: string;
+    value: Config['db']['defaultIDType'] | { [k: string]: unknown; id: Config['db']['defaultIDType'] };
+  } | null;
+  linkType: 'custom' | 'internal';
+  newTab: boolean;
+  url?: string;
+}
+export interface SerializedLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'link';
+  fields: TFields;
+  id?: string;
+}
+export interface SerializedAutoLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'autolink';
+  fields: TFields;
 }
 
 /** Shape of a Lexical `richText` field. */
@@ -1056,6 +1589,14 @@ export interface LexicalRichText<TNode> {
     /** @deprecated Ignored when loading. Typed as required only to match Lexical's types: rich text sent through the API, CLI or MCP may not contain it. */
     version: number;
   };
+}
+
+export interface SerializedHeadingNode<
+  TChildren,
+  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+> extends SerializedLexicalElementBase<TChildren> {
+  type: 'heading';
+  tag: TTag;
 }
 
 
