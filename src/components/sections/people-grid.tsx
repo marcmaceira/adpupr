@@ -27,7 +27,7 @@ export type PeopleGridProps = Omit<
   readonly members: readonly PeopleGridMember[];
 };
 
-/** Junta Directiva: split header and cards that open a biography overlay. */
+/** Board grid: split header and cards that open a biography overlay. */
 function BioOverlayGrid({ eyebrow, heading, intro, members, labels, settings }: PeopleGridProps) {
   const cards = members.map((member, index) => ({
     key: member.key,

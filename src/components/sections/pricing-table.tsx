@@ -7,7 +7,7 @@ import { Container, SECTION_SPACING, SECTION_TONES } from "@/components/ui/layou
 import { Eyebrow, Heading } from "@/components/ui/typography";
 
 export type PricingTableProps = Omit<PricingTableBlock, "blockType" | "blockName" | "id"> & {
-  /** ATH Móvil payment link from the site settings. */
+  /** ATH Movil payment link from the site settings. */
   readonly athMovilUrl?: string | null;
 };
 
@@ -48,7 +48,7 @@ function PriceCard({ price }: { readonly price: Price }) {
   );
 }
 
-/** Registration rates with PayPal buttons, the ATH Móvil banner and a closing note. */
+/** Registration rates with PayPal buttons, the ATH Movil banner and a closing note. */
 export function PricingTable({
   eyebrow,
   heading,

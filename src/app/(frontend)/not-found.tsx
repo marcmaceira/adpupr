@@ -11,7 +11,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: settings.notFound?.title || undefined };
 }
 
-/** 404 inside the site frame. Copy comes from Configuración del sitio → Página no encontrada. */
+/** 404 inside the site frame. Copy comes from the site-settings global (notFound group). */
 export default async function NotFound() {
   const { notFound } = await getSiteSettings();
   const link = resolveLink(notFound?.link);
