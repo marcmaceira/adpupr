@@ -24,7 +24,17 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": [".next/**", "out/**", "build/**", "next-env.d.ts", ".agents/**", ".claude/**"],
+  "ignorePatterns": [
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+    ".agents/**",
+    ".claude/**",
+    "src/payload-types.ts",
+    "src/app/(payload)/**",
+    "src/migrations/**"
+  ],
   "rules": {
     "no-array-constructor": "error",
     "no-unused-expressions": "warn",
