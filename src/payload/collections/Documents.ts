@@ -13,7 +13,8 @@ export const Documents: CollectionConfig = {
   slug: "documents",
   labels: { singular: "Documento", plural: "Documentos" },
   versions: false,
-  defaultSort: "-publishedAt",
+  // Same order as the library on the site.
+  defaultSort: ["-publishedAt", "sortOrder"],
   admin: {
     group: "Contenido",
     useAsTitle: "title",
