@@ -14,11 +14,14 @@ export function slugify(value: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
-/** Fills an empty `slug` from another text field of the same document. */
+/**
+ * Fills an empty `slug` from another text field of the same document. Never changes an
+ * existing slug: anchors and seed keys must survive a rename or a partial update.
+ */
 export const slugFrom =
   (source: string): CollectionBeforeValidateHook =>
-  ({ data }) => {
-    if (!data || data.slug) return data;
+  ({ data, originalDoc }) => {
+    if (!data || data.slug || originalDoc?.slug) return data;
     const value: unknown = Reflect.get(data, source);
     return typeof value === "string" ? { ...data, slug: slugify(value) } : data;
   };

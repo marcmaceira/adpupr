@@ -1,4 +1,4 @@
-import type { Block } from "payload";
+import type { Block, Condition } from "payload";
 import {
   array,
   sectionHeader,
@@ -22,6 +22,12 @@ export const PEOPLE_GRID_VARIANTS = [
 
 type PeopleGridVariant = (typeof PEOPLE_GRID_VARIANTS)[number]["value"];
 const when = (...variants: PeopleGridVariant[]) => variantIs(...variants);
+
+/**
+ * For fields nested in the `labels` group: `variantIs` reads the sibling data, which inside
+ * a group is the group itself, so read the enclosing block's variant instead.
+ */
+const blockIsBioOverlay: Condition = (_, __, { blockData }) => blockData?.variant === "bioOverlay";
 
 const NAME_TOKEN_HELP = "{nombre} se reemplaza por el nombre de cada persona.";
 
@@ -85,28 +91,28 @@ export const PeopleGridBlock: Block = {
             required: true,
             description: "Por ejemplo: Ver biografía",
           }),
-          when("bioOverlay"),
+          blockIsBioOverlay,
         ),
         showWhen(
           text("openAria", "Botón para abrir (lector de pantalla)", {
             required: true,
             description: "Por ejemplo: Ver biografía de {nombre}",
           }),
-          when("bioOverlay"),
+          blockIsBioOverlay,
         ),
         showWhen(
           text("bioAria", "Panel de biografía (lector de pantalla)", {
             required: true,
             description: "Por ejemplo: Biografía de {nombre}",
           }),
-          when("bioOverlay"),
+          blockIsBioOverlay,
         ),
         showWhen(
           text("closeAria", "Botón para cerrar (lector de pantalla)", {
             required: true,
             description: "Por ejemplo: Cerrar biografía de {nombre}",
           }),
-          when("bioOverlay"),
+          blockIsBioOverlay,
         ),
       ],
     },
