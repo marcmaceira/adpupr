@@ -99,4 +99,4 @@ node --env-file=.env scripts/mcp-demo.mjs / "Nuevo antetítulo"
 
 ## Deploying
 
-Production needs a hosted Postgres database (`DATABASE_URL`), Vercel Blob enabled for uploads (`USE_VERCEL_BLOB=true` plus the token), the environment variables above, and a first run of `pnpm seed` against the production database. See the deployment notes in the project handover.
+Production needs a hosted Postgres database (`DATABASE_URL`), Vercel Blob enabled for uploads (`USE_VERCEL_BLOB=true` plus the token), and the environment variables above. Before the first deploy, create the database schema with Payload migrations (`pnpm payload migrate:create` against Postgres, commit the files in `src/migrations/`, then run `pnpm payload migrate` before `pnpm build`), and run `pnpm seed` once against the production database. Locally the schema is created automatically (Payload's development schema push).

@@ -28,7 +28,7 @@ Always build fields with these helpers so blocks stay consistent:
 - `variant(options, { defaultValue })`: a named design variant. Editors choose among variants the design already uses. **Never** add free color, spacing, size or class-name fields.
 - `sectionSettings({ tones, defaultTone })`: the `settings` group with an anchor id and, when a block allows more than one, a background tone restricted to that block's tones.
 - `text(name, label, { required, textarea, description })`, `richText(name, label)`, `headline(name, label, { highlight })`, `sectionHeader({ eyebrow, intro, highlight })`.
-- `link({ required })`: page-or-URL link with label (generated as `CmsLink`; resolve with `resolveLink`/`resolveHref` from `src/lib/links.ts`).
+- `link({ required })`: a labelled link to a site page (plus optional anchor), a custom URL, or "Correo del sitio" (the main email from site settings, with an optional subject; `src/lib/site-email.ts` fills in its `mailto:` when the document is read). Generated as `CmsLink`; resolve with `resolveLink`/`resolveHref` from `src/lib/links.ts`.
 - `media(name, label)`: upload to `media`; alt text is required on the media record.
 - `icon(name, label)`: select from the curated set in `src/lib/icons.ts`.
 - `array(name, label, singular, fields, opts)`: **use this for every array.** It normalizes missing nested arrays to `[]`, working around payloadcms/payload#19798 (rows saved under the wrong parent in 4.0.0-beta.11).
