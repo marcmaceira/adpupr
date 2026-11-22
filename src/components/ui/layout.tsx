@@ -87,6 +87,11 @@ export const CONTAINER_WIDTHS = {
   wideInset: "mx-auto max-w-[1248px] px-6",
   /** The stats band. */
   stats: "mx-auto max-w-[760px]",
+  /**
+   * `narrow` plus Tailwind's `container` class, kept literally from the home CTA bands.
+   * At 1440 `max-w-[1200px]` wins (1152px of content); the class stays for parity.
+   */
+  narrowContainer: "container mx-auto max-w-[1200px] px-6",
 } as const;
 
 export type ContainerWidth = keyof typeof CONTAINER_WIDTHS;

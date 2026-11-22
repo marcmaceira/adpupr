@@ -23,6 +23,8 @@ export const HERO_VARIANTS = [
 type HeroVariant = (typeof HERO_VARIANTS)[number]["value"];
 const when = (...variants: HeroVariant[]) => variantIs(...variants);
 
+const [headingField, highlightField] = headline("heading", "Título", { highlight: true });
+
 /**
  * Hero: the dark band that opens every page. One block, seven named variants that
  * reproduce the existing page headers. Fields irrelevant to a variant are hidden.
@@ -34,10 +36,14 @@ export const HeroBlock: Block = {
   admin: { group: "Encabezados y bandas" },
   fields: [
     variant(HERO_VARIANTS, {
-      description: "Cada variante reproduce un encabezado existente del sitio.",
+      description:
+        "Cada variante reproduce un encabezado existente del sitio, con su tamaño de título, espaciado y adornos.",
     }),
-    text("eyebrow", "Antetítulo"),
-    ...headline("heading", "Título", { highlight: true }),
+    text("eyebrow", "Antetítulo", {
+      description: "Texto corto en mayúsculas que aparece sobre el título.",
+    }),
+    ...(headingField ? [headingField] : []),
+    ...(highlightField ? [showWhen(highlightField, when("home"))] : []),
     showWhen(
       text("lede", "Texto introductorio", { textarea: true }),
       when("home", "subhead", "resources", "structure", "history"),
@@ -46,14 +52,23 @@ export const HeroBlock: Block = {
       name: "themeBox",
       type: "group",
       label: "Tema central",
-      admin: { condition: when("event") },
-      fields: [text("label", "Etiqueta"), text("text", "Tema", { textarea: true })],
+      admin: {
+        condition: when("event"),
+        description: "Recuadro con borde mostaza debajo del título.",
+      },
+      fields: [
+        text("label", "Etiqueta", { description: "Por ejemplo: Tema central" }),
+        text("text", "Tema", { textarea: true }),
+      ],
     },
     {
       name: "eventDate",
       type: "group",
       label: "Fecha destacada",
-      admin: { condition: when("event") },
+      admin: {
+        condition: when("event"),
+        description: "Panel a la derecha del título con el día en grande.",
+      },
       fields: [
         {
           type: "row",
@@ -87,15 +102,27 @@ export const HeroBlock: Block = {
             ],
           },
         ],
-        { maxRows: 2 },
+        {
+          maxRows: 2,
+          description:
+            "Hasta dos botones. En la portada de inicio se muestran grandes; en la variante institucional, medianos.",
+        },
       ),
       when("home", "structure"),
     ),
     showWhen(
       array("sectionLinks", "Índice de secciones", "Enlace", [link({ required: true })], {
         maxRows: 6,
+        description: "Enlaces a las secciones de la página, mostrados como lista a la derecha.",
       }),
       when("resources"),
+    ),
+    showWhen(
+      text("navLabel", "Nombre del grupo de enlaces (lectores de pantalla)", {
+        description:
+          "No se ve en pantalla. Lo anuncian los lectores de pantalla, por ejemplo: Secciones de recursos.",
+      }),
+      when("resources", "structure"),
     ),
     sectionSettings(),
   ],

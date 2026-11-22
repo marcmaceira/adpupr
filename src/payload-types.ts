@@ -234,7 +234,7 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: HeroBlock[] | null;
+  layout?: (HeroBlock | CtaBandBlock | StatsBlock)[] | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -274,9 +274,12 @@ export interface Page {
  */
 export interface HeroBlock {
   /**
-   * Cada variante reproduce un encabezado existente del sitio.
+   * Cada variante reproduce un encabezado existente del sitio, con su tamaño de título, espaciado y adornos.
    */
   variant: 'home' | 'subhead' | 'event' | 'resources' | 'structure' | 'history' | 'brief';
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título.
+   */
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
@@ -287,10 +290,19 @@ export interface HeroBlock {
    */
   headingHighlight?: string | null;
   lede?: string | null;
+  /**
+   * Recuadro con borde mostaza debajo del título.
+   */
   themeBox?: {
+    /**
+     * Por ejemplo: Tema central
+     */
     label?: string | null;
     text?: string | null;
   };
+  /**
+   * Panel a la derecha del título con el día en grande.
+   */
   eventDate?: {
     day?: string | null;
     /**
@@ -299,6 +311,9 @@ export interface HeroBlock {
     monthYear?: string | null;
     caption?: string | null;
   };
+  /**
+   * Hasta dos botones. En la portada de inicio se muestran grandes; en la variante institucional, medianos.
+   */
   actions?:
     | {
         link?: CmsLink;
@@ -306,12 +321,19 @@ export interface HeroBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Enlaces a las secciones de la página, mostrados como lista a la derecha.
+   */
   sectionLinks?:
     | {
         link?: CmsLink;
         id?: string | null;
       }[]
     | null;
+  /**
+   * No se ve en pantalla. Lo anuncian los lectores de pantalla, por ejemplo: Secciones de recursos.
+   */
+  navLabel?: string | null;
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -339,6 +361,150 @@ export interface CmsLink {
    */
   url?: string | null;
   newTab?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBandBlock".
+ */
+export interface CtaBandBlock {
+  /**
+   * Cada variante reproduce una banda existente del sitio, con su color y diseño.
+   */
+  variant: 'primary' | 'mustard' | 'mustardIcon' | 'navy';
+  icon?:
+    | (
+        | 'arrow-down'
+        | 'arrow-right'
+        | 'arrow-up'
+        | 'arrow-up-right'
+        | 'badge-check'
+        | 'book-open'
+        | 'calendar'
+        | 'calendar-days'
+        | 'check'
+        | 'clock'
+        | 'coffee'
+        | 'download'
+        | 'external-link'
+        | 'file-chart-column'
+        | 'file-pen-line'
+        | 'file-text'
+        | 'heart-handshake'
+        | 'library'
+        | 'mail'
+        | 'map-pin'
+        | 'presentation'
+        | 'search'
+        | 'send'
+        | 'smartphone'
+        | 'store'
+        | 'users'
+        | 'utensils'
+      )
+    | null;
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título. Opcional.
+   */
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  /**
+   * Opcional. Escribe exactamente una parte del título para mostrarla en color de acento.
+   */
+  headingHighlight?: string | null;
+  body?: string | null;
+  /**
+   * Fila de datos bajo el texto (fecha, lugar, modalidad). Sin ícono se muestra un punto (·).
+   */
+  meta?:
+    | {
+        icon?:
+          | (
+              | 'arrow-down'
+              | 'arrow-right'
+              | 'arrow-up'
+              | 'arrow-up-right'
+              | 'badge-check'
+              | 'book-open'
+              | 'calendar'
+              | 'calendar-days'
+              | 'check'
+              | 'clock'
+              | 'coffee'
+              | 'download'
+              | 'external-link'
+              | 'file-chart-column'
+              | 'file-pen-line'
+              | 'file-text'
+              | 'heart-handshake'
+              | 'library'
+              | 'mail'
+              | 'map-pin'
+              | 'presentation'
+              | 'search'
+              | 'send'
+              | 'smartphone'
+              | 'store'
+              | 'users'
+              | 'utensils'
+            )
+          | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  primaryAction?: CmsLink;
+  secondaryAction?: CmsLink;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaBand';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  /**
+   * Cada variante reproduce una sección de cifras existente del sitio.
+   */
+  variant: 'band' | 'tiles';
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título.
+   */
+  eyebrow?: string | null;
+  heading?: string | null;
+  /**
+   * La banda celeste muestra dos cifras por fila; el mosaico, hasta cuatro.
+   */
+  items: {
+    /**
+     * Por ejemplo: 50 o 2023
+     */
+    value: string;
+    /**
+     * Opcional, por ejemplo: +
+     */
+    suffix?: string | null;
+    label: string;
+    id?: string | null;
+  }[];
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
 }
 /**
  * Imágenes del sitio: logotipos, retratos y fotos. Todas requieren texto alternativo.
@@ -552,6 +718,8 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        ctaBand?: T | CtaBandBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
       };
   meta?:
     | T
@@ -611,6 +779,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
         link?: T | CmsLinkSelect<T>;
         id?: T;
       };
+  navLabel?: T;
   settings?:
     | T
     | {
@@ -630,6 +799,58 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBandBlock_select".
+ */
+export interface CtaBandBlockSelect<T extends boolean = true> {
+  variant?: T;
+  icon?: T;
+  eyebrow?: T;
+  heading?: T;
+  headingHighlight?: T;
+  body?: T;
+  meta?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
+  primaryAction?: T | CmsLinkSelect<T>;
+  secondaryAction?: T | CmsLinkSelect<T>;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        value?: T;
+        suffix?: T;
+        label?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

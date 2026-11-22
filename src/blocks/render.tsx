@@ -14,6 +14,16 @@ const registry = {
   ...peopleComponents,
 } satisfies BlockRegistry;
 
+type Renderer = ComponentType<{ readonly block: LayoutBlock }>;
+
+/**
+ * The registry is keyed by slug, so the renderer found for `block.blockType` accepts that
+ * block. TypeScript cannot correlate the two through an index, hence this guard.
+ */
+function isRenderer(value: unknown): value is Renderer {
+  return typeof value === "function";
+}
+
 /** Renders a page layout. Unknown block types render nothing. */
 export function RenderBlocks({
   blocks,
@@ -24,10 +34,8 @@ export function RenderBlocks({
   return (
     <>
       {blocks.map((block, index) => {
-        const Component = registry[block.blockType] as
-          | ComponentType<{ readonly block: LayoutBlock }>
-          | undefined;
-        if (!Component) return null;
+        const Component: unknown = Reflect.get(registry, block.blockType);
+        if (!isRenderer(Component)) return null;
         return <Component key={block.id ?? `${block.blockType}-${index}`} block={block} />;
       })}
     </>
