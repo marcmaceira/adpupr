@@ -139,6 +139,19 @@ export type SupportedTimezones =
   | 'Pacific/Fiji';
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LexicalNodes_ABC6E12E".
+ */
+export type LexicalNodes_ABC6E12E =
+  | SerializedTextNode
+  | SerializedTabNode
+  | SerializedLineBreakNode
+  | SerializedParagraphNode<LexicalNodes_ABC6E12E>
+  | SerializedListNode<LexicalNodes_ABC6E12E>
+  | SerializedListItemNode<LexicalNodes_ABC6E12E>
+  | SerializedAutoLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>
+  | SerializedLinkNode<LexicalNodes_ABC6E12E, LexicalLinkFields>;
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "LexicalNodes_3DE324E4".
  */
 export type LexicalNodes_3DE324E4 =
@@ -159,6 +172,8 @@ export interface Config {
     pages: Page;
     people: Person;
     committees: Committee;
+    documents: Document;
+    'document-categories': DocumentCategory;
     media: Media;
     users: User;
     'payload-kv': PayloadKv;
@@ -172,6 +187,8 @@ export interface Config {
     pages: PagesSelect<false> | PagesSelect<true>;
     people: PeopleSelect<false> | PeopleSelect<true>;
     committees: CommitteesSelect<false> | CommitteesSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    'document-categories': DocumentCategoriesSelect<false> | DocumentCategoriesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -242,7 +259,28 @@ export interface Page {
    * Ejemplos: / · /membresia · /nosotros/quienes-somos
    */
   path: string;
-  layout?: (HeroBlock | PeopleGridBlock | CommitteesBlock)[] | null;
+  layout?:
+    | (
+        | HeroBlock
+        | CtaBandBlock
+        | StatsBlock
+        | TextSplitBlock
+        | FeatureCardsBlock
+        | NumberedListBlock
+        | IconColumnsBlock
+        | VideoFeatureBlock
+        | RichTextBlock
+        | EventOverviewBlock
+        | EventBenefitsBlock
+        | PricingTableBlock
+        | NumberedGridBlock
+        | MembershipEnrollmentBlock
+        | ContactSectionBlock
+        | ResourceLibraryBlock
+        | PeopleGridBlock
+        | CommitteesBlock
+      )[]
+    | null;
   meta?: {
     /**
      * Se muestra como «Título | ADPUPR». Déjalo vacío para usar el título de la página.
@@ -282,9 +320,12 @@ export interface Page {
  */
 export interface HeroBlock {
   /**
-   * Cada variante reproduce un encabezado existente del sitio.
+   * Cada variante reproduce un encabezado existente del sitio, con su tamaño de título, espaciado y adornos.
    */
   variant: 'home' | 'subhead' | 'event' | 'resources' | 'structure' | 'history' | 'brief';
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título.
+   */
   eyebrow?: string | null;
   /**
    * Cada salto de línea se muestra como un salto de línea.
@@ -295,10 +336,19 @@ export interface HeroBlock {
    */
   headingHighlight?: string | null;
   lede?: string | null;
+  /**
+   * Recuadro con borde mostaza debajo del título.
+   */
   themeBox?: {
+    /**
+     * Por ejemplo: Tema central
+     */
     label?: string | null;
     text?: string | null;
   };
+  /**
+   * Panel a la derecha del título con el día en grande.
+   */
   eventDate?: {
     day?: string | null;
     /**
@@ -307,6 +357,9 @@ export interface HeroBlock {
     monthYear?: string | null;
     caption?: string | null;
   };
+  /**
+   * Hasta dos botones. En la portada de inicio se muestran grandes; en la variante institucional, medianos.
+   */
   actions?:
     | {
         link?: CmsLink;
@@ -314,12 +367,19 @@ export interface HeroBlock {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Enlaces a las secciones de la página, mostrados como lista a la derecha.
+   */
   sectionLinks?:
     | {
         link?: CmsLink;
         id?: string | null;
       }[]
     | null;
+  /**
+   * No se ve en pantalla. Lo anuncian los lectores de pantalla, por ejemplo: Secciones de recursos.
+   */
+  navLabel?: string | null;
   settings?: {
     /**
      * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
@@ -331,6 +391,8 @@ export interface HeroBlock {
   blockType: 'hero';
 }
 /**
+ * Normalmente un formulario externo que se abre en una pestaña nueva.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "CmsLink".
  */
@@ -347,6 +409,914 @@ export interface CmsLink {
    */
   url?: string | null;
   newTab?: boolean | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBandBlock".
+ */
+export interface CtaBandBlock {
+  /**
+   * Cada variante reproduce una banda existente del sitio, con su color y diseño.
+   */
+  variant: 'primary' | 'mustard' | 'mustardIcon' | 'navy';
+  icon?:
+    | (
+        | 'arrow-down'
+        | 'arrow-right'
+        | 'arrow-up'
+        | 'arrow-up-right'
+        | 'badge-check'
+        | 'book-open'
+        | 'calendar'
+        | 'calendar-days'
+        | 'check'
+        | 'clock'
+        | 'coffee'
+        | 'download'
+        | 'external-link'
+        | 'file-chart-column'
+        | 'file-pen-line'
+        | 'file-text'
+        | 'heart-handshake'
+        | 'library'
+        | 'mail'
+        | 'map-pin'
+        | 'presentation'
+        | 'search'
+        | 'send'
+        | 'smartphone'
+        | 'store'
+        | 'users'
+        | 'utensils'
+      )
+    | null;
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título. Opcional.
+   */
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  /**
+   * Opcional. Escribe exactamente una parte del título para mostrarla en color de acento.
+   */
+  headingHighlight?: string | null;
+  body?: string | null;
+  /**
+   * Fila de datos bajo el texto (fecha, lugar, modalidad). Sin ícono se muestra un punto (·).
+   */
+  meta?:
+    | {
+        icon?:
+          | (
+              | 'arrow-down'
+              | 'arrow-right'
+              | 'arrow-up'
+              | 'arrow-up-right'
+              | 'badge-check'
+              | 'book-open'
+              | 'calendar'
+              | 'calendar-days'
+              | 'check'
+              | 'clock'
+              | 'coffee'
+              | 'download'
+              | 'external-link'
+              | 'file-chart-column'
+              | 'file-pen-line'
+              | 'file-text'
+              | 'heart-handshake'
+              | 'library'
+              | 'mail'
+              | 'map-pin'
+              | 'presentation'
+              | 'search'
+              | 'send'
+              | 'smartphone'
+              | 'store'
+              | 'users'
+              | 'utensils'
+            )
+          | null;
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  primaryAction?: CmsLink;
+  secondaryAction?: CmsLink;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'ctaBand';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock".
+ */
+export interface StatsBlock {
+  /**
+   * Cada variante reproduce una sección de cifras existente del sitio.
+   */
+  variant: 'band' | 'tiles';
+  /**
+   * Texto corto en mayúsculas que aparece sobre el título.
+   */
+  eyebrow?: string | null;
+  heading?: string | null;
+  /**
+   * La banda celeste muestra dos cifras por fila; el mosaico, hasta cuatro.
+   */
+  items: {
+    /**
+     * Por ejemplo: 50 o 2023
+     */
+    value: string;
+    /**
+     * Opcional, por ejemplo: +
+     */
+    suffix?: string | null;
+    label: string;
+    id?: string | null;
+  }[];
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'stats';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextSplitBlock".
+ */
+export interface TextSplitBlock {
+  /**
+   * También ajusta el tamaño del texto y el espaciado de la sección.
+   */
+  ratio: 'wideLeft' | 'fixedLeft' | 'narrowLeft';
+  accent: 'rightRule' | 'goldBar' | 'bottomRule' | 'none';
+  headingSize: 'section' | 'compact';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body: LexicalRichText<LexicalNodes_ABC6E12E>;
+  link?: CmsLink;
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'textSplit';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock".
+ */
+export interface FeatureCardsBlock {
+  /**
+   * Los paneles unidos muestran el título de cada panel en tamaño grande.
+   */
+  variant: 'separate' | 'joined';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading?: string | null;
+  items: {
+    tone: 'light' | 'dark';
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    eyebrow?: string | null;
+    title: string;
+    text: string;
+    link?: CmsLink;
+    id?: string | null;
+  }[];
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface2';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featureCards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedListBlock".
+ */
+export interface NumberedListBlock {
+  /**
+   * La numeración (01, 02, 03…) se genera sola según el orden.
+   */
+  variant: 'stacked' | 'sidebar';
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  items: {
+    text: string;
+    id?: string | null;
+  }[];
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'numberedList';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconColumnsBlock".
+ */
+export interface IconColumnsBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  columns: {
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    title: string;
+    text?: string | null;
+    /**
+     * Por ejemplo: Archivo en preparación.
+     */
+    status?: string | null;
+    id?: string | null;
+  }[];
+  note?: {
+    icon?:
+      | (
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils'
+        )
+      | null;
+    text?: string | null;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'iconColumns';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoFeatureBlock".
+ */
+export interface VideoFeatureBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  channelLink?: CmsLink;
+  /**
+   * Los 11 caracteres después de «v=» o de «youtu.be/» en el enlace del video. Por ejemplo: jhXQO0PB0PY
+   */
+  youtubeId: string;
+  /**
+   * Lo anuncian los lectores de pantalla. Describe el video brevemente.
+   */
+  videoTitle: string;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'videoFeature';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock".
+ */
+export interface RichTextBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading?: string | null;
+  body: LexicalRichText<LexicalNodes_ABC6E12E>;
+  settings: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+    tone: 'bg' | 'surface';
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richTextBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventOverviewBlock".
+ */
+export interface EventOverviewBlock {
+  /**
+   * La franja con fecha, horario y lugar. Se muestran en una fila de tres.
+   */
+  details?:
+    | {
+        icon:
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils';
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  intro: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    /**
+     * Se muestran a la derecha del título.
+     */
+    rows?:
+      | {
+          icon:
+            | 'arrow-down'
+            | 'arrow-right'
+            | 'arrow-up'
+            | 'arrow-up-right'
+            | 'badge-check'
+            | 'book-open'
+            | 'calendar'
+            | 'calendar-days'
+            | 'check'
+            | 'clock'
+            | 'coffee'
+            | 'download'
+            | 'external-link'
+            | 'file-chart-column'
+            | 'file-pen-line'
+            | 'file-text'
+            | 'heart-handshake'
+            | 'library'
+            | 'mail'
+            | 'map-pin'
+            | 'presentation'
+            | 'search'
+            | 'send'
+            | 'smartphone'
+            | 'store'
+            | 'users'
+            | 'utensils';
+          /**
+           * Opcional.
+           */
+          heading?: string | null;
+          text: string;
+          /**
+           * Muestra el texto en azul y en negrita.
+           */
+          emphasis?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  /**
+   * La agenda aparece cerrada; el visitante la abre con el botón. Las actividades con descripción (y no atenuadas) se pueden desplegar.
+   */
+  agenda: {
+    heading: string;
+    expandLabel: string;
+    /**
+     * Se usa arriba (con la agenda abierta) y al final de la agenda.
+     */
+    collapseLabel: string;
+    periods?:
+      | {
+          title: string;
+          summary?: string | null;
+          entries?:
+            | {
+                start: string;
+                end: string;
+                title: string;
+                /**
+                 * Opcional. El visitante la despliega con el botón +.
+                 */
+                description?: string | null;
+                /**
+                 * Se muestra en gris y nunca despliega la descripción.
+                 */
+                quiet?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Por ejemplo: Programa sujeto a ajustes.
+     */
+    note?: string | null;
+    registrationLink?: CmsLink;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventBenefitsBlock".
+ */
+export interface EventBenefitsBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  callout?: {
+    label?: string | null;
+    /**
+     * No se ve; se lee antes de la cifra. Por ejemplo: Hasta
+     */
+    srPrefix?: string | null;
+    /**
+     * Por ejemplo: 8.5 h
+     */
+    value?: string | null;
+    note?: string | null;
+  };
+  benefits?:
+    | {
+        icon:
+          | 'arrow-down'
+          | 'arrow-right'
+          | 'arrow-up'
+          | 'arrow-up-right'
+          | 'badge-check'
+          | 'book-open'
+          | 'calendar'
+          | 'calendar-days'
+          | 'check'
+          | 'clock'
+          | 'coffee'
+          | 'download'
+          | 'external-link'
+          | 'file-chart-column'
+          | 'file-pen-line'
+          | 'file-text'
+          | 'heart-handshake'
+          | 'library'
+          | 'mail'
+          | 'map-pin'
+          | 'presentation'
+          | 'search'
+          | 'send'
+          | 'smartphone'
+          | 'store'
+          | 'users'
+          | 'utensils';
+        title: string;
+        detail?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El texto en negrita se muestra en mostaza.
+   */
+  footnote?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'eventBenefits';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingTableBlock".
+ */
+export interface PricingTableBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  intro?: string | null;
+  prices?:
+    | {
+        name: string;
+        price: string;
+        note?: string | null;
+        buttonLabel: string;
+        /**
+         * Se abre en una pestaña nueva.
+         */
+        paymentUrl: string;
+        /**
+         * Borde azul, botón sólido y la insignia de arriba.
+         */
+        featured?: boolean | null;
+        badge?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * El enlace de pago se edita en Ajustes del sitio → Pagos. Sin enlace, el botón no se muestra.
+   */
+  athMovil?: {
+    title?: string | null;
+    text?: string | null;
+    buttonLabel?: string | null;
+  };
+  footnote?: string | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'pricingTable';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock".
+ */
+export interface NumberedGridBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  /**
+   * Se muestra a la derecha del título.
+   */
+  intro?: string | null;
+  /**
+   * Por ejemplo: EJE (se muestra «EJE 01»).
+   */
+  numberPrefix?: string | null;
+  /**
+   * Va antes de cada descripción. Por ejemplo: Enfoque:
+   */
+  leadIn?: string | null;
+  items?:
+    | {
+        number: string;
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'numberedGrid';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembershipEnrollmentBlock".
+ */
+export interface MembershipEnrollmentBlock {
+  benefits: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    items?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    text?: string | null;
+    link?: CmsLink;
+    callout?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
+  payment: {
+    eyebrow?: string | null;
+    /**
+     * Cada salto de línea se muestra como un salto de línea.
+     */
+    heading: string;
+    /**
+     * El enlace de pago se edita en Configuración del sitio → Pagos.
+     */
+    athMovil: {
+      title: string;
+      text?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+      buttonLabel: string;
+    };
+    paypal: {
+      title: string;
+      plans?:
+        | {
+            name: string;
+            price: string;
+            url: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    /**
+     * La dirección postal se edita en Configuración del sitio → Contacto.
+     */
+    check: {
+      title: string;
+      text?: string | null;
+    };
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'membershipEnrollment';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock".
+ */
+export interface ContactSectionBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  /**
+   * El formulario abre la aplicación de correo del visitante con el mensaje listo para enviar. No guarda datos.
+   */
+  form: {
+    eyebrow?: string | null;
+    heading: string;
+    nameLabel: string;
+    namePlaceholder?: string | null;
+    contactLabel: string;
+    contactPlaceholder?: string | null;
+    messageLabel: string;
+    messagePlaceholder?: string | null;
+    privacyNote?: string | null;
+    submitLabel: string;
+    email: {
+      /**
+       * Opcional. Si lo dejas vacío, se usa el primer correo de Configuración del sitio → Contacto.
+       */
+      recipient?: string | null;
+      /**
+       * Escribe {nombre} donde debe ir el nombre de la persona.
+       */
+      subjectTemplate: string;
+      /**
+       * Por ejemplo «Nombre:». Le sigue el nombre escrito.
+       */
+      nameLine: string;
+      /**
+       * Se omite si la persona no escribe su contacto.
+       */
+      contactLine: string;
+      /**
+       * Va en su propia línea, antes del mensaje.
+       */
+      messageLine: string;
+    };
+  };
+  /**
+   * Los correos, la dirección y los enlaces de redes se editan en Configuración del sitio.
+   */
+  channels: {
+    eyebrow?: string | null;
+    ariaLabel: string;
+    emailHeading?: string | null;
+    postalHeading?: string | null;
+    socialHeading?: string | null;
+    /**
+     * En el orden en que aparecen. Solo se muestran redes configuradas.
+     */
+    networks?:
+      | {
+          network: 'facebook' | 'instagram' | 'linkedin' | 'youtube';
+          id?: string | null;
+        }[]
+      | null;
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactSection';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceLibraryBlock".
+ */
+export interface ResourceLibraryBlock {
+  eyebrow?: string | null;
+  /**
+   * Cada salto de línea se muestra como un salto de línea.
+   */
+  heading: string;
+  body?: LexicalRichText<LexicalNodes_ABC6E12E> | null;
+  /**
+   * Los documentos se suben en Contenido → Documentos; las categorías, en Categorías de documentos.
+   */
+  library: {
+    filterLegend: string;
+    allLabel: string;
+    searchLabel: string;
+    searchPlaceholder?: string | null;
+    /**
+     * Los lectores de pantalla lo leen seguido del título del documento.
+     */
+    downloadLabel: string;
+    emptyArchive?: {
+      title?: string | null;
+      text?: string | null;
+    };
+    noResults?: {
+      title?: string | null;
+      text?: string | null;
+    };
+  };
+  settings?: {
+    /**
+     * Opcional. Permite enlazar a esta sección con #ancla. Minúsculas, números y guiones.
+     */
+    anchorId?: string | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'resourceLibrary';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -700,6 +1670,93 @@ export interface Committee {
   createdAt: string;
 }
 /**
+ * Archivos que se descargan desde la biblioteca de Recursos. Sube el archivo, escribe el título y elige la categoría.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  /**
+   * Así aparece en la lista y en el botón de descarga.
+   */
+  title: string;
+  category: number | DocumentCategory;
+  /**
+   * La lista muestra primero los documentos más recientes.
+   */
+  publishedAt: string;
+  /**
+   * Opcional. Si dos documentos tienen la misma fecha, el de número menor aparece primero.
+   */
+  sortOrder?: number | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  _stored?: boolean | null;
+  _transforms?: UploadTransforms;
+  original?: {
+    filename?: string | null;
+    url?: string | null;
+    mimeType?: string | null;
+    filesize?: number | null;
+    width?: number | null;
+    height?: number | null;
+    prefix?: string | null;
+    _objectKey?: string | null;
+    _stored?: boolean | null;
+  };
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * Categorías de la biblioteca de Recursos. Cada una aparece como un botón de filtro, en el orden indicado.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-categories".
+ */
+export interface DocumentCategory {
+  id: number;
+  /**
+   * Texto del botón de filtro y de la etiqueta sobre cada documento.
+   */
+  label: string;
+  /**
+   * Minúsculas, números y guiones. No se muestra a visitantes.
+   */
+  slug: string;
+  /**
+   * Las categorías con número menor aparecen primero.
+   */
+  order: number;
+  createdBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedBy?: {
+    relationTo: 'users';
+    value: number | User;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -734,6 +1791,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'committees';
         value: number | Committee;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'document-categories';
+        value: number | DocumentCategory;
       } | null)
     | ({
         relationTo: 'media';
@@ -818,6 +1883,21 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         hero?: T | HeroBlockSelect<T>;
+        ctaBand?: T | CtaBandBlockSelect<T>;
+        stats?: T | StatsBlockSelect<T>;
+        textSplit?: T | TextSplitBlockSelect<T>;
+        featureCards?: T | FeatureCardsBlockSelect<T>;
+        numberedList?: T | NumberedListBlockSelect<T>;
+        iconColumns?: T | IconColumnsBlockSelect<T>;
+        videoFeature?: T | VideoFeatureBlockSelect<T>;
+        richTextBlock?: T | RichTextBlockSelect<T>;
+        eventOverview?: T | EventOverviewBlockSelect<T>;
+        eventBenefits?: T | EventBenefitsBlockSelect<T>;
+        pricingTable?: T | PricingTableBlockSelect<T>;
+        numberedGrid?: T | NumberedGridBlockSelect<T>;
+        membershipEnrollment?: T | MembershipEnrollmentBlockSelect<T>;
+        contactSection?: T | ContactSectionBlockSelect<T>;
+        resourceLibrary?: T | ResourceLibraryBlockSelect<T>;
         peopleGrid?: T | PeopleGridBlockSelect<T>;
         committees?: T | CommitteesBlockSelect<T>;
       };
@@ -879,6 +1959,7 @@ export interface HeroBlockSelect<T extends boolean = true> {
         link?: T | CmsLinkSelect<T>;
         id?: T;
       };
+  navLabel?: T;
   settings?:
     | T
     | {
@@ -898,6 +1979,514 @@ export interface CmsLinkSelect<T extends boolean = true> {
   anchor?: T;
   url?: T;
   newTab?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CtaBandBlock_select".
+ */
+export interface CtaBandBlockSelect<T extends boolean = true> {
+  variant?: T;
+  icon?: T;
+  eyebrow?: T;
+  heading?: T;
+  headingHighlight?: T;
+  body?: T;
+  meta?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+        id?: T;
+      };
+  primaryAction?: T | CmsLinkSelect<T>;
+  secondaryAction?: T | CmsLinkSelect<T>;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StatsBlock_select".
+ */
+export interface StatsBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        value?: T;
+        suffix?: T;
+        label?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextSplitBlock_select".
+ */
+export interface TextSplitBlockSelect<T extends boolean = true> {
+  ratio?: T;
+  accent?: T;
+  headingSize?: T;
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  link?: T | CmsLinkSelect<T>;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeatureCardsBlock_select".
+ */
+export interface FeatureCardsBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        tone?: T;
+        icon?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedListBlock_select".
+ */
+export interface NumberedListBlockSelect<T extends boolean = true> {
+  variant?: T;
+  eyebrow?: T;
+  heading?: T;
+  items?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconColumnsBlock_select".
+ */
+export interface IconColumnsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  columns?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        text?: T;
+        status?: T;
+        id?: T;
+      };
+  note?:
+    | T
+    | {
+        icon?: T;
+        text?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "VideoFeatureBlock_select".
+ */
+export interface VideoFeatureBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  channelLink?: T | CmsLinkSelect<T>;
+  youtubeId?: T;
+  videoTitle?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichTextBlock_select".
+ */
+export interface RichTextBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+        tone?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventOverviewBlock_select".
+ */
+export interface EventOverviewBlockSelect<T extends boolean = true> {
+  details?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  intro?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        rows?:
+          | T
+          | {
+              icon?: T;
+              heading?: T;
+              text?: T;
+              emphasis?: T;
+              id?: T;
+            };
+      };
+  agenda?:
+    | T
+    | {
+        heading?: T;
+        expandLabel?: T;
+        collapseLabel?: T;
+        periods?:
+          | T
+          | {
+              title?: T;
+              summary?: T;
+              entries?:
+                | T
+                | {
+                    start?: T;
+                    end?: T;
+                    title?: T;
+                    description?: T;
+                    quiet?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        note?: T;
+        registrationLink?: T | CmsLinkSelect<T>;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "EventBenefitsBlock_select".
+ */
+export interface EventBenefitsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  callout?:
+    | T
+    | {
+        label?: T;
+        srPrefix?: T;
+        value?: T;
+        note?: T;
+      };
+  benefits?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        detail?: T;
+        id?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PricingTableBlock_select".
+ */
+export interface PricingTableBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  prices?:
+    | T
+    | {
+        name?: T;
+        price?: T;
+        note?: T;
+        buttonLabel?: T;
+        paymentUrl?: T;
+        featured?: T;
+        badge?: T;
+        id?: T;
+      };
+  athMovil?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        buttonLabel?: T;
+      };
+  footnote?: T;
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "NumberedGridBlock_select".
+ */
+export interface NumberedGridBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  intro?: T;
+  numberPrefix?: T;
+  leadIn?: T;
+  items?:
+    | T
+    | {
+        number?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MembershipEnrollmentBlock_select".
+ */
+export interface MembershipEnrollmentBlockSelect<T extends boolean = true> {
+  benefits?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        items?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        text?: T;
+        link?: T | CmsLinkSelect<T>;
+        callout?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  payment?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        athMovil?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              buttonLabel?: T;
+            };
+        paypal?:
+          | T
+          | {
+              title?: T;
+              plans?:
+                | T
+                | {
+                    name?: T;
+                    price?: T;
+                    url?: T;
+                    id?: T;
+                  };
+            };
+        check?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactSectionBlock_select".
+ */
+export interface ContactSectionBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        heading?: T;
+        nameLabel?: T;
+        namePlaceholder?: T;
+        contactLabel?: T;
+        contactPlaceholder?: T;
+        messageLabel?: T;
+        messagePlaceholder?: T;
+        privacyNote?: T;
+        submitLabel?: T;
+        email?:
+          | T
+          | {
+              recipient?: T;
+              subjectTemplate?: T;
+              nameLine?: T;
+              contactLine?: T;
+              messageLine?: T;
+            };
+      };
+  channels?:
+    | T
+    | {
+        eyebrow?: T;
+        ariaLabel?: T;
+        emailHeading?: T;
+        postalHeading?: T;
+        socialHeading?: T;
+        networks?:
+          | T
+          | {
+              network?: T;
+              id?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ResourceLibraryBlock_select".
+ */
+export interface ResourceLibraryBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  body?: T;
+  library?:
+    | T
+    | {
+        filterLegend?: T;
+        allLabel?: T;
+        searchLabel?: T;
+        searchPlaceholder?: T;
+        downloadLabel?: T;
+        emptyArchive?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+        noResults?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+            };
+      };
+  settings?:
+    | T
+    | {
+        anchorId?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1021,6 +2610,59 @@ export interface CommitteesSelect<T extends boolean = true> {
       };
   order?: T;
   slug?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  category?: T;
+  publishedAt?: T;
+  sortOrder?: T;
+  prefix?: T;
+  _objectKey?: T;
+  createdBy?: T;
+  updatedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  _stored?: T;
+  _transforms?: T;
+  original?:
+    | T
+    | {
+        filename?: T;
+        url?: T;
+        mimeType?: T;
+        filesize?: T;
+        width?: T;
+        height?: T;
+        prefix?: T;
+        _objectKey?: T;
+        _stored?: T;
+      };
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "document-categories_select".
+ */
+export interface DocumentCategoriesSelect<T extends boolean = true> {
+  label?: T;
+  slug?: T;
+  order?: T;
   createdBy?: T;
   updatedBy?: T;
   updatedAt?: T;
@@ -1511,7 +3153,7 @@ export interface CollectionsWidget {
 export interface CollectionQueryWidget {
   data?: {
     title?: string | null;
-    relatedCollection: 'pages' | 'people' | 'committees' | 'media' | 'users';
+    relatedCollection: 'pages' | 'people' | 'committees' | 'documents' | 'document-categories' | 'media' | 'users';
     where?:
       | {
           [k: string]: unknown;
@@ -1533,7 +3175,8 @@ export interface CollectionQueryWidget {
  */
 export interface ActivityWidget {
   data?: {
-    excludedCollections?: ('pages' | 'people' | 'committees' | 'media' | 'users')[] | null;
+    excludedCollections?:
+      ('pages' | 'people' | 'committees' | 'documents' | 'document-categories' | 'media' | 'users')[] | null;
   };
   width: 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1543,7 +3186,7 @@ export interface ActivityWidget {
  */
 export interface UploadDropzoneWidget {
   data?: {
-    excludedCollections?: 'media'[] | null;
+    excludedCollections?: ('documents' | 'media')[] | null;
   };
   width: 'x-small' | 'small' | 'medium' | 'large' | 'x-large' | 'full';
 }
@@ -1620,12 +3263,24 @@ export interface SerializedListItemNode<TChildren> extends SerializedLexicalElem
   value: number;
 }
 
-export interface SerializedHeadingNode<
-  TChildren,
-  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
-> extends SerializedLexicalElementBase<TChildren> {
-  type: 'heading';
-  tag: TTag;
+export interface LexicalLinkFields {
+  [k: string]: unknown;
+  doc?: {
+    relationTo: string;
+    value: Config['db']['defaultIDType'] | { [k: string]: unknown; id: Config['db']['defaultIDType'] };
+  } | null;
+  linkType: 'custom' | 'internal';
+  newTab: boolean;
+  url?: string;
+}
+export interface SerializedLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'link';
+  fields: TFields;
+  id?: string;
+}
+export interface SerializedAutoLinkNode<TChildren, TFields = LexicalLinkFields> extends SerializedLexicalElementBase<TChildren> {
+  type: 'autolink';
+  fields: TFields;
 }
 
 /** Shape of a Lexical `richText` field. */
@@ -1639,6 +3294,14 @@ export interface LexicalRichText<TNode> {
     /** @deprecated Ignored when loading. Typed as required only to match Lexical's types: rich text sent through the API, CLI or MCP may not contain it. */
     version: number;
   };
+}
+
+export interface SerializedHeadingNode<
+  TChildren,
+  TTag extends 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6',
+> extends SerializedLexicalElementBase<TChildren> {
+  type: 'heading';
+  tag: TTag;
 }
 
 
